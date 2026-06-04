@@ -42,7 +42,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .hero-haze{position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(ellipse 60% 50% at 55% 45%,rgba(53,133,142,.12) 0%,transparent 70%);mix-blend-mode:screen;animation:hazeDrift 11s ease-in-out infinite;}
 @keyframes hazeDrift{0%,100%{opacity:.5;transform:translate(-2%,0)}50%{opacity:.9;transform:translate(2%,-1.5%)}}
 .hero-scrim{position:absolute;inset:0;z-index:2;background:linear-gradient(to top,rgba(10,10,10,.95) 0%,rgba(10,10,10,.2) 45%,transparent 72%),linear-gradient(to right,rgba(10,10,10,.6) 0%,transparent 58%);}
-.hero-top{position:absolute;top:120px;left:var(--pad);z-index:3;}
+.hero-top{position:absolute;bottom:140px;left:var(--pad);z-index:3;}
 .hero-since{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--white-30);margin-bottom:14px;}
 /* stacked wordmark — NINE stretched to match LAYER width so I sits under A */
 .hero-wordmark{font-family:'Orbitron',sans-serif;font-weight:600;text-transform:uppercase;line-height:.9;color:var(--white);display:inline-block;}
@@ -61,7 +61,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .hero-services a{font-size:13px;color:var(--white-50);display:flex;align-items:center;gap:10px;justify-content:flex-end;transition:color .2s;}
 .hero-services a .sidx{font-size:9px;color:var(--accent);}
 .hero-services a:hover{color:var(--white);}
-.hero-bottom{position:absolute;bottom:46px;left:var(--pad);z-index:3;opacity:0;animation:fadeIn 1s ease 1.1s forwards;}
+.hero-bottom{position:absolute;bottom:50px;left:var(--pad);z-index:3;opacity:0;animation:fadeIn 1s ease 1.1s forwards;}
 .hero-lead{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--white-30);margin-bottom:6px;}
 .hero-rot{font-family:'DM Sans',sans-serif;font-size:clamp(1.3rem,2.2vw,2rem);font-weight:500;color:var(--white);height:1.4em;overflow:hidden;position:relative;}
 .hero-rot span{display:block;position:absolute;width:100%;opacity:0;transform:translateY(100%);transition:opacity .6s,transform .6s;}
@@ -99,8 +99,9 @@ section{position:relative;z-index:2;}
 .about{padding:120px 0;border-top:1px solid var(--white-08);}
 .about-panel{display:grid;grid-template-columns:1fr 1.1fr;min-height:520px;border:1px solid var(--white-08);margin:0 var(--pad);overflow:hidden;}
 .about-img{position:relative;overflow:hidden;background:var(--surface2);}
-.about-img .slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transform:scale(1.06);transition:opacity .8s,transform .8s;}
-.about-img .slide.active{opacity:1;transform:scale(1);}
+.about-img .slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transform:translateY(100%);transition:transform .9s cubic-bezier(.76,0,.24,1),opacity .6s ease;}
+.about-img .slide.active{opacity:1;transform:translateY(0);}
+.about-img .slide.leaving{opacity:1;transform:translateY(-100%);transition:transform .9s cubic-bezier(.76,0,.24,1),opacity .6s ease;}
 .about-content{padding:56px;display:flex;flex-direction:column;justify-content:center;position:relative;}
 .about-headline{font-family:'Orbitron',sans-serif;font-weight:700;font-size:clamp(1.8rem,3.6vw,3.4rem);line-height:1.05;color:var(--white);min-height:1.1em;}
 .about-headline .item{display:none;align-items:flex-start;gap:.1em;}
@@ -175,7 +176,7 @@ footer{border-top:1px solid var(--white-08);padding:60px var(--pad) 40px;backgro
 @media(max-width:960px){
   .nav-menu{display:none;}
   .logo-wordmark{height:24px;}.logo-graphic{height:32px;}
-  .hero-top{top:96px;}
+  .hero-top{bottom:110px;}
   .hero-services{display:none;}
   .contact-card{display:none;}
   .hero-layer,.hero-nine{font-size:clamp(2.4rem,13vw,4rem);}
@@ -221,11 +222,12 @@ footer{border-top:1px solid var(--white-08);padding:60px var(--pad) 40px;backgro
     </h1>
   </div>
   <div class="hero-services">
-    <a href="#services"><span class="sidx">(01)</span> AI Direction</a>
-    <a href="#services"><span class="sidx">(02)</span> Neural Color</a>
-    <a href="#services"><span class="sidx">(03)</span> Generative Worlds</a>
-    <a href="#services"><span class="sidx">(04)</span> Adaptive Sound</a>
-    <a href="#services"><span class="sidx">(05)</span> AI Marketing</a>
+    <a href="#services"><span class="sidx">(01)</span> Creative AI Visuals</a>
+    <a href="#services"><span class="sidx">(02)</span> AI Marketing</a>
+    <a href="#services"><span class="sidx">(03)</span> AI Social & Branding</a>
+    <a href="#services"><span class="sidx">(04)</span> AI Post-Production</a>
+    <a href="#services"><span class="sidx">(05)</span> AI Direction & Consulting</a>
+    <a href="#services"><span class="sidx">(06)</span> Classic Production</a>
   </div>
   <div class="hero-bottom">
     <div class="hero-lead">More than a studio,</div>
@@ -327,28 +329,28 @@ footer{border-top:1px solid var(--white-08);padding:60px var(--pad) 40px;backgro
   <h2 class="copy-title"><span class="cmark">©</span>Services<span class="cnum">(06)</span></h2>
   <div class="svc-acc">
     <div class="svc-item open">
-      <div class="svc-head"><span class="s-num">(01)</span><span class="s-name">AI Direction</span><span class="s-plus">+</span></div>
-      <div class="svc-body"><div class="svc-body-inner">Neural systems that read emotional tone and visual grammar before you call action. We translate creative intent into machine-readable direction — pacing, framing, mood — so the technology serves the story, not the other way around.</div></div>
+      <div class="svc-head"><span class="s-num">(01)</span><span class="s-name">Creative AI Visuals</span><span class="s-plus">+</span></div>
+      <div class="svc-body"><div class="svc-body-inner">Original AI-generated imagery, concept art, and visual worlds built for film, campaigns, and brands. From mood and look development to finished frames — art-directed, never generic.</div></div>
     </div>
     <div class="svc-item">
-      <div class="svc-head"><span class="s-num">(02)</span><span class="s-name">Neural Color</span><span class="s-plus">+</span></div>
-      <div class="svc-body"><div class="svc-body-inner">Grading AI trained on 500+ festival films for deeply cinematic colour. We match the emotional temperature of a reference in minutes, then refine by hand for a look that feels authored, not auto-generated.</div></div>
+      <div class="svc-head"><span class="s-num">(02)</span><span class="s-name">AI Marketing</span><span class="s-plus">+</span></div>
+      <div class="svc-body"><div class="svc-body-inner">End-to-end AI-driven campaigns — visuals, copy, and performance analytics. We turn one idea into dozens of tailored cuts, posters, and ads, each optimised for its platform and audience.</div></div>
     </div>
     <div class="svc-item">
-      <div class="svc-head"><span class="s-num">(03)</span><span class="s-name">Generative Worlds</span><span class="s-plus">+</span></div>
-      <div class="svc-body"><div class="svc-body-inner">AI-built environments and world design that feel lived-in, not rendered. From concept to final plate, we generate places with weather, history, and atmosphere — production-ready and art-directed.</div></div>
+      <div class="svc-head"><span class="s-num">(03)</span><span class="s-name">AI Social &amp; Branding</span><span class="s-plus">+</span></div>
+      <div class="svc-body"><div class="svc-body-inner">Brand identity and social content systems powered by AI. Consistent visual language, scroll-stopping social assets, and a brand that scales across every channel without losing its soul.</div></div>
     </div>
     <div class="svc-item">
-      <div class="svc-head"><span class="s-num">(04)</span><span class="s-name">Adaptive Sound</span><span class="s-plus">+</span></div>
-      <div class="svc-body"><div class="svc-body-inner">Generative scores that evolve frame-by-frame with your edit in real time. The music breathes with the cut — tension, release, and motif handled by a system that understands your film's emotional shape.</div></div>
+      <div class="svc-head"><span class="s-num">(04)</span><span class="s-name">AI Post-Production</span><span class="s-plus">+</span></div>
+      <div class="svc-body"><div class="svc-body-inner">Neural color, generative sound, VFX, and editing — the full finishing pipeline accelerated by AI. Cinematic results at a fraction of traditional time and cost.</div></div>
     </div>
     <div class="svc-item">
-      <div class="svc-head"><span class="s-num">(05)</span><span class="s-name">AI Marketing</span><span class="s-plus">+</span></div>
-      <div class="svc-body"><div class="svc-body-inner">End-to-end AI-generated campaign visuals, copy, and performance analytics. We turn one film into a hundred tailored cuts, posters, and trailers — each optimised for its platform and audience.</div></div>
+      <div class="svc-head"><span class="s-num">(05)</span><span class="s-name">AI Direction &amp; Consulting</span><span class="s-plus">+</span></div>
+      <div class="svc-body"><div class="svc-body-inner">Strategic creative direction for the post-camera era. We help studios and brands integrate AI into their workflow — mapping where it creates real leverage, then guiding the build.</div></div>
     </div>
     <div class="svc-item">
-      <div class="svc-head"><span class="s-num">(06)</span><span class="s-name">Visual Effects</span><span class="s-plus">+</span></div>
-      <div class="svc-body"><div class="svc-body-inner">Neural compositing and AI-powered VFX pipelines for feature and commercial work. Cleanup, set extension, and impossible shots — delivered at a fraction of traditional time and cost.</div></div>
+      <div class="svc-head"><span class="s-num">(06)</span><span class="s-name">Classic Production</span><span class="s-plus">+</span></div>
+      <div class="svc-body"><div class="svc-body-inner">Traditional photography and videography, elevated by an AI-native studio. Real cameras, real sets, real craft — seamlessly blended with generative tools when the story calls for it.</div></div>
     </div>
   </div>
 </section>
@@ -406,10 +408,16 @@ document.querySelectorAll('.r').forEach(el=>obs.observe(el));
 // Hero rotating tagline
 const rot=document.getElementById('heroRot').querySelectorAll('span');let ri=0;
 setInterval(()=>{rot[ri].classList.remove('active');ri=(ri+1)%rot.length;rot[ri].classList.add('active');},2800);
-// About cycling headline + image
+// About cycling headline + image (slide-up)
 const aHead=document.getElementById('aboutHead').querySelectorAll('.item');
 const aSlides=document.querySelectorAll('.about-img .slide');let ai=0;
-setInterval(()=>{aHead[ai].classList.remove('active');aSlides[ai].classList.remove('active');ai=(ai+1)%aHead.length;aHead[ai].classList.add('active');aSlides[ai].classList.add('active');},3400);
+setInterval(()=>{
+  const prev=ai;ai=(ai+1)%aHead.length;
+  aHead[prev].classList.remove('active');aHead[ai].classList.add('active');
+  aSlides[prev].classList.add('leaving');aSlides[prev].classList.remove('active');
+  aSlides[ai].classList.add('active');
+  setTimeout(()=>aSlides[prev].classList.remove('leaving'),900);
+},3400);
 // Services accordion
 document.querySelectorAll('.svc-item').forEach(item=>{
   const head=item.querySelector('.svc-head');const body=item.querySelector('.svc-body');
