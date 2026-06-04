@@ -27,7 +27,9 @@ a{color:inherit;text-decoration:none}
 
 /* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:26px var(--pad);}
-.nav-logo{font-family:'Orbitron',sans-serif;font-weight:500;letter-spacing:.20em;font-size:1.45rem;color:var(--white);line-height:1;display:flex;align-items:baseline;gap:.18em;}
+.nav-logo{display:flex;align-items:center;gap:12px;line-height:1;}
+.logo-wordmark{height:22px;width:auto;display:block;}
+.logo-graphic{height:30px;width:auto;display:block;opacity:.95;}
 .nav-logo .nine{color:var(--accent);}
 .nav-menu{display:flex;align-items:center;gap:32px;list-style:none;}
 .nav-menu a{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--white-50);font-weight:400;transition:color .2s;position:relative;}
@@ -40,10 +42,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 /* ── IMAGE HERO (animated bg) ── */
 .hero{position:relative;width:100%;height:100vh;min-height:600px;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;background:#0a0a0a;}
 /* full-bleed image with slow Ken Burns zoom + drift */
-.hero-bg{position:absolute;inset:-4%;z-index:0;background-image:url("hero.png");background-size:cover;background-position:center 42%;will-change:transform;animation:kenburns 28s ease-in-out infinite alternate;}
+.hero-bg{position:absolute;inset:-4%;z-index:0;background-image:url("hero.png");background-size:cover;background-position:center 42%;will-change:transform;animation:kenburns 18s ease-in-out infinite alternate;}
 @keyframes kenburns{0%{transform:scale(1.04) translate(0,0)}100%{transform:scale(1.14) translate(-1.5%,-1%)}}
 /* drifting haze layer for depth/movement */
-.hero-haze{position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(ellipse 60% 50% at 50% 48%,rgba(53,133,142,.10) 0%,transparent 70%);mix-blend-mode:screen;animation:hazeDrift 16s ease-in-out infinite;}
+.hero-haze{position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(ellipse 60% 50% at 50% 48%,rgba(53,133,142,.10) 0%,transparent 70%);mix-blend-mode:screen;animation:hazeDrift 11s ease-in-out infinite;}
 @keyframes hazeDrift{0%,100%{opacity:.5;transform:translate(-2%,0) scale(1)}50%{opacity:.9;transform:translate(2%,-1.5%) scale(1.08)}}
 /* a soft pulsing glow band that rides over the image's light lines */
 .hero-band{position:absolute;left:0;right:0;top:38%;height:2px;z-index:1;pointer-events:none;background:linear-gradient(90deg,transparent,rgba(75,163,173,.55),transparent);filter:blur(1px);animation:bandPulse 6s ease-in-out infinite;}
@@ -54,11 +56,14 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 /* readability scrim — darken bottom + edges so hero text pops */
 .hero-scrim{position:absolute;inset:0;z-index:2;background:linear-gradient(to top,rgba(10,10,10,.92) 0%,rgba(10,10,10,.25) 45%,transparent 70%),linear-gradient(to right,rgba(10,10,10,.55) 0%,transparent 55%),linear-gradient(to bottom,rgba(10,10,10,.5) 0%,transparent 25%);}
 .hero-content{position:relative;z-index:2;padding:0 var(--pad) 60px;display:flex;align-items:flex-end;justify-content:space-between;gap:40px;}
-.hero-title{font-family:'Orbitron',sans-serif;font-weight:500;font-size:clamp(3.2rem,8.5vw,9rem);letter-spacing:.22em;text-transform:uppercase;line-height:.95;color:var(--white);}
+.hero-title{font-family:'Orbitron',sans-serif;font-weight:500;font-size:clamp(3.2rem,8.5vw,9rem);letter-spacing:.22em;text-transform:uppercase;line-height:.92;color:var(--white);}
 .hero-title .line{display:block;overflow:hidden;}
-.hero-title .line span{display:block;transform:translateY(110%);animation:riseUp 1.1s cubic-bezier(.16,1,.3,1) forwards;}
-.hero-title .line:nth-child(1) span{animation-delay:.3s;}
-.hero-title .line:nth-child(2) span{animation-delay:.45s;color:var(--accent);}
+.hero-title .line span{display:block;transform:translateY(110%);animation:riseUp .8s cubic-bezier(.16,1,.3,1) forwards;}
+.hero-title .line:nth-child(1) span{animation-delay:.2s;}
+.hero-title .line:nth-child(2) span{animation-delay:.32s;}
+/* NINE shifted right so its N aligns under the A of LAYER (≈ one char + spacing) */
+.hero-title .line-nine{padding-left:1.22em;}
+.hero-title i.tl{font-style:normal;color:var(--accent);}
 @keyframes riseUp{to{transform:translateY(0);}}
 .hero-right-col{flex-shrink:0;max-width:320px;text-align:right;padding-bottom:8px;opacity:0;animation:fadeIn 1s ease 1s forwards;}
 @keyframes fadeIn{to{opacity:1;}}
@@ -80,7 +85,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 
 /* MARQUEE */
 .marquee{position:relative;z-index:2;border-top:1px solid var(--white-08);border-bottom:1px solid var(--white-08);background:var(--surface);overflow:hidden;white-space:nowrap;padding:22px 0;}
-.marquee-track{display:inline-flex;gap:48px;animation:marq 30s linear infinite;}
+.marquee-track{display:inline-flex;gap:48px;animation:marq 20s linear infinite;}
 .marquee-track span{font-family:'Orbitron',sans-serif;font-size:1.1rem;letter-spacing:.18em;text-transform:uppercase;color:var(--white-30);display:inline-flex;align-items:center;gap:48px;}
 .marquee-track span::after{content:'✦';color:var(--accent);font-size:.7rem;}
 @keyframes marq{to{transform:translateX(-50%);}}
@@ -178,7 +183,7 @@ footer{border-top:1px solid var(--white-08);padding:60px var(--pad) 44px;positio
 .f-email{font-size:11px;color:var(--white-30);transition:color .2s;letter-spacing:.04em;}
 .f-email:hover{color:var(--accent);}
 
-.r{opacity:0;transform:translateY(30px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1);}
+.r{opacity:0;transform:translateY(30px);transition:opacity .6s cubic-bezier(.16,1,.3,1),transform .6s cubic-bezier(.16,1,.3,1);}
 .r.in{opacity:1;transform:translateY(0);}
 .stag>*{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease;}
 .stag.in>*{opacity:1;transform:translateY(0);}
@@ -212,7 +217,10 @@ footer{border-top:1px solid var(--white-08);padding:60px var(--pad) 44px;positio
 <div id="cur-r"></div>
 
 <nav>
-  <a href="#" class="nav-logo">LAYER&nbsp;<span class="nine">NINE</span></a>
+  <a href="#" class="nav-logo">
+    <img src="logo-text.png" alt="Layer Nine" class="logo-wordmark">
+    <img src="logo-graphic.png" alt="" class="logo-graphic">
+  </a>
   <ul class="nav-menu">
     <li><a href="#about">About</a></li>
     <li><a href="#services">Services</a></li>
@@ -232,8 +240,8 @@ footer{border-top:1px solid var(--white-08);padding:60px var(--pad) 44px;positio
   <div class="hero-content">
     <div>
       <h1 class="hero-title">
-        <span class="line"><span>LAYER</span></span>
-        <span class="line"><span>NINE</span></span>
+        <span class="line"><span>L<i class="tl">A</i>YER</span></span>
+        <span class="line line-nine"><span>N<i class="tl">I</i>NE</span></span>
       </h1>
     </div>
     <div class="hero-right-col">
