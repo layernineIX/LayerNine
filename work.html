@@ -47,7 +47,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:24px var(--pad);disp
 .g-hs{display:grid;grid-template-columns:2fr 1fr;}
 .g-sh{display:grid;grid-template-columns:1fr 2fr;}
 
-.cell{overflow:hidden;position:relative;background:#111;}
+.cell{overflow:hidden;position:relative;background:#111;cursor:pointer;}
 .cell img,.cell video{transition:transform .8s cubic-bezier(.16,1,.3,1);}
 .cell:hover img,.cell:hover video{transform:scale(1.04);}
 .cell.p45{aspect-ratio:4/5;}
@@ -63,10 +63,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:24px var(--pad);disp
 /* VIDEO STRIP */
 .vstrip{padding:48px var(--pad);background:#0a0a0a;border-top:1px solid var(--w08);}
 .vs-label{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--w30);margin-bottom:24px;}
-.vs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
-.vs-cell{overflow:hidden;position:relative;background:#050505;border:1px solid var(--w08);}
+.vs-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+.vs-cell{overflow:hidden;position:relative;background:#050505;border:1px solid var(--w08);cursor:pointer;}
 .vs-cell.portrait{aspect-ratio:9/16;}
-.vs-cell.landscape{aspect-ratio:16/9;}
 .vs-cell video{width:100%;height:100%;object-fit:cover;}
 .vs-meta{position:absolute;bottom:0;left:0;right:0;padding:16px;background:linear-gradient(transparent,rgba(10,10,10,.8));}
 .vs-t{font-size:11px;letter-spacing:.1em;color:var(--white);}
@@ -111,6 +110,16 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:24px var(--pad);disp
 .r{opacity:0;transform:translateY(28px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1);}
 .r.in{opacity:1;transform:translateY(0);}
 
+/* LIGHTBOX */
+.lb{display:none;position:fixed;inset:0;z-index:999;background:rgba(0,0,0,.95);backdrop-filter:blur(8px);align-items:center;justify-content:center;cursor:zoom-out;}
+.lb.open{display:flex;}
+.lb-inner{position:relative;max-width:92vw;max-height:92vh;display:flex;align-items:center;justify-content:center;}
+.lb-inner img{max-width:90vw;max-height:88vh;object-fit:contain;width:auto;height:auto;}
+.lb-inner video{max-width:90vw;max-height:88vh;object-fit:contain;width:auto;height:auto;}
+.lb-close{position:fixed;top:24px;right:32px;font-size:28px;color:rgba(226,221,214,.6);cursor:pointer;line-height:1;transition:color .2s;z-index:1000;}
+.lb-close:hover{color:var(--accent2);}
+.lb-caption{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(226,221,214,.4);}
+
 @media(max-width:900px){
   nav{padding:16px 24px;}
   .work-hero,.cs-header{padding-left:24px;padding-right:24px;}
@@ -123,6 +132,13 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:24px var(--pad);disp
 </style>
 </head>
 <body>
+
+<!-- LIGHTBOX -->
+<div class="lb" id="lb" onclick="closeLB(event)">
+  <span class="lb-close" onclick="closeLB()">×</span>
+  <div class="lb-inner" id="lb-inner"></div>
+  <div class="lb-caption" id="lb-caption"></div>
+</div>
 
 <nav>
   <a href="index.html" class="nav-logo">
@@ -138,10 +154,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:24px var(--pad);disp
   <h1 class="wh-title">Creative<br>AI <em>Production</em></h1>
   <p class="wh-sub">A complete AI-generated portfolio — cinematic visual worlds, brand campaigns, editorial photography, and video. Built to show what's possible when creative direction meets machine intelligence.</p>
   <div class="wh-stats">
-    <div><div class="stat-n">03</div><div class="stat-l">Case Studies</div></div>
-    <div><div class="stat-n">20+</div><div class="stat-l">Campaign Images</div></div>
-    <div><div class="stat-n">06</div><div class="stat-l">Campaign Videos</div></div>
-    <div><div class="stat-n">02</div><div class="stat-l">AI Characters</div></div>
+    <div><div class="stat-n">02</div><div class="stat-l">Case Studies</div></div>
+    <div><div class="stat-n">12+</div><div class="stat-l">Campaign Images</div></div>
+    <div><div class="stat-n">04</div><div class="stat-l">Campaign Videos</div></div>
+    <div><div class="stat-n">01</div><div class="stat-l">AI Character</div></div>
     <div><div class="stat-n">$0</div><div class="stat-l">Traditional Shoot Cost</div></div>
   </div>
 </section>
@@ -171,7 +187,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:24px var(--pad);disp
   </div>
 
   <!-- Full cinematic hero -->
-  <div class="cell cinema r" style="height:60vh;">
+  <div class="cell cinema r" style="height:60vh;" onclick="openLB('hero.png','Layer Nine Hero · Post-Camera Era')">
     <img src="hero.png" alt="Layer Nine Hero">
     <div class="cm" style="opacity:1;background:linear-gradient(transparent,rgba(10,10,10,.7));">
       <div style="display:flex;justify-content:space-between;align-items:flex-end;">
@@ -183,15 +199,15 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:24px var(--pad);disp
 
   <!-- 3 column About images -->
   <div class="g3 r">
-    <div class="cell tall">
+    <div class="cell tall" onclick="openLB('about1.jpg','Neural Cinema · Portrait Series')">
       <img src="about1.jpg" alt="Neural Cinema">
       <div class="cm"><div class="cm-t">©Neural Cinema</div><div class="cm-s">Portrait Series · About</div></div>
     </div>
-    <div class="cell tall">
+    <div class="cell tall" onclick="openLB('about2.jpg','Generative Worlds · AI Environments')">
       <img src="about2.jpg" alt="Generative Worlds">
       <div class="cm"><div class="cm-t">©Generative Worlds</div><div class="cm-s">AI Environments · About</div></div>
     </div>
-    <div class="cell tall">
+    <div class="cell tall" onclick="openLB('about3.jpg','Post-Camera Craft · Architectural Vision')">
       <img src="about3.jpg" alt="Post-Camera Craft">
       <div class="cm"><div class="cm-t">©Post-Camera Craft</div><div class="cm-s">Architectural Vision · About</div></div>
     </div>
@@ -199,11 +215,11 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:24px var(--pad);disp
 
   <!-- 2 column — work image + brand lockup -->
   <div class="g2 r">
-    <div class="cell wide">
+    <div class="cell wide" onclick="openLB('work1.jpg','Amber Corridor · Work Section Visual')">
       <img src="work1.jpg" alt="Amber Corridor">
       <div class="cm"><div class="cm-t">Amber Corridor</div><div class="cm-s">Work Section Visual</div></div>
     </div>
-    <div class="cell wide" style="background:#0a0a0a;display:flex;align-items:center;justify-content:center;padding:60px;">
+    <div class="cell wide" style="background:#0a0a0a;display:flex;align-items:center;justify-content:center;padding:60px;cursor:default;">
       <div style="text-align:center;">
         <div style="font-family:'Orbitron',sans-serif;font-size:2.5rem;letter-spacing:.18em;color:var(--white);line-height:1;">LAYER<br><span style="color:var(--accent2);">NINE</span></div>
         <div style="width:80px;height:1px;background:linear-gradient(90deg,transparent,var(--accent2),transparent);margin:20px auto;"></div>
@@ -233,7 +249,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:24px var(--pad);disp
     <div class="cs-meta">
       <div class="cs-num">(02) — AI Marketing · Gen Z Campaign</div>
       <h2 class="cs-title">SKAI Skincare<br>Campaign — Mimi</h2>
-      <p class="cs-desc">A complete AI-generated skincare brand campaign built around Mimi — a Gen Z Southeast Asian character created and locked in Magnific. Product photography, lifestyle editorial, campaign portraits, and 6 campaign videos. Built to demonstrate what a $30,000 traditional shoot looks like at a fraction of the cost and time.</p>
+      <p class="cs-desc">A complete AI-generated skincare brand campaign built around Mimi — a Gen Z Southeast Asian character created and locked in Magnific. Product photography, lifestyle editorial, campaign portraits, and 4 campaign videos. Built to demonstrate what a $30,000 traditional shoot looks like at a fraction of the cost and time.</p>
       <div class="cs-tags">
         <span class="tag ac">AI Marketing</span>
         <span class="tag ac">Creative AI Visuals</span>
@@ -250,9 +266,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:24px var(--pad);disp
     </div>
   </div>
 
-  <!-- Campaign hero full -->
-  <div class="cell r" style="aspect-ratio:16/7;">
-    <img src="skai_mimi_hero.jpg" alt="SKAI Mimi Hero">
+  <!-- Campaign hero full — using beauty portrait as hero -->
+  <div class="cell r" style="aspect-ratio:16/7;" onclick="openLB('magnific_beauty-portrait-southeast_iA1iQXW3uK.jpeg','SKAI · Your skin. Your sky. — Glow Oil Campaign')">
+    <img src="magnific_beauty-portrait-southeast_iA1iQXW3uK.jpeg" alt="SKAI Mimi Hero">
     <div class="cm" style="opacity:1;background:linear-gradient(transparent,rgba(10,10,10,.8));">
       <div style="display:flex;justify-content:space-between;align-items:flex-end;">
         <div><div class="cm-t" style="font-size:22px;letter-spacing:.3em;">SKAI</div><div class="cm-s">Your skin. Your sky. — Glow Oil Campaign</div></div>
@@ -263,91 +279,51 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:24px var(--pad);disp
 
   <!-- 3 portrait grid — core Mimi shots -->
   <div class="g3 r">
-    <div class="cell p45">
-      <img src="skai_mimi_navy.jpg" alt="Mimi Navy">
+    <div class="cell p45" onclick="openLB('magnific_mimi-same-character-refer_aQWC13dfSh.png','Daily Essence · Navy Campaign Hero')">
+      <img src="magnific_mimi-same-character-refer_aQWC13dfSh.png" alt="Mimi Navy">
       <div class="cm"><div class="cm-t">Daily Essence</div><div class="cm-s">Navy · Campaign Hero</div></div>
     </div>
-    <div class="cell p45">
-      <img src="skai_mimi_peek.jpg" alt="Mimi Peek">
+    <div class="cell p45" onclick="openLB('magnific_mimi-same-character-refer_hEnakETvqL.png','Viral Format · Social First Gen Z')">
+      <img src="magnific_mimi-same-character-refer_hEnakETvqL.png" alt="Mimi Peek">
       <div class="cm"><div class="cm-t">Viral Format</div><div class="cm-s">Social First · Gen Z</div></div>
     </div>
-    <div class="cell p45">
-      <img src="skai_mimi_cheeks.jpg" alt="Mimi Cheeks">
+    <div class="cell p45" onclick="openLB('magnific_mimi-same-character-refer_jSms6eeLD0.png','Gen Z Moment · Hands on Cheeks')">
+      <img src="magnific_mimi-same-character-refer_jSms6eeLD0.png" alt="Mimi Cheeks">
       <div class="cm"><div class="cm-t">Gen Z Moment</div><div class="cm-s">Hands on Cheeks · Instagram</div></div>
     </div>
   </div>
 
-  <!-- Mimi sensory + product + eye + still -->
+  <!-- 2 Mimi shots side by side -->
   <div class="g2 r">
-    <div class="g2" style="grid-template-columns:1fr 1fr;">
-      <div class="cell p45">
-        <img src="skai_mimi_sensory.jpg" alt="Mimi Sensory">
-        <div class="cm"><div class="cm-t">Night Repair</div><div class="cm-s">Sensory · Terracotta</div></div>
-      </div>
-      <div class="cell p45">
-        <img src="mimi_master.jpg" alt="Mimi Master">
-        <div class="cm"><div class="cm-t">Mimi — Character</div><div class="cm-s">Master Reference</div></div>
-      </div>
+    <div class="cell p45" onclick="openLB('magnific_same-girl-as-character-re_WMwWSmvcXe.png','Night Repair · Sensory Terracotta')">
+      <img src="magnific_same-girl-as-character-re_WMwWSmvcXe.png" alt="Mimi Sensory">
+      <div class="cm"><div class="cm-t">Night Repair</div><div class="cm-s">Sensory · Terracotta</div></div>
     </div>
-    <div class="g2" style="grid-template-columns:1fr 1fr;">
-      <div class="cell p45">
-        <img src="skai_product.jpg" alt="SKAI Product">
-        <div class="cm"><div class="cm-t">Radiance Serum</div><div class="cm-s">Product Hero</div></div>
-      </div>
-      <div class="cell p45">
-        <img src="skai_eye_closeup.jpg" alt="Eye Close-up">
-        <div class="cm"><div class="cm-t">Editorial Close-Up</div><div class="cm-s">Anamorphic · Magazine</div></div>
-      </div>
+    <div class="cell p45" onclick="openLB('magnific_same-girl-mimi-character-_YVUYSh5WeC.png','Mimi — Character Master Reference')">
+      <img src="magnific_same-girl-mimi-character-_YVUYSh5WeC.png" alt="Mimi Master">
+      <div class="cm"><div class="cm-t">Mimi — Character</div><div class="cm-s">Master Reference</div></div>
     </div>
   </div>
 
-  <!-- Eyes open still -->
-  <div class="g-sh r">
-    <div style="background:#0f0f0f;display:flex;flex-direction:column;justify-content:center;padding:60px;">
-      <div style="font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--accent2);margin-bottom:16px;">Campaign Closer</div>
-      <div style="font-family:'Orbitron',sans-serif;font-size:1.4rem;letter-spacing:.06em;text-transform:uppercase;color:var(--white);line-height:1.2;margin-bottom:16px;">Eyes On.<br>SKAI On.</div>
-      <p style="font-size:13px;color:var(--w50);line-height:1.8;margin-bottom:24px;">Direct eye contact with camera. The closing shot of the SKAI campaign — confident, luminous, direct. Generated and extracted from video, colour graded.</p>
-      <div style="display:flex;flex-direction:column;gap:8px;padding-top:20px;border-top:1px solid var(--w08);">
-        <div style="display:flex;justify-content:space-between;font-size:11px;"><span style="color:var(--w30);">Tool</span><span style="color:var(--white);">Magnific Cinematic</span></div>
-        <div style="display:flex;justify-content:space-between;font-size:11px;"><span style="color:var(--w30);">Process</span><span style="color:var(--white);">Video → Frame Extract → Grade</span></div>
-        <div style="display:flex;justify-content:space-between;font-size:11px;"><span style="color:var(--w30);">Format</span><span style="color:var(--white);">4:5 Campaign Still</span></div>
-      </div>
-    </div>
-    <div class="cell p45">
-      <img src="skai_still_eyes_warm.jpg" alt="SKAI Eyes Open">
-      <div class="cm"><div class="cm-t">Campaign Closer</div><div class="cm-s">Eyes Direct · Warm Grade</div></div>
-    </div>
-  </div>
-
-  <!-- ALL 6 VIDEOS -->
+  <!-- 4 VIDEOS -->
   <div class="vstrip r">
-    <div class="vs-label">06 Campaign Videos — Kling AI · Colour Graded by Layer Nine</div>
-    <div class="vs-grid" style="grid-template-columns:repeat(3,1fr);">
-      <div class="vs-cell portrait">
+    <div class="vs-label">04 Campaign Videos — Kling AI · Colour Graded by Layer Nine</div>
+    <div class="vs-grid">
+      <div class="vs-cell portrait" onclick="openLBVideo('skai_videos/skai_v1_bottle_warm.mp4','Bottle Reveal · Product 5s 9:16')">
         <video autoplay muted loop playsinline src="skai_videos/skai_v1_bottle_warm.mp4"></video>
         <div class="vs-meta"><div class="vs-t">Bottle Reveal</div><div class="vs-s">Product · 5s · 9:16</div></div>
       </div>
-      <div class="vs-cell portrait">
+      <div class="vs-cell portrait" onclick="openLBVideo('skai_videos/skai_v2_bathroom_warm.mp4','Morning Ritual · Lifestyle 5s 9:16')">
         <video autoplay muted loop playsinline src="skai_videos/skai_v2_bathroom_warm.mp4"></video>
         <div class="vs-meta"><div class="vs-t">Morning Ritual</div><div class="vs-s">Lifestyle · 5s · 9:16</div></div>
       </div>
-      <div class="vs-cell portrait">
-        <video autoplay muted loop playsinline src="skai_videos/skai_v3_holding_warm.mp4"></video>
-        <div class="vs-meta"><div class="vs-t">Product Moment</div><div class="vs-s">Portrait · 5s · 9:16</div></div>
-      </div>
-    </div>
-    <div class="vs-grid" style="grid-template-columns:repeat(3,1fr);margin-top:12px;">
-      <div class="vs-cell portrait">
+      <div class="vs-cell portrait" onclick="openLBVideo('skai_videos/skai_v4_portrait_warm.mp4','Portrait Film · Character 5s 9:16')">
         <video autoplay muted loop playsinline src="skai_videos/skai_v4_portrait_warm.mp4"></video>
         <div class="vs-meta"><div class="vs-t">Portrait Film</div><div class="vs-s">Character · 5s · 9:16</div></div>
       </div>
-      <div class="vs-cell portrait">
+      <div class="vs-cell portrait" onclick="openLBVideo('skai_videos/skai_v5_skin_warm.mp4','Skin Texture · Macro 4s 9:16')">
         <video autoplay muted loop playsinline src="skai_videos/skai_v5_skin_warm.mp4"></video>
         <div class="vs-meta"><div class="vs-t">Skin Texture</div><div class="vs-s">Macro · 4s · 9:16</div></div>
-      </div>
-      <div class="vs-cell portrait">
-        <video autoplay muted loop playsinline src="skai_videos/skai_v6_eyes_trimmed_warm.mp4"></video>
-        <div class="vs-meta"><div class="vs-t">The Look</div><div class="vs-s">Eyes Direct · 2.5s · 9:16</div></div>
       </div>
     </div>
   </div>
@@ -355,98 +331,19 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:24px var(--pad);disp
   <!-- Project stats -->
   <div class="stats-panel r">
     <div class="sp-grid">
-      <div class="sp-item"><div class="sp-n">12</div><div class="sp-l">Campaign Images</div></div>
-      <div class="sp-item"><div class="sp-n">06</div><div class="sp-l">Campaign Videos</div></div>
-      <div class="sp-item"><div class="sp-n">04</div><div class="sp-l">Product SKUs</div></div>
+      <div class="sp-item"><div class="sp-n">06</div><div class="sp-l">Campaign Images</div></div>
+      <div class="sp-item"><div class="sp-n">04</div><div class="sp-l">Campaign Videos</div></div>
+      <div class="sp-item"><div class="sp-n">01</div><div class="sp-l">AI Character</div></div>
       <div class="sp-item"><div class="sp-n">1</div><div class="sp-l">Day to Produce</div></div>
       <div class="sp-item"><div class="sp-n" style="font-size:1.4rem;">$0</div><div class="sp-l">Traditional Cost</div></div>
     </div>
   </div>
 
   <div class="proc-row r">
-    <div class="proc"><div class="proc-n">(01)</div><div class="proc-t">Brand</div><div class="proc-d">Named SKAI, defined 4-product line, visual direction, campaign concept and colour system.</div></div>
-    <div class="proc"><div class="proc-n">(02)</div><div class="proc-t">Character</div><div class="proc-d">Created Mimi — Gen Z SEA character locked in Magnific, consistent across all 12 campaign shots.</div></div>
-    <div class="proc"><div class="proc-n">(03)</div><div class="proc-t">Campaign</div><div class="proc-d">Shot portrait, product, lifestyle, editorial, macro, and viral formats using Magnific Cinematic mode.</div></div>
-    <div class="proc"><div class="proc-n">(04)</div><div class="proc-t">Video</div><div class="proc-d">6 campaign videos generated with Kling AI, colour graded to warm luxury palette by Layer Nine.</div></div>
-  </div>
-</section>
-
-<!-- ══════════════════════════════
-  CASE STUDY 03 — SKAI PREMIUM TIER
-══════════════════════════════ -->
-<section class="case-study" id="cs03">
-  <div class="cs-header r">
-    <div class="cs-meta">
-      <div class="cs-num">(03) — AI Marketing · Premium Campaign</div>
-      <h2 class="cs-title">SKAI Premium<br>— Character 1</h2>
-      <p class="cs-desc">The same SKAI brand, a different audience tier. Using Character 1 — a sophisticated 28-32 year old — alongside lifestyle editorial and product shots to demonstrate how one AI campaign system serves multiple market segments simultaneously.</p>
-      <div class="cs-tags">
-        <span class="tag ac">Multi-tier Strategy</span>
-        <span class="tag ac">Premium Beauty</span>
-        <span class="tag ac">Lifestyle Editorial</span>
-        <span class="tag">Magnific</span>
-        <span class="tag">Character Direction</span>
-      </div>
-    </div>
-    <div style="font-size:11px;color:var(--w30);letter-spacing:.1em;text-align:right;flex-shrink:0;">
-      <div>Premium Segment</div>
-      <div style="margin-top:4px;color:var(--accent2);">2026</div>
-    </div>
-  </div>
-
-  <!-- Character 1 hero + side -->
-  <div class="g-hs r">
-    <div class="cell tall">
-      <img src="skai_char1_campaign.jpg" alt="Character 1 Campaign">
-      <div class="cm"><div class="cm-t">Premium Hero</div><div class="cm-s">SKAI Daily Essence · Character 1</div></div>
-    </div>
-    <div style="display:flex;flex-direction:column;">
-      <div class="cell" style="flex:1;">
-        <img src="skai_char1_master.jpg" alt="Character 1 Master">
-        <div class="cm"><div class="cm-t">Character 1 Master</div><div class="cm-s">Premium · Luxury Tier</div></div>
-      </div>
-      <div class="cell" style="flex:1;">
-        <img src="skai_char1_smile.jpg" alt="Character 1 Smile">
-        <div class="cm"><div class="cm-t">Warm Confidence</div><div class="cm-s">25-35 Market</div></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Product + lifestyle + macro -->
-  <div class="g3 r">
-    <div class="cell p45">
-      <img src="skai_bathroom.jpg" alt="Bathroom Lifestyle">
-      <div class="cm"><div class="cm-t">Morning Ritual</div><div class="cm-s">Lifestyle Editorial · SKAI</div></div>
-    </div>
-    <div class="cell p45">
-      <img src="skai_bottle_marble.jpg" alt="Bottle Marble">
-      <div class="cm"><div class="cm-t">Radiance Serum</div><div class="cm-s">Minimal Product · Marble</div></div>
-    </div>
-    <div class="cell p45">
-      <img src="skai_skin_macro.jpg" alt="Skin Macro">
-      <div class="cm"><div class="cm-t">Skin Texture</div><div class="cm-s">Macro · Detail Shot</div></div>
-    </div>
-  </div>
-
-  <!-- Insight panel -->
-  <div class="insight r">
-    <div class="ins-grid">
-      <div>
-        <div class="ins-label">Gen Z Tier — Mimi</div>
-        <div class="ins-title">Bold · Playful · Viral</div>
-        <div class="ins-body">Terracotta and navy palette. High contrast. Scroll-stopping energy. Designed for Instagram Reels and TikTok first.</div>
-      </div>
-      <div>
-        <div class="ins-label">Premium Tier — Character 1</div>
-        <div class="ins-title">Refined · Confident · Editorial</div>
-        <div class="ins-body">Warm studio lighting. Soft bokeh. Magazine-quality restraint. Designed for a discerning 28-35 audience and luxury retail.</div>
-      </div>
-      <div>
-        <div class="ins-label">The Layer Nine Method</div>
-        <div class="ins-title">One Brand · Many Worlds</div>
-        <div class="ins-body">AI lets us build multiple campaign tiers simultaneously — different characters, moods, and formats with no additional shoot cost or scheduling.</div>
-      </div>
-    </div>
+    <div class="proc"><div class="proc-n">(01)</div><div class="proc-t">Brand</div><div class="proc-d">Named SKAI, defined product line, visual direction, campaign concept and colour system.</div></div>
+    <div class="proc"><div class="proc-n">(02)</div><div class="proc-t">Character</div><div class="proc-d">Created Mimi — Gen Z SEA character locked in Magnific, consistent across all campaign shots.</div></div>
+    <div class="proc"><div class="proc-n">(03)</div><div class="proc-t">Campaign</div><div class="proc-d">Shot portrait, lifestyle, editorial, and viral formats using Magnific Cinematic mode.</div></div>
+    <div class="proc"><div class="proc-n">(04)</div><div class="proc-t">Video</div><div class="proc-d">4 campaign videos generated with Kling AI, colour graded to warm luxury palette by Layer Nine.</div></div>
   </div>
 </section>
 
@@ -459,8 +356,41 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:24px var(--pad);disp
 </section>
 
 <script>
+// SCROLL REVEAL
 const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');});},{threshold:.08});
 document.querySelectorAll('.r').forEach(el=>obs.observe(el));
+
+// LIGHTBOX
+const lb=document.getElementById('lb');
+const lbInner=document.getElementById('lb-inner');
+const lbCap=document.getElementById('lb-caption');
+let lbVideo=null;
+
+function openLB(src,caption){
+  lbInner.innerHTML=`<img src="${src}" alt="${caption}">`;
+  lbCap.textContent=caption||'';
+  lb.classList.add('open');
+  document.body.style.overflow='hidden';
+  lbVideo=null;
+}
+
+function openLBVideo(src,caption){
+  lbInner.innerHTML=`<video src="${src}" autoplay controls loop playsinline style="max-width:90vw;max-height:88vh;"></video>`;
+  lbCap.textContent=caption||'';
+  lb.classList.add('open');
+  document.body.style.overflow='hidden';
+  lbVideo=lbInner.querySelector('video');
+}
+
+function closeLB(e){
+  if(e&&e.target!==lb&&e.target.className!=='lb-close')return;
+  lb.classList.remove('open');
+  document.body.style.overflow='';
+  lbInner.innerHTML='';
+  lbVideo=null;
+}
+
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLB({target:lb});});
 </script>
 </body>
 </html>
