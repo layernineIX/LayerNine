@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Layer Nine — Selected Work</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:#0a0a0a;color:#e2ddd6;font-family:'DM Sans',sans-serif;font-weight:300;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+:root{--white:#e2ddd6;--w50:rgba(226,221,214,.5);--w30:rgba(226,221,214,.3);--w08:rgba(226,221,214,.08);--accent:#35858E;--accent2:#4ba3ad;--pad:clamp(24px,5vw,80px);}
+a{color:inherit;text-decoration:none}
+img,video{display:block;width:100%;height:100%;object-fit:cover;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:24px var(--pad);display:flex;align-items:center;justify-content:space-between;background:rgba(10,10,10,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--w08);}
+.nav-logo{display:flex;align-items:center;gap:12px;}
+.logo-wm{height:22px;width:auto;}
+.logo-gfx{height:30px;width:auto;}
+.nav-back{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--w50);display:flex;align-items:center;gap:8px;transition:color .2s;}
+.nav-back:hover{color:var(--accent2);}
+
+/* HERO */
+.work-hero{padding:140px var(--pad) 80px;border-bottom:1px solid var(--w08);}
+.wh-label{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent2);margin-bottom:16px;}
+.wh-title{font-family:'Orbitron',sans-serif;font-weight:500;font-size:clamp(2.4rem,5vw,5rem);letter-spacing:.08em;text-transform:uppercase;color:var(--white);line-height:1.05;}
+.wh-title em{color:var(--accent2);font-style:normal;}
+.wh-sub{font-size:15px;color:var(--w50);max-width:560px;line-height:1.8;margin-top:20px;}
+.wh-stats{display:flex;gap:48px;margin-top:40px;padding-top:40px;border-top:1px solid var(--w08);flex-wrap:wrap;}
+.stat-n{font-family:'Orbitron',sans-serif;font-size:2rem;color:var(--accent2);}
+.stat-l{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--w30);margin-top:4px;}
+
+/* SECTIONS */
+.case-study{border-bottom:1px solid var(--w08);}
+.cs-header{padding:80px var(--pad) 48px;display:flex;align-items:flex-end;justify-content:space-between;gap:40px;}
+.cs-meta{flex:1;}
+.cs-num{font-size:11px;letter-spacing:.2em;color:var(--accent2);margin-bottom:12px;}
+.cs-title{font-family:'Orbitron',sans-serif;font-size:clamp(1.8rem,3.5vw,3.2rem);font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--white);line-height:1.1;}
+.cs-desc{font-size:14px;color:var(--w50);max-width:520px;line-height:1.8;margin-top:14px;}
+.cs-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px;}
+.tag{font-size:10px;letter-spacing:.12em;text-transform:uppercase;border:1px solid var(--w08);padding:6px 14px;color:var(--w30);}
+.tag.ac{border-color:rgba(75,163,173,.4);color:var(--accent2);}
+
+/* GRIDS */
+.g2{display:grid;grid-template-columns:1fr 1fr;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);}
+.g-hs{display:grid;grid-template-columns:2fr 1fr;}
+.g-sh{display:grid;grid-template-columns:1fr 2fr;}
+
+.cell{overflow:hidden;position:relative;background:#111;}
+.cell img,.cell video{transition:transform .8s cubic-bezier(.16,1,.3,1);}
+.cell:hover img,.cell:hover video{transform:scale(1.04);}
+.cell.p45{aspect-ratio:4/5;}
+.cell.sq{aspect-ratio:1/1;}
+.cell.wide{aspect-ratio:16/9;}
+.cell.cinema{aspect-ratio:21/9;}
+.cell.tall{aspect-ratio:3/4;}
+.cm{position:absolute;bottom:0;left:0;right:0;padding:20px;background:linear-gradient(transparent,rgba(10,10,10,.75));opacity:0;transition:opacity .3s;}
+.cell:hover .cm{opacity:1;}
+.cm-t{font-family:'Orbitron',sans-serif;font-size:12px;letter-spacing:.1em;color:var(--white);}
+.cm-s{font-size:11px;color:var(--accent2);letter-spacing:.08em;margin-top:3px;}
+
+/* VIDEO STRIP */
+.vstrip{padding:48px var(--pad);background:#0a0a0a;border-top:1px solid var(--w08);}
+.vs-label{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--w30);margin-bottom:24px;}
+.vs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.vs-cell{overflow:hidden;position:relative;background:#050505;border:1px solid var(--w08);}
+.vs-cell.portrait{aspect-ratio:9/16;}
+.vs-cell.landscape{aspect-ratio:16/9;}
+.vs-cell video{width:100%;height:100%;object-fit:cover;}
+.vs-meta{position:absolute;bottom:0;left:0;right:0;padding:16px;background:linear-gradient(transparent,rgba(10,10,10,.8));}
+.vs-t{font-size:11px;letter-spacing:.1em;color:var(--white);}
+.vs-s{font-size:10px;color:var(--accent2);letter-spacing:.08em;margin-top:2px;}
+
+/* PROCESS */
+.proc-row{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--w08);}
+.proc{padding:36px var(--pad);border-right:1px solid var(--w08);}
+.proc:last-child{border-right:none;}
+.proc-n{font-size:11px;letter-spacing:.14em;color:var(--accent2);margin-bottom:10px;}
+.proc-t{font-family:'Orbitron',sans-serif;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--white);margin-bottom:8px;}
+.proc-d{font-size:13px;color:var(--w50);line-height:1.7;}
+
+/* QUOTE */
+.qblock{padding:100px var(--pad);text-align:center;border-top:1px solid var(--w08);border-bottom:1px solid var(--w08);}
+.qtext{font-size:clamp(1.1rem,2vw,1.6rem);font-weight:300;font-style:italic;color:var(--w50);max-width:800px;margin:0 auto;line-height:1.6;}
+.qtext em{color:var(--white);font-style:normal;}
+
+/* INSIGHT */
+.insight{padding:60px var(--pad);background:#0f0f0f;border-top:1px solid var(--w08);}
+.ins-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:48px;}
+.ins-label{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent2);margin-bottom:12px;}
+.ins-title{font-family:'Orbitron',sans-serif;font-size:1rem;letter-spacing:.06em;color:var(--white);margin-bottom:10px;}
+.ins-body{font-size:13px;color:var(--w30);line-height:1.7;}
+
+/* STATS PANEL */
+.stats-panel{border-top:1px solid var(--w08);padding:48px var(--pad);}
+.sp-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:24px;}
+.sp-item{padding:28px;border:1px solid var(--w08);text-align:center;}
+.sp-n{font-family:'Orbitron',sans-serif;font-size:1.8rem;color:var(--accent2);}
+.sp-l{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--w30);margin-top:6px;}
+
+/* CTA */
+.wcta{padding:120px var(--pad);text-align:center;}
+.wcta-t{font-family:'Orbitron',sans-serif;font-size:clamp(2rem,5vw,4rem);font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--white);margin-bottom:16px;}
+.wcta-t em{color:var(--accent2);font-style:normal;}
+.wcta-s{font-size:14px;color:var(--w30);letter-spacing:.06em;margin-bottom:36px;}
+.btn{display:inline-flex;align-items:center;gap:12px;background:var(--white);color:#0a0a0a;padding:16px 36px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:500;transition:all .25s;}
+.btn:hover{background:var(--accent2);}
+
+/* REVEAL */
+.r{opacity:0;transform:translateY(28px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1);}
+.r.in{opacity:1;transform:translateY(0);}
+
+@media(max-width:900px){
+  nav{padding:16px 24px;}
+  .work-hero,.cs-header{padding-left:24px;padding-right:24px;}
+  .cs-header{flex-direction:column;padding-top:60px;padding-bottom:32px;}
+  .g2,.g3,.g4,.g-hs,.g-sh,.proc-row,.vs-grid,.sp-grid,.ins-grid{grid-template-columns:1fr;}
+  .proc{border-right:none;border-bottom:1px solid var(--w08);}
+  .vstrip,.insight,.stats-panel,.qblock,.wcta{padding-left:24px;padding-right:24px;}
+  .wh-stats{gap:24px;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="logo-text.png" alt="Layer Nine" class="logo-wm">
+    <img src="logo-graphic.png" alt="" class="logo-gfx">
+  </a>
+  <a href="index.html" class="nav-back">← Back to Studio</a>
+</nav>
+
+<!-- HERO -->
+<section class="work-hero r">
+  <div class="wh-label">Selected Work — 2025 / 2026</div>
+  <h1 class="wh-title">Creative<br>AI <em>Production</em></h1>
+  <p class="wh-sub">A complete AI-generated portfolio — cinematic visual worlds, brand campaigns, editorial photography, and video. Built to show what's possible when creative direction meets machine intelligence.</p>
+  <div class="wh-stats">
+    <div><div class="stat-n">03</div><div class="stat-l">Case Studies</div></div>
+    <div><div class="stat-n">20+</div><div class="stat-l">Campaign Images</div></div>
+    <div><div class="stat-n">06</div><div class="stat-l">Campaign Videos</div></div>
+    <div><div class="stat-n">02</div><div class="stat-l">AI Characters</div></div>
+    <div><div class="stat-n">$0</div><div class="stat-l">Traditional Shoot Cost</div></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+  CASE STUDY 01 — LAYER NINE VISUAL WORLD
+══════════════════════════════ -->
+<section class="case-study" id="cs01">
+  <div class="cs-header r">
+    <div class="cs-meta">
+      <div class="cs-num">(01) — AI Direction · Visual World</div>
+      <h2 class="cs-title">Layer Nine<br>Visual Identity</h2>
+      <p class="cs-desc">A complete AI-generated visual world for Layer Nine Studio — cinematic architecture, atmospheric portraiture, and generative environments that form the studio's own brand identity. Created with Midjourney and Magnific.</p>
+      <div class="cs-tags">
+        <span class="tag ac">AI Direction</span>
+        <span class="tag ac">Creative AI Visuals</span>
+        <span class="tag">Midjourney</span>
+        <span class="tag">Magnific</span>
+        <span class="tag">Cinematic</span>
+        <span class="tag">Brand Identity</span>
+      </div>
+    </div>
+    <div style="font-size:11px;color:var(--w30);letter-spacing:.1em;text-align:right;flex-shrink:0;">
+      <div>Studio Project</div>
+      <div style="margin-top:4px;color:var(--accent2);">2026</div>
+    </div>
+  </div>
+
+  <!-- Full cinematic hero -->
+  <div class="cell cinema r" style="height:60vh;">
+    <img src="hero.png" alt="Layer Nine Hero">
+    <div class="cm" style="opacity:1;background:linear-gradient(transparent,rgba(10,10,10,.7));">
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;">
+        <div><div class="cm-t" style="font-size:18px;letter-spacing:.2em;">LAYER NINE</div><div class="cm-s">Post-Camera Era · Hero Visual</div></div>
+        <div style="font-size:10px;letter-spacing:.14em;color:var(--w30);">AI Direction · Midjourney</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3 column About images -->
+  <div class="g3 r">
+    <div class="cell tall">
+      <img src="about1.jpg" alt="Neural Cinema">
+      <div class="cm"><div class="cm-t">©Neural Cinema</div><div class="cm-s">Portrait Series · About</div></div>
+    </div>
+    <div class="cell tall">
+      <img src="about2.jpg" alt="Generative Worlds">
+      <div class="cm"><div class="cm-t">©Generative Worlds</div><div class="cm-s">AI Environments · About</div></div>
+    </div>
+    <div class="cell tall">
+      <img src="about3.jpg" alt="Post-Camera Craft">
+      <div class="cm"><div class="cm-t">©Post-Camera Craft</div><div class="cm-s">Architectural Vision · About</div></div>
+    </div>
+  </div>
+
+  <!-- 2 column — work image + brand lockup -->
+  <div class="g2 r">
+    <div class="cell wide">
+      <img src="work1.jpg" alt="Amber Corridor">
+      <div class="cm"><div class="cm-t">Amber Corridor</div><div class="cm-s">Work Section Visual</div></div>
+    </div>
+    <div class="cell wide" style="background:#0a0a0a;display:flex;align-items:center;justify-content:center;padding:60px;">
+      <div style="text-align:center;">
+        <div style="font-family:'Orbitron',sans-serif;font-size:2.5rem;letter-spacing:.18em;color:var(--white);line-height:1;">LAYER<br><span style="color:var(--accent2);">NINE</span></div>
+        <div style="width:80px;height:1px;background:linear-gradient(90deg,transparent,var(--accent2),transparent);margin:20px auto;"></div>
+        <div style="font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--w30);">Creative Systems<br>for the Post-Camera Era</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="proc-row r">
+    <div class="proc"><div class="proc-n">(01)</div><div class="proc-t">Brief</div><div class="proc-d">Define the visual DNA — mood, palette, light language, and narrative for a post-camera AI studio.</div></div>
+    <div class="proc"><div class="proc-n">(02)</div><div class="proc-t">Prompt</div><div class="proc-d">Engineered prompts across 3 categories — portrait, architecture, abstract light — with a locked style suffix.</div></div>
+    <div class="proc"><div class="proc-n">(03)</div><div class="proc-t">Direct</div><div class="proc-d">Curated from 40+ generations using editorial eye — restraint, negative space, cinematic tension.</div></div>
+    <div class="proc"><div class="proc-n">(04)</div><div class="proc-t">Finish</div><div class="proc-d">Magnific upscale, color grading, and integration into live website. Zero traditional photography.</div></div>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<div class="qblock r">
+  <p class="qtext">"We don't make content. We build <em>worlds that didn't exist</em> before the AI and the human decided to tell a story together."</p>
+</div>
+
+<!-- ══════════════════════════════
+  CASE STUDY 02 — SKAI GEN Z CAMPAIGN
+══════════════════════════════ -->
+<section class="case-study" id="cs02">
+  <div class="cs-header r">
+    <div class="cs-meta">
+      <div class="cs-num">(02) — AI Marketing · Gen Z Campaign</div>
+      <h2 class="cs-title">SKAI Skincare<br>Campaign — Mimi</h2>
+      <p class="cs-desc">A complete AI-generated skincare brand campaign built around Mimi — a Gen Z Southeast Asian character created and locked in Magnific. Product photography, lifestyle editorial, campaign portraits, and 6 campaign videos. Built to demonstrate what a $30,000 traditional shoot looks like at a fraction of the cost and time.</p>
+      <div class="cs-tags">
+        <span class="tag ac">AI Marketing</span>
+        <span class="tag ac">Creative AI Visuals</span>
+        <span class="tag ac">AI Post-Production</span>
+        <span class="tag ac">Character Direction</span>
+        <span class="tag">Magnific</span>
+        <span class="tag">Kling Video</span>
+        <span class="tag">Brand Identity</span>
+      </div>
+    </div>
+    <div style="font-size:11px;color:var(--w30);letter-spacing:.1em;text-align:right;flex-shrink:0;">
+      <div>Concept Campaign</div>
+      <div style="margin-top:4px;color:var(--accent2);">2026</div>
+    </div>
+  </div>
+
+  <!-- Campaign hero full -->
+  <div class="cell r" style="aspect-ratio:16/7;">
+    <img src="skai_mimi_hero.jpg" alt="SKAI Mimi Hero">
+    <div class="cm" style="opacity:1;background:linear-gradient(transparent,rgba(10,10,10,.8));">
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;">
+        <div><div class="cm-t" style="font-size:22px;letter-spacing:.3em;">SKAI</div><div class="cm-s">Your skin. Your sky. — Glow Oil Campaign</div></div>
+        <div style="font-size:10px;letter-spacing:.14em;color:var(--w30);">Mimi · Terracotta</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3 portrait grid — core Mimi shots -->
+  <div class="g3 r">
+    <div class="cell p45">
+      <img src="skai_mimi_navy.jpg" alt="Mimi Navy">
+      <div class="cm"><div class="cm-t">Daily Essence</div><div class="cm-s">Navy · Campaign Hero</div></div>
+    </div>
+    <div class="cell p45">
+      <img src="skai_mimi_peek.jpg" alt="Mimi Peek">
+      <div class="cm"><div class="cm-t">Viral Format</div><div class="cm-s">Social First · Gen Z</div></div>
+    </div>
+    <div class="cell p45">
+      <img src="skai_mimi_cheeks.jpg" alt="Mimi Cheeks">
+      <div class="cm"><div class="cm-t">Gen Z Moment</div><div class="cm-s">Hands on Cheeks · Instagram</div></div>
+    </div>
+  </div>
+
+  <!-- Mimi sensory + product + eye + still -->
+  <div class="g2 r">
+    <div class="g2" style="grid-template-columns:1fr 1fr;">
+      <div class="cell p45">
+        <img src="skai_mimi_sensory.jpg" alt="Mimi Sensory">
+        <div class="cm"><div class="cm-t">Night Repair</div><div class="cm-s">Sensory · Terracotta</div></div>
+      </div>
+      <div class="cell p45">
+        <img src="mimi_master.jpg" alt="Mimi Master">
+        <div class="cm"><div class="cm-t">Mimi — Character</div><div class="cm-s">Master Reference</div></div>
+      </div>
+    </div>
+    <div class="g2" style="grid-template-columns:1fr 1fr;">
+      <div class="cell p45">
+        <img src="skai_product.jpg" alt="SKAI Product">
+        <div class="cm"><div class="cm-t">Radiance Serum</div><div class="cm-s">Product Hero</div></div>
+      </div>
+      <div class="cell p45">
+        <img src="skai_eye_closeup.jpg" alt="Eye Close-up">
+        <div class="cm"><div class="cm-t">Editorial Close-Up</div><div class="cm-s">Anamorphic · Magazine</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Eyes open still -->
+  <div class="g-sh r">
+    <div style="background:#0f0f0f;display:flex;flex-direction:column;justify-content:center;padding:60px;">
+      <div style="font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--accent2);margin-bottom:16px;">Campaign Closer</div>
+      <div style="font-family:'Orbitron',sans-serif;font-size:1.4rem;letter-spacing:.06em;text-transform:uppercase;color:var(--white);line-height:1.2;margin-bottom:16px;">Eyes On.<br>SKAI On.</div>
+      <p style="font-size:13px;color:var(--w50);line-height:1.8;margin-bottom:24px;">Direct eye contact with camera. The closing shot of the SKAI campaign — confident, luminous, direct. Generated and extracted from video, colour graded.</p>
+      <div style="display:flex;flex-direction:column;gap:8px;padding-top:20px;border-top:1px solid var(--w08);">
+        <div style="display:flex;justify-content:space-between;font-size:11px;"><span style="color:var(--w30);">Tool</span><span style="color:var(--white);">Magnific Cinematic</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:11px;"><span style="color:var(--w30);">Process</span><span style="color:var(--white);">Video → Frame Extract → Grade</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:11px;"><span style="color:var(--w30);">Format</span><span style="color:var(--white);">4:5 Campaign Still</span></div>
+      </div>
+    </div>
+    <div class="cell p45">
+      <img src="skai_still_eyes_warm.jpg" alt="SKAI Eyes Open">
+      <div class="cm"><div class="cm-t">Campaign Closer</div><div class="cm-s">Eyes Direct · Warm Grade</div></div>
+    </div>
+  </div>
+
+  <!-- ALL 6 VIDEOS -->
+  <div class="vstrip r">
+    <div class="vs-label">06 Campaign Videos — Kling AI · Colour Graded by Layer Nine</div>
+    <div class="vs-grid" style="grid-template-columns:repeat(3,1fr);">
+      <div class="vs-cell portrait">
+        <video autoplay muted loop playsinline src="skai_videos/skai_v1_bottle_warm.mp4"></video>
+        <div class="vs-meta"><div class="vs-t">Bottle Reveal</div><div class="vs-s">Product · 5s · 9:16</div></div>
+      </div>
+      <div class="vs-cell portrait">
+        <video autoplay muted loop playsinline src="skai_videos/skai_v2_bathroom_warm.mp4"></video>
+        <div class="vs-meta"><div class="vs-t">Morning Ritual</div><div class="vs-s">Lifestyle · 5s · 9:16</div></div>
+      </div>
+      <div class="vs-cell portrait">
+        <video autoplay muted loop playsinline src="skai_videos/skai_v3_holding_warm.mp4"></video>
+        <div class="vs-meta"><div class="vs-t">Product Moment</div><div class="vs-s">Portrait · 5s · 9:16</div></div>
+      </div>
+    </div>
+    <div class="vs-grid" style="grid-template-columns:repeat(3,1fr);margin-top:12px;">
+      <div class="vs-cell portrait">
+        <video autoplay muted loop playsinline src="skai_videos/skai_v4_portrait_warm.mp4"></video>
+        <div class="vs-meta"><div class="vs-t">Portrait Film</div><div class="vs-s">Character · 5s · 9:16</div></div>
+      </div>
+      <div class="vs-cell portrait">
+        <video autoplay muted loop playsinline src="skai_videos/skai_v5_skin_warm.mp4"></video>
+        <div class="vs-meta"><div class="vs-t">Skin Texture</div><div class="vs-s">Macro · 4s · 9:16</div></div>
+      </div>
+      <div class="vs-cell portrait">
+        <video autoplay muted loop playsinline src="skai_videos/skai_v6_eyes_trimmed_warm.mp4"></video>
+        <div class="vs-meta"><div class="vs-t">The Look</div><div class="vs-s">Eyes Direct · 2.5s · 9:16</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Project stats -->
+  <div class="stats-panel r">
+    <div class="sp-grid">
+      <div class="sp-item"><div class="sp-n">12</div><div class="sp-l">Campaign Images</div></div>
+      <div class="sp-item"><div class="sp-n">06</div><div class="sp-l">Campaign Videos</div></div>
+      <div class="sp-item"><div class="sp-n">04</div><div class="sp-l">Product SKUs</div></div>
+      <div class="sp-item"><div class="sp-n">1</div><div class="sp-l">Day to Produce</div></div>
+      <div class="sp-item"><div class="sp-n" style="font-size:1.4rem;">$0</div><div class="sp-l">Traditional Cost</div></div>
+    </div>
+  </div>
+
+  <div class="proc-row r">
+    <div class="proc"><div class="proc-n">(01)</div><div class="proc-t">Brand</div><div class="proc-d">Named SKAI, defined 4-product line, visual direction, campaign concept and colour system.</div></div>
+    <div class="proc"><div class="proc-n">(02)</div><div class="proc-t">Character</div><div class="proc-d">Created Mimi — Gen Z SEA character locked in Magnific, consistent across all 12 campaign shots.</div></div>
+    <div class="proc"><div class="proc-n">(03)</div><div class="proc-t">Campaign</div><div class="proc-d">Shot portrait, product, lifestyle, editorial, macro, and viral formats using Magnific Cinematic mode.</div></div>
+    <div class="proc"><div class="proc-n">(04)</div><div class="proc-t">Video</div><div class="proc-d">6 campaign videos generated with Kling AI, colour graded to warm luxury palette by Layer Nine.</div></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+  CASE STUDY 03 — SKAI PREMIUM TIER
+══════════════════════════════ -->
+<section class="case-study" id="cs03">
+  <div class="cs-header r">
+    <div class="cs-meta">
+      <div class="cs-num">(03) — AI Marketing · Premium Campaign</div>
+      <h2 class="cs-title">SKAI Premium<br>— Character 1</h2>
+      <p class="cs-desc">The same SKAI brand, a different audience tier. Using Character 1 — a sophisticated 28-32 year old — alongside lifestyle editorial and product shots to demonstrate how one AI campaign system serves multiple market segments simultaneously.</p>
+      <div class="cs-tags">
+        <span class="tag ac">Multi-tier Strategy</span>
+        <span class="tag ac">Premium Beauty</span>
+        <span class="tag ac">Lifestyle Editorial</span>
+        <span class="tag">Magnific</span>
+        <span class="tag">Character Direction</span>
+      </div>
+    </div>
+    <div style="font-size:11px;color:var(--w30);letter-spacing:.1em;text-align:right;flex-shrink:0;">
+      <div>Premium Segment</div>
+      <div style="margin-top:4px;color:var(--accent2);">2026</div>
+    </div>
+  </div>
+
+  <!-- Character 1 hero + side -->
+  <div class="g-hs r">
+    <div class="cell tall">
+      <img src="skai_char1_campaign.jpg" alt="Character 1 Campaign">
+      <div class="cm"><div class="cm-t">Premium Hero</div><div class="cm-s">SKAI Daily Essence · Character 1</div></div>
+    </div>
+    <div style="display:flex;flex-direction:column;">
+      <div class="cell" style="flex:1;">
+        <img src="skai_char1_master.jpg" alt="Character 1 Master">
+        <div class="cm"><div class="cm-t">Character 1 Master</div><div class="cm-s">Premium · Luxury Tier</div></div>
+      </div>
+      <div class="cell" style="flex:1;">
+        <img src="skai_char1_smile.jpg" alt="Character 1 Smile">
+        <div class="cm"><div class="cm-t">Warm Confidence</div><div class="cm-s">25-35 Market</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Product + lifestyle + macro -->
+  <div class="g3 r">
+    <div class="cell p45">
+      <img src="skai_bathroom.jpg" alt="Bathroom Lifestyle">
+      <div class="cm"><div class="cm-t">Morning Ritual</div><div class="cm-s">Lifestyle Editorial · SKAI</div></div>
+    </div>
+    <div class="cell p45">
+      <img src="skai_bottle_marble.jpg" alt="Bottle Marble">
+      <div class="cm"><div class="cm-t">Radiance Serum</div><div class="cm-s">Minimal Product · Marble</div></div>
+    </div>
+    <div class="cell p45">
+      <img src="skai_skin_macro.jpg" alt="Skin Macro">
+      <div class="cm"><div class="cm-t">Skin Texture</div><div class="cm-s">Macro · Detail Shot</div></div>
+    </div>
+  </div>
+
+  <!-- Insight panel -->
+  <div class="insight r">
+    <div class="ins-grid">
+      <div>
+        <div class="ins-label">Gen Z Tier — Mimi</div>
+        <div class="ins-title">Bold · Playful · Viral</div>
+        <div class="ins-body">Terracotta and navy palette. High contrast. Scroll-stopping energy. Designed for Instagram Reels and TikTok first.</div>
+      </div>
+      <div>
+        <div class="ins-label">Premium Tier — Character 1</div>
+        <div class="ins-title">Refined · Confident · Editorial</div>
+        <div class="ins-body">Warm studio lighting. Soft bokeh. Magazine-quality restraint. Designed for a discerning 28-35 audience and luxury retail.</div>
+      </div>
+      <div>
+        <div class="ins-label">The Layer Nine Method</div>
+        <div class="ins-title">One Brand · Many Worlds</div>
+        <div class="ins-body">AI lets us build multiple campaign tiers simultaneously — different characters, moods, and formats with no additional shoot cost or scheduling.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="wcta r">
+  <div class="wh-label" style="display:flex;justify-content:center;">Start Your Project</div>
+  <h2 class="wcta-t">Ready to build<br>something <em>real?</em></h2>
+  <p class="wcta-s">We create campaigns like this for real brands — faster, more creative, and more affordable than traditional production.</p>
+  <a href="mailto:studio@layernine.studio" class="btn">studio@layernine.studio →</a>
+</section>
+
+<script>
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');});},{threshold:.08});
+document.querySelectorAll('.r').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
