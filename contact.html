@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Layer Nine Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;scroll-behavior:smooth}
+body{background:#0a0a0a;color:#e2ddd6;font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+:root{
+  --white:#e2ddd6;--white-50:rgba(226,221,214,.5);--white-30:rgba(226,221,214,.3);
+  --white-15:rgba(226,221,214,.15);--white-08:rgba(226,221,214,.08);
+  --accent:#35858E;--accent-bright:#4ba3ad;--accent-dim:rgba(53,133,142,.12);
+  --black:#0a0a0a;--surface:#0f0f0f;--surface2:#141414;--pad:clamp(24px,4vw,64px);--rail-w:220px;
+}
+.noise{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.04;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+@keyframes statusPulse{0%,100%{opacity:1}50%{opacity:.3}}
+@keyframes fadeIn{to{opacity:1}}
+
+/* RAIL NAV */
+.rail{position:fixed;top:0;left:0;width:var(--rail-w);height:100vh;z-index:200;background:var(--black);border-right:1px solid var(--white-08);padding:28px 24px;display:flex;flex-direction:column;justify-content:space-between;}
+.rail-top{display:flex;flex-direction:column;gap:8px;}
+.rail-logo{font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;color:var(--white);letter-spacing:.05em;}
+.rail-status{font-size:10px;letter-spacing:.1em;color:var(--accent-bright);display:flex;align-items:center;gap:6px;}
+.status-dot{width:5px;height:5px;border-radius:50%;background:var(--accent-bright);animation:statusPulse 1.8s ease-in-out infinite;}
+.rail-burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:6px;}
+.rail-burger span{width:22px;height:1.5px;background:var(--white);display:block;}
+.rail-nav{display:flex;flex-direction:column;gap:18px;list-style:none;}
+.rail-nav a{font-size:12px;letter-spacing:.06em;color:var(--white-50);display:flex;align-items:center;gap:10px;transition:color .2s;}
+.rail-nav a:hover,.rail-nav a.current{color:var(--white);}
+.rail-nav .idx{font-size:11px;color:var(--accent-bright);}
+.rail-bottom{display:flex;flex-direction:column;gap:4px;}
+.rail-loc{font-size:10px;letter-spacing:.1em;color:var(--white-30);text-transform:uppercase;}
+.rail-clock{font-family:'Orbitron',sans-serif;font-size:16px;color:var(--white);}
+
+/* MAIN */
+.main{margin-left:var(--rail-w);}
+section{position:relative;z-index:2;}
+.sec-tag{font-size:12px;letter-spacing:.1em;color:var(--white-30);padding:0 var(--pad);margin-bottom:20px;}
+
+/* CONTACT HERO */
+.contact-hero{padding:150px 0 50px;border-bottom:1px solid var(--white-08);}
+.page-title{font-family:'Orbitron',sans-serif;font-weight:700;font-size:clamp(2.4rem,6vw,4.4rem);color:var(--white);padding:0 var(--pad);line-height:1.02;margin-bottom:20px;}
+.page-body{padding:0 var(--pad);font-size:15px;color:var(--white-50);max-width:560px;line-height:1.9;}
+.page-body p+p{margin-top:10px;}
+
+/* CONTACT GRID */
+.contact-main{padding:90px var(--pad) 120px;display:grid;grid-template-columns:.85fr 1.3fr;gap:64px;}
+
+/* INFO PANEL */
+.info-list{display:flex;flex-direction:column;gap:32px;}
+.info-item{border-top:1px solid var(--white-08);padding-top:20px;}
+.info-label{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--white-30);margin-bottom:10px;}
+.info-value{font-family:'Orbitron',sans-serif;font-size:1.05rem;color:var(--white);}
+.info-value a{transition:color .2s;}
+.info-value a:hover{color:var(--accent-bright);}
+.info-value.muted{font-family:'DM Sans',sans-serif;font-weight:400;font-size:14px;color:var(--white-30);font-style:italic;}
+
+/* FORM */
+.cform{display:flex;flex-direction:column;gap:22px;}
+.cform-row{display:grid;grid-template-columns:1fr 1fr;gap:22px;}
+.field{display:flex;flex-direction:column;gap:8px;}
+.field label{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--white-30);}
+.field input,.field select,.field textarea{
+  background:var(--surface2);border:1px solid var(--white-08);color:var(--white);
+  font-family:'DM Sans',sans-serif;font-size:14px;padding:14px 16px;width:100%;
+  transition:border-color .2s,background .2s;
+}
+.field select{cursor:pointer;}
+.field textarea{resize:vertical;min-height:140px;}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--accent-bright);background:var(--surface);}
+.field input::placeholder,.field textarea::placeholder{color:var(--white-30);}
+.hp{position:absolute;left:-9999px;opacity:0;pointer-events:none;}
+.submit-row{display:flex;align-items:center;gap:20px;margin-top:8px;flex-wrap:wrap;}
+.cta-btn{display:inline-flex;align-items:center;gap:12px;background:var(--white);color:var(--black);padding:16px 36px;border-radius:100px;font-weight:600;font-size:14px;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .25s;}
+.cta-btn:hover{background:var(--accent-bright);}
+.cta-btn:disabled{opacity:.5;cursor:not-allowed;}
+.form-status{font-size:13px;letter-spacing:.02em;}
+.form-status.ok{color:var(--accent-bright);}
+.form-status.err{color:#d97a7a;}
+
+/* FLOATING CONTACT CARD */
+.floating-card{position:fixed;bottom:28px;right:28px;z-index:150;display:flex;align-items:center;gap:14px;background:rgba(20,20,20,.75);backdrop-filter:blur(14px);border:1px solid var(--white-08);padding:12px 16px;opacity:0;animation:fadeIn 1s ease .4s forwards;}
+.fc-av{width:38px;height:38px;border-radius:50%;background:var(--accent-dim);display:flex;align-items:center;justify-content:center;font-family:'Orbitron';font-size:11px;color:var(--accent-bright);flex-shrink:0;}
+.fc-label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--white-30);}
+.fc-email{font-size:12px;color:var(--white);font-weight:500;}
+.fc-arrow{width:34px;height:34px;border:1px solid var(--white-15);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--white);flex-shrink:0;transition:all .25s;}
+.fc-arrow:hover{background:var(--accent);border-color:var(--accent);}
+
+/* FOOTER */
+footer{padding:56px var(--pad) 36px;background:var(--surface);border-top:1px solid var(--white-08);}
+.footer-top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:32px;margin-bottom:36px;}
+.footer-brand-name{font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;color:var(--white);letter-spacing:.05em;margin-bottom:12px;}
+.footer-brand p{font-size:13px;color:var(--white-30);line-height:1.8;max-width:320px;}
+.f-social{display:flex;gap:20px;align-items:flex-start;}
+.f-social a{font-size:10px;letter-spacing:.14em;color:var(--white-30);transition:color .2s;}
+.f-social a:hover{color:var(--accent-bright);}
+.footer-bottom{border-top:1px solid var(--white-08);padding-top:20px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+.footer-bottom p{font-size:11px;color:var(--white-30);letter-spacing:.04em;}
+
+.r{opacity:0;transform:translateY(34px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1);}
+.r.in{opacity:1;transform:translateY(0);}
+
+@media(max-width:960px){
+  .rail{position:fixed;width:100%;height:64px;flex-direction:row;align-items:center;justify-content:space-between;padding:0 20px;border-right:none;border-bottom:1px solid var(--white-08);}
+  .rail-top{flex-direction:row;align-items:center;gap:16px;}
+  .rail-status,.rail-bottom{display:none;}
+  .rail-burger{display:flex;}
+  .rail-nav{display:none;position:fixed;top:64px;left:0;right:0;background:var(--black);border-bottom:1px solid var(--white-08);flex-direction:column;padding:24px 20px;gap:20px;z-index:150;}
+  .rail.open .rail-nav{display:flex;}
+  .main{margin-left:0;margin-top:64px;}
+  .contact-hero{padding-top:60px;}
+  .contact-main{grid-template-columns:1fr;padding:60px 24px 100px;gap:48px;}
+  .cform-row{grid-template-columns:1fr;}
+  .floating-card{left:16px;right:16px;bottom:16px;}
+  .fc-label,.fc-email{display:block;}
+  .footer-top{flex-direction:column;}
+}
+@media(max-width:600px){
+  .floating-card{display:none;}
+}
+</style>
+</head>
+<body>
+<div class="noise"></div>
+
+<!-- RAIL NAV -->
+<div class="rail" id="rail">
+  <div class="rail-top">
+    <a href="index.html" class="rail-logo">LAYER NINE</a>
+    <div class="rail-status"><span class="status-dot"></span>SYSTEM ONLINE</div>
+    <button class="rail-burger" id="railBurger" aria-label="Toggle menu"><span></span><span></span></button>
+  </div>
+  <nav class="rail-nav">
+    <a href="index.html"><span class="idx">01</span>Home</a>
+    <a href="about.html"><span class="idx">02</span>About</a>
+    <a href="services.html"><span class="idx">03</span>Services</a>
+    <a href="work.html"><span class="idx">04</span>Work</a>
+    <a href="contact.html" class="current"><span class="idx">05</span>Contact</a>
+  </nav>
+  <div class="rail-bottom">
+    <div class="rail-loc">Kuala Lumpur</div>
+    <div class="rail-clock" id="railClock">00:00:00</div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- CONTACT HERO -->
+  <section class="contact-hero r">
+    <div class="sec-tag">05 / Contact</div>
+    <h1 class="page-title">Let's Build Something</h1>
+    <div class="page-body">
+      <p>Based in Kuala Lumpur. Working with brands everywhere.</p>
+      <p>Tell us about your project — we'll get back to you within 48 hours.</p>
+    </div>
+  </section>
+
+  <!-- CONTACT MAIN -->
+  <section class="contact-main r">
+
+    <!-- INFO -->
+    <div class="info-list">
+      <div class="info-item">
+        <div class="info-label">Email</div>
+        <div class="info-value"><a href="mailto:layernineix@gmail.com">layernineix@gmail.com</a></div>
+      </div>
+      <div class="info-item">
+        <div class="info-label">Location</div>
+        <div class="info-value">Kuala Lumpur, Malaysia</div>
+      </div>
+      <div class="info-item">
+        <div class="info-label">Instagram</div>
+        <div class="info-value muted">Coming soon</div>
+      </div>
+      <div class="info-item">
+        <div class="info-label">TikTok</div>
+        <div class="info-value muted">Coming soon</div>
+      </div>
+    </div>
+
+    <!-- FORM -->
+    <form class="cform" id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+      <input type="text" name="_gotcha" class="hp" tabindex="-1" autocomplete="off">
+      <input type="hidden" name="_subject" value="New project inquiry — Layer Nine website">
+
+      <div class="cform-row">
+        <div class="field">
+          <label for="f-name">Name</label>
+          <input type="text" id="f-name" name="name" placeholder="Your name" required>
+        </div>
+        <div class="field">
+          <label for="f-email">Email</label>
+          <input type="email" id="f-email" name="email" placeholder="you@brand.com" required>
+        </div>
+      </div>
+
+      <div class="cform-row">
+        <div class="field">
+          <label for="f-type">Project Type</label>
+          <select id="f-type" name="project_type" required>
+            <option value="" disabled selected>Select a discipline</option>
+            <option value="AI Visuals">AI Visuals</option>
+            <option value="Brand & Marketing Systems">Brand &amp; Marketing Systems</option>
+            <option value="AI Post-Production">AI Post-Production</option>
+            <option value="Creative Direction & Consulting">Creative Direction &amp; Consulting</option>
+            <option value="Classic Production">Classic Production</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="f-budget">Budget Range <span style="opacity:.5;">(optional)</span></label>
+          <select id="f-budget" name="budget_range">
+            <option value="" selected>Prefer not to say</option>
+            <option value="Under $2,000">Under $2,000</option>
+            <option value="$2,000 – $5,000">$2,000 – $5,000</option>
+            <option value="$5,000 – $15,000">$5,000 – $15,000</option>
+            <option value="$15,000+">$15,000+</option>
+            <option value="Not sure yet">Not sure yet</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="f-message">Message</label>
+        <textarea id="f-message" name="message" placeholder="Tell us about your project — goals, timeline, references." required></textarea>
+      </div>
+
+      <div class="submit-row">
+        <button type="submit" class="cta-btn" id="submitBtn">Send Message →</button>
+        <span class="form-status" id="formStatus"></span>
+      </div>
+    </form>
+
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-brand-name">LAYER NINE</div>
+        <p>Creative Systems for the Post-Camera Era. Studio / Lab / Films — Kuala Lumpur.</p>
+      </div>
+      <div class="f-social"><span style="font-size:10px;letter-spacing:.14em;color:var(--white-15);">IG</span><span style="font-size:10px;letter-spacing:.14em;color:var(--white-15);">TIKTOK</span></div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Layer Nine Studio. All rights reserved.</p>
+      <p>layernine.studio</p>
+    </div>
+  </footer>
+
+</div>
+
+<!-- FLOATING CONTACT CARD -->
+<a href="mailto:layernineix@gmail.com" class="floating-card">
+  <div class="fc-av">L9</div>
+  <div>
+    <div class="fc-label">Let's Talk</div>
+    <div class="fc-email">layernineix@gmail.com</div>
+  </div>
+  <span class="fc-arrow">→</span>
+</a>
+
+<script>
+// Rail clock (Kuala Lumpur)
+const railClock=document.getElementById('railClock');
+function tick(){
+  railClock.textContent=new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Kuala_Lumpur',hour:'2-digit',minute:'2-digit',second:'2-digit'}).format(new Date());
+}
+tick();setInterval(tick,1000);
+
+// Mobile rail toggle
+const rail=document.getElementById('rail'),railBurger=document.getElementById('railBurger');
+railBurger.addEventListener('click',()=>rail.classList.toggle('open'));
+document.querySelectorAll('.rail-nav a').forEach(a=>a.addEventListener('click',()=>rail.classList.remove('open')));
+
+// Reveal on scroll
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');});},{threshold:.1});
+document.querySelectorAll('.r').forEach(el=>obs.observe(el));
+
+// Form submit (Formspree AJAX)
+const form=document.getElementById('contactForm');
+const status=document.getElementById('formStatus');
+const submitBtn=document.getElementById('submitBtn');
+form.addEventListener('submit',async(e)=>{
+  e.preventDefault();
+  status.className='form-status';
+  status.textContent='Sending…';
+  submitBtn.disabled=true;
+  try{
+    const res=await fetch(form.action,{method:'POST',body:new FormData(form),headers:{Accept:'application/json'}});
+    if(res.ok){
+      form.reset();
+      status.textContent="Thanks — we'll get back to you within 48 hours.";
+      status.classList.add('ok');
+    }else{
+      const data=await res.json().catch(()=>({}));
+      status.textContent=(data.errors&&data.errors.map(x=>x.message).join(', '))||'Something went wrong. Please email us directly.';
+      status.classList.add('err');
+    }
+  }catch(err){
+    status.textContent='Network error — please email us directly at layernineix@gmail.com.';
+    status.classList.add('err');
+  }finally{
+    submitBtn.disabled=false;
+  }
+});
+</script>
+</body>
+</html>

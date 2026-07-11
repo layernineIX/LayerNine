@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — Layer Nine Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;scroll-behavior:smooth}
+body{background:#0a0a0a;color:#e2ddd6;font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+:root{
+  --white:#e2ddd6;--white-50:rgba(226,221,214,.5);--white-30:rgba(226,221,214,.3);
+  --white-15:rgba(226,221,214,.15);--white-08:rgba(226,221,214,.08);
+  --accent:#35858E;--accent-bright:#4ba3ad;--accent-dim:rgba(53,133,142,.12);
+  --black:#0a0a0a;--surface:#0f0f0f;--surface2:#141414;--pad:clamp(24px,4vw,64px);--rail-w:220px;
+}
+.noise{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.04;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+@keyframes statusPulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* RAIL NAV */
+.rail{position:fixed;top:0;left:0;width:var(--rail-w);height:100vh;z-index:200;background:var(--black);border-right:1px solid var(--white-08);padding:28px 24px;display:flex;flex-direction:column;justify-content:space-between;}
+.rail-top{display:flex;flex-direction:column;gap:8px;}
+.rail-logo{font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;color:var(--white);letter-spacing:.05em;}
+.rail-status{font-size:10px;letter-spacing:.1em;color:var(--accent-bright);display:flex;align-items:center;gap:6px;}
+.status-dot{width:5px;height:5px;border-radius:50%;background:var(--accent-bright);animation:statusPulse 1.8s ease-in-out infinite;}
+.rail-burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:6px;}
+.rail-burger span{width:22px;height:1.5px;background:var(--white);display:block;}
+.rail-nav{display:flex;flex-direction:column;gap:18px;list-style:none;}
+.rail-nav a{font-size:12px;letter-spacing:.06em;color:var(--white-50);display:flex;align-items:center;gap:10px;transition:color .2s;}
+.rail-nav a:hover,.rail-nav a.current{color:var(--white);}
+.rail-nav .idx{font-size:11px;color:var(--accent-bright);}
+.rail-bottom{display:flex;flex-direction:column;gap:4px;}
+.rail-loc{font-size:10px;letter-spacing:.1em;color:var(--white-30);text-transform:uppercase;}
+.rail-clock{font-family:'Orbitron',sans-serif;font-size:16px;color:var(--white);}
+
+/* MAIN */
+.main{margin-left:var(--rail-w);}
+
+/* SECTION SHARED */
+section{position:relative;z-index:2;}
+.sec-tag{font-size:12px;letter-spacing:.1em;color:var(--white-30);padding:0 var(--pad);margin-bottom:20px;}
+.sec-title{font-family:'Orbitron',sans-serif;font-weight:700;font-size:clamp(1.8rem,3.4vw,2.6rem);color:var(--white);padding:0 var(--pad);margin-bottom:44px;}
+.sec-title span{color:var(--accent-bright);}
+
+/* ABOUT HERO */
+.about-hero{padding:150px 0 60px;border-bottom:1px solid var(--white-08);}
+.page-title{font-family:'Orbitron',sans-serif;font-weight:700;font-size:clamp(2.4rem,6vw,4.4rem);color:var(--white);padding:0 var(--pad);line-height:1.02;}
+
+/* ABOUT MAIN — cycling image + copy */
+.about-main{padding:110px 0;border-bottom:1px solid var(--white-08);}
+.about-grid{padding:0 var(--pad);display:grid;grid-template-columns:1fr 1.15fr;gap:0;min-height:520px;}
+.about-img{position:relative;overflow:hidden;border:1px solid var(--white-08);background:var(--surface2);}
+.about-img .slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transform:translateY(100%);transition:transform .9s cubic-bezier(.76,0,.24,1),opacity .6s ease;}
+.about-img .slide.active{opacity:1;transform:translateY(0);}
+.about-img .slide.leaving{opacity:1;transform:translateY(-100%);transition:transform .9s cubic-bezier(.76,0,.24,1),opacity .6s ease;}
+.about-content{padding:0 56px;display:flex;flex-direction:column;justify-content:center;gap:22px;}
+.about-content p{font-size:15px;color:var(--white-50);line-height:1.9;max-width:480px;}
+.about-content p a{color:var(--accent-bright);border-bottom:1px solid rgba(75,163,173,.4);transition:color .2s;}
+.about-content p a:hover{color:var(--white);}
+
+/* HOW WE WORK */
+.hww{padding:110px 0;border-bottom:1px solid var(--white-08);}
+.hww-row{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--white-08);margin:0 var(--pad);width:calc(100% - 2 * var(--pad));}
+.hww-item{padding:32px 28px 0 0;border-right:1px solid var(--white-08);}
+.hww-item:last-child{border-right:none;padding-right:0;}
+.hww-n{font-size:12px;letter-spacing:.1em;color:var(--accent-bright);margin-bottom:14px;}
+.hww-t{font-family:'Orbitron',sans-serif;font-weight:600;font-size:1.15rem;color:var(--white);margin-bottom:10px;}
+.hww-d{font-size:13px;color:var(--white-50);line-height:1.75;}
+
+/* THESIS */
+.thesis{padding:150px var(--pad);text-align:center;border-bottom:1px solid var(--white-08);position:relative;overflow:hidden;}
+.thesis-glow{position:absolute;top:-140px;left:50%;transform:translateX(-50%);width:680px;height:420px;background:radial-gradient(ellipse,rgba(53,133,142,.12),transparent 70%);}
+.thesis-line{font-family:'Orbitron',sans-serif;font-weight:700;font-size:clamp(1.6rem,3.4vw,2.6rem);color:var(--white);line-height:1.3;max-width:820px;margin:0 auto;position:relative;}
+.thesis-line em{font-style:normal;color:var(--accent-bright);}
+.thesis-line + .thesis-line{color:var(--white-50);font-weight:500;margin-top:14px;}
+
+/* CTA strip */
+.about-cta-row{padding:90px var(--pad);text-align:center;border-bottom:1px solid var(--white-08);}
+.about-cta-row p{font-size:14px;color:var(--white-30);letter-spacing:.02em;margin-bottom:28px;}
+.cta-btn{display:inline-flex;align-items:center;gap:12px;background:var(--white);color:var(--black);padding:17px 40px;border-radius:100px;font-weight:600;font-size:14px;transition:all .25s;}
+.cta-btn:hover{background:var(--accent-bright);}
+
+/* FOOTER */
+footer{padding:56px var(--pad) 36px;background:var(--surface);}
+.footer-top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:32px;margin-bottom:36px;}
+.footer-brand-name{font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;color:var(--white);letter-spacing:.05em;margin-bottom:12px;}
+.footer-brand p{font-size:13px;color:var(--white-30);line-height:1.8;max-width:320px;}
+.f-social{display:flex;gap:20px;align-items:flex-start;}
+.f-social a{font-size:10px;letter-spacing:.14em;color:var(--white-30);transition:color .2s;}
+.f-social a:hover{color:var(--accent-bright);}
+.footer-bottom{border-top:1px solid var(--white-08);padding-top:20px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+.footer-bottom p{font-size:11px;color:var(--white-30);letter-spacing:.04em;}
+
+.r{opacity:0;transform:translateY(34px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1);}
+.r.in{opacity:1;transform:translateY(0);}
+
+@media(max-width:960px){
+  .rail{position:fixed;width:100%;height:64px;flex-direction:row;align-items:center;justify-content:space-between;padding:0 20px;border-right:none;border-bottom:1px solid var(--white-08);}
+  .rail-top{flex-direction:row;align-items:center;gap:16px;}
+  .rail-status,.rail-bottom{display:none;}
+  .rail-burger{display:flex;}
+  .rail-nav{display:none;position:fixed;top:64px;left:0;right:0;background:var(--black);border-bottom:1px solid var(--white-08);flex-direction:column;padding:24px 20px;gap:20px;z-index:150;}
+  .rail.open .rail-nav{display:flex;}
+  .main{margin-left:0;margin-top:64px;}
+  .about-hero{padding-top:70px;}
+  .about-grid{grid-template-columns:1fr;}
+  .about-img{min-height:300px;}
+  .about-content{padding:36px 0 0;}
+  .hww-row{grid-template-columns:1fr;}
+  .hww-item{border-right:none;border-bottom:1px solid var(--white-08);padding:28px 0;}
+  .hww-item:last-child{border-bottom:none;}
+  .footer-top{flex-direction:column;}
+}
+</style>
+</head>
+<body>
+<div class="noise"></div>
+
+<!-- RAIL NAV -->
+<div class="rail" id="rail">
+  <div class="rail-top">
+    <a href="index.html" class="rail-logo">LAYER NINE</a>
+    <div class="rail-status"><span class="status-dot"></span>SYSTEM ONLINE</div>
+    <button class="rail-burger" id="railBurger" aria-label="Toggle menu"><span></span><span></span></button>
+  </div>
+  <nav class="rail-nav">
+    <a href="index.html"><span class="idx">01</span>Home</a>
+    <a href="about.html" class="current"><span class="idx">02</span>About</a>
+    <a href="services.html"><span class="idx">03</span>Services</a>
+    <a href="work.html"><span class="idx">04</span>Work</a>
+    <a href="contact.html"><span class="idx">05</span>Contact</a>
+  </nav>
+  <div class="rail-bottom">
+    <div class="rail-loc">Kuala Lumpur</div>
+    <div class="rail-clock" id="railClock">00:00:00</div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- ABOUT HERO -->
+  <section class="about-hero r">
+    <div class="sec-tag">02 / About Layer Nine</div>
+    <h1 class="page-title">About Layer Nine</h1>
+  </section>
+
+  <!-- ABOUT MAIN — cycling image + copy -->
+  <section class="about-main r">
+    <div class="about-grid">
+      <div class="about-img">
+        <div class="slide active" style="background-image:url('about1.jpg')"></div>
+        <div class="slide" style="background-image:url('about2.jpg')"></div>
+        <div class="slide" style="background-image:url('about3.jpg')"></div>
+      </div>
+      <div class="about-content">
+        <p>Layer Nine is a creative studio built for the post-camera era.</p>
+        <p>Founded by Ali, a photographer, filmmaker, and creative director, Layer Nine exists to prove that AI-driven production can carry the same discipline, taste, and craft as a traditional set — without needing one.</p>
+        <p>We're not a prompt shop. Every campaign starts the way a real shoot would: with direction, references, mood, and a point of view. Then we use the full range of AI creative tools to execute it at a speed and scale traditional production can't match.</p>
+        <p>Based in Kuala Lumpur, Layer Nine works across visuals, brand, marketing, and post-production — building both client campaigns and original brand work, like <a href="work.html#cs01">ERATO</a> and <a href="work.html#cs02">SKAI</a>, that show what's possible when creative direction leads and the tools follow.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW WE WORK -->
+  <section class="hww r">
+    <div class="sec-tag">How We Work</div>
+    <h2 class="sec-title">Process</h2>
+    <div class="hww-row">
+      <div class="hww-item">
+        <div class="hww-n">(01)</div>
+        <div class="hww-t">Direction</div>
+        <div class="hww-d">Concept, references, mood, story.</div>
+      </div>
+      <div class="hww-item">
+        <div class="hww-n">(02)</div>
+        <div class="hww-t">Generation</div>
+        <div class="hww-d">AI visual and video production across the right tools for the job.</div>
+      </div>
+      <div class="hww-item">
+        <div class="hww-n">(03)</div>
+        <div class="hww-t">Post</div>
+        <div class="hww-d">Grading, compositing, finishing.</div>
+      </div>
+      <div class="hww-item">
+        <div class="hww-n">(04)</div>
+        <div class="hww-t">Delivery</div>
+        <div class="hww-d">Campaign-ready assets, built for every channel.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THESIS -->
+  <section class="thesis r">
+    <div class="thesis-glow"></div>
+    <div class="thesis-line">The camera was never the craft. <em>The eye was.</em></div>
+    <div class="thesis-line">Layer Nine is what happens when that eye is pointed at a new toolkit.</div>
+  </section>
+
+  <!-- CTA -->
+  <section class="about-cta-row r">
+    <p>Want to work with us?</p>
+    <a href="mailto:studio@layernine.studio" class="cta-btn">studio@layernine.studio →</a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-brand-name">LAYER NINE</div>
+        <p>Creative Systems for the Post-Camera Era. Studio / Lab / Films — Kuala Lumpur.</p>
+      </div>
+      <div class="f-social"><a href="#">IG</a><a href="#">X</a><a href="#">LI</a><a href="#">VIMEO</a><a href="#">YT</a></div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Layer Nine Studio. All rights reserved.</p>
+      <p>layernine.studio</p>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+// Rail clock (Kuala Lumpur)
+const railClock=document.getElementById('railClock');
+function tick(){
+  railClock.textContent=new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Kuala_Lumpur',hour:'2-digit',minute:'2-digit',second:'2-digit'}).format(new Date());
+}
+tick();setInterval(tick,1000);
+
+// Mobile rail toggle
+const rail=document.getElementById('rail'),railBurger=document.getElementById('railBurger');
+railBurger.addEventListener('click',()=>rail.classList.toggle('open'));
+document.querySelectorAll('.rail-nav a').forEach(a=>a.addEventListener('click',()=>rail.classList.remove('open')));
+
+// Cycling image swap (slide up)
+const aSlides=document.querySelectorAll('.about-img .slide');let ai=0;
+setInterval(()=>{
+  const prev=ai;ai=(ai+1)%aSlides.length;
+  aSlides[prev].classList.add('leaving');aSlides[prev].classList.remove('active');
+  aSlides[ai].classList.add('active');
+  setTimeout(()=>aSlides[prev].classList.remove('leaving'),900);
+},3400);
+
+// Reveal on scroll
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');});},{threshold:.1});
+document.querySelectorAll('.r').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
