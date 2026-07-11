@@ -10,414 +10,298 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{font-size:16px;scroll-behavior:smooth}
-body{background:#0a0a0a;color:#e2ddd6;font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased;cursor:none;}
+body{background:#0a0a0a;color:#e2ddd6;font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
 a{color:inherit;text-decoration:none}
 img{display:block;max-width:100%}
 :root{
   --white:#e2ddd6;--white-50:rgba(226,221,214,.5);--white-30:rgba(226,221,214,.3);
   --white-15:rgba(226,221,214,.15);--white-08:rgba(226,221,214,.08);
   --accent:#35858E;--accent-bright:#4ba3ad;--accent-dim:rgba(53,133,142,.12);
-  --black:#0a0a0a;--surface:#0f0f0f;--surface2:#141414;--pad:clamp(24px,4vw,64px);
+  --black:#0a0a0a;--surface:#0f0f0f;--surface2:#141414;--pad:clamp(24px,4vw,64px);--rail-w:220px;
 }
-#cur{position:fixed;width:8px;height:8px;background:#e2ddd6;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s;mix-blend-mode:difference;}
-#cur-r{position:fixed;width:34px;height:34px;border:1px solid rgba(226,221,214,.35);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:transform .15s ease,width .3s,height .3s;}
 .noise{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.04;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+@keyframes pulseDown{0%,100%{opacity:.3;transform:translateY(0)}50%{opacity:.9;transform:translateY(4px)}}
+@keyframes statusPulse{0%,100%{opacity:1}50%{opacity:.3}}
 
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:22px var(--pad);transition:background .35s,padding .35s;}
-.nav-logo{display:flex;align-items:center;gap:15px;}
-.logo-wordmark{height:29px;width:auto;}
-.logo-graphic{height:39px;width:auto;opacity:.95;}
-.nav-menu{display:flex;align-items:center;gap:34px;list-style:none;}
-.nav-menu a{font-size:13px;letter-spacing:.04em;color:var(--white-50);font-weight:400;transition:color .2s;position:relative;}
-.nav-menu a .idx{font-size:9px;color:var(--accent);vertical-align:super;margin-left:2px;}
-.nav-menu a:hover{color:var(--white);}
-.nav-burger{display:flex;flex-direction:column;gap:5px;cursor:none;}
-.nav-burger span{width:26px;height:1.5px;background:var(--white);display:block;}
+/* RAIL NAV */
+.rail{position:fixed;top:0;left:0;width:var(--rail-w);height:100vh;z-index:200;background:var(--black);border-right:1px solid var(--white-08);padding:28px 24px;display:flex;flex-direction:column;justify-content:space-between;}
+.rail-top{display:flex;flex-direction:column;gap:8px;}
+.rail-logo{font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;color:var(--white);letter-spacing:.05em;}
+.rail-status{font-size:10px;letter-spacing:.1em;color:var(--accent-bright);display:flex;align-items:center;gap:6px;}
+.status-dot{width:5px;height:5px;border-radius:50%;background:var(--accent-bright);animation:statusPulse 1.8s ease-in-out infinite;}
+.rail-burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:6px;}
+.rail-burger span{width:22px;height:1.5px;background:var(--white);display:block;}
+.rail-nav{display:flex;flex-direction:column;gap:18px;list-style:none;}
+.rail-nav a{font-size:12px;letter-spacing:.06em;color:var(--white-50);display:flex;align-items:center;gap:10px;transition:color .2s;}
+.rail-nav a:hover{color:var(--white);}
+.rail-nav .idx{font-size:11px;color:var(--accent-bright);}
+.rail-bottom{display:flex;flex-direction:column;gap:4px;}
+.rail-loc{font-size:10px;letter-spacing:.1em;color:var(--white-30);text-transform:uppercase;}
+.rail-clock{font-family:'Orbitron',sans-serif;font-size:16px;color:var(--white);}
+
+/* MAIN */
+.main{margin-left:var(--rail-w);}
 
 /* HERO */
-.hero{position:relative;width:100%;height:100vh;min-height:640px;overflow:hidden;background:#0a0a0a;}
-.hero-bg{position:absolute;inset:-4%;z-index:0;background-image:url("hero.png");background-size:cover;background-position:center 42%;animation:kenburns 18s ease-in-out infinite alternate;}
-@keyframes kenburns{0%{transform:scale(1.04)}100%{transform:scale(1.14) translate(-1.5%,-1%)}}
-.hero-haze{position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(ellipse 60% 50% at 55% 45%,rgba(53,133,142,.12) 0%,transparent 70%);mix-blend-mode:screen;animation:hazeDrift 11s ease-in-out infinite;}
-@keyframes hazeDrift{0%,100%{opacity:.5;transform:translate(-2%,0)}50%{opacity:.9;transform:translate(2%,-1.5%)}}
-.hero-scrim{position:absolute;inset:0;z-index:2;background:linear-gradient(to top,rgba(10,10,10,.95) 0%,rgba(10,10,10,.2) 45%,transparent 72%),linear-gradient(to right,rgba(10,10,10,.6) 0%,transparent 58%);}
-.hero-top{position:absolute;bottom:140px;left:var(--pad);z-index:3;}
-.hero-since{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--white-30);margin-bottom:14px;}
-/* stacked wordmark — NINE stretched to match LAYER width so I sits under A */
-.hero-wordmark{font-family:'Orbitron',sans-serif;font-weight:600;text-transform:uppercase;line-height:.9;color:var(--white);display:inline-block;}
-.hero-wordmark .row{display:block;overflow:hidden;}
-.hero-wordmark .row>span{display:block;transform:translateY(110%);animation:riseUp .85s cubic-bezier(.16,1,.3,1) forwards;white-space:nowrap;}
-.hero-wordmark .row:nth-child(1)>span{animation-delay:.15s;}
-.hero-wordmark .row:nth-child(2)>span{animation-delay:.3s;}
-.hero-layer{font-size:clamp(3.4rem,9vw,9.5rem);letter-spacing:.04em;display:block;}
-/* NINE letter-spaced to span the same width as LAYER; both left-aligned so I (2nd glyph) sits under A (2nd glyph) */
-.hero-nine{font-size:clamp(3.4rem,9vw,9.5rem);letter-spacing:.34em;display:block;white-space:nowrap;}
-.hero-nine i,.hero-nine span{display:inline;}
-.hero-wordmark i{font-style:normal;color:var(--accent-bright);}
-@keyframes riseUp{to{transform:translateY(0)}}
-.hero-tm{font-size:.32em;vertical-align:super;color:var(--white-50);letter-spacing:0;}
-.hero-services{position:absolute;top:130px;right:var(--pad);z-index:3;display:flex;flex-direction:column;gap:9px;opacity:0;animation:fadeIn 1s ease .9s forwards;}
-.hero-services a{font-size:13px;color:var(--white-50);display:flex;align-items:center;gap:10px;justify-content:flex-end;transition:color .2s;}
-.hero-services a .sidx{font-size:9px;color:var(--accent);}
-.hero-services a:hover{color:var(--white);}
-.hero-bottom{position:absolute;bottom:50px;left:var(--pad);z-index:3;opacity:0;animation:fadeIn 1s ease 1.1s forwards;}
-.hero-lead{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--white-30);margin-bottom:6px;}
-.hero-rot{font-family:'DM Sans',sans-serif;font-size:clamp(1.3rem,2.2vw,2rem);font-weight:500;color:var(--white);height:1.4em;overflow:hidden;position:relative;}
-.hero-rot span{display:block;position:absolute;width:100%;opacity:0;transform:translateY(100%);transition:opacity .6s,transform .6s;}
-.hero-rot span.active{opacity:1;transform:translateY(0);}
-.hero-rot span em{font-style:normal;color:var(--accent-bright);}
-.hero-scroll{margin-top:22px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--white-30);display:flex;align-items:center;gap:8px;}
-@keyframes fadeIn{to{opacity:1}}
-/* floating contact card */
-.contact-card{position:absolute;bottom:34px;right:var(--pad);z-index:3;display:flex;align-items:center;gap:14px;background:rgba(20,20,20,.7);backdrop-filter:blur(14px);border:1px solid var(--white-08);padding:12px 14px;opacity:0;animation:fadeIn 1s ease 1.3s forwards;}
-.contact-card .cc-av{width:38px;height:38px;border-radius:50%;background:var(--accent-dim);display:flex;align-items:center;justify-content:center;font-family:'Orbitron';font-size:11px;color:var(--accent-bright);}
-.contact-card .cc-label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--white-30);}
-.contact-card .cc-name{font-size:13px;color:var(--white);font-weight:500;}
-.contact-card .cc-role{font-size:11px;color:var(--white-30);}
-.contact-card .cc-arrow{width:36px;height:36px;border:1px solid var(--white-15);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--white);margin-left:6px;transition:all .25s;}
-.contact-card .cc-arrow:hover{background:var(--accent);border-color:var(--accent);}
+.hero{position:relative;width:100%;height:100vh;min-height:640px;overflow:hidden;background:#0a0a0a;cursor:crosshair;}
+.hero-bg{position:absolute;inset:0;z-index:0;background-image:url("hero.png");background-size:cover;background-position:center 40%;}
+.hero-grid{position:absolute;inset:0;z-index:1;pointer-events:none;background-image:linear-gradient(rgba(226,221,214,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(226,221,214,.05) 1px,transparent 1px);background-size:60px 60px;}
+.hero-scrim{position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(to top,rgba(10,10,10,.92) 0%,rgba(10,10,10,.15) 50%,rgba(10,10,10,.5) 100%);}
+.hero-reticle-v{position:absolute;left:50%;top:0;width:1px;height:100%;background:rgba(75,163,173,.5);z-index:3;pointer-events:none;}
+.hero-reticle-h{position:absolute;top:50%;left:0;width:100%;height:1px;background:rgba(75,163,173,.5);z-index:3;pointer-events:none;}
+.hero-reticle-dot{position:absolute;left:50%;top:50%;width:16px;height:16px;transform:translate(-50%,-50%);border:1px solid var(--accent-bright);border-radius:50%;z-index:3;pointer-events:none;}
+.hero-reticle-label{position:absolute;left:50%;top:50%;transform:translate(14px,-26px);font-size:10px;letter-spacing:.08em;color:var(--accent-bright);font-family:'Orbitron',sans-serif;white-space:nowrap;z-index:3;pointer-events:none;}
+@media(hover:none){.hero-reticle-v,.hero-reticle-h,.hero-reticle-dot,.hero-reticle-label{display:none;}}
+.hero-copy{position:absolute;bottom:clamp(60px,12vh,110px);left:var(--pad);z-index:4;}
+.hero-eyebrow{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--white-30);margin-bottom:16px;}
+.hero-word{font-family:'Orbitron',sans-serif;font-weight:700;font-size:clamp(2.8rem,6.5vw,5.5rem);letter-spacing:-.01em;line-height:.94;color:var(--white);}
+.hero-word span{color:var(--accent-bright);}
+.hero-scroll{position:absolute;bottom:44px;right:var(--pad);z-index:4;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--white-35,rgba(226,221,214,.35));display:flex;align-items:center;gap:8px;animation:pulseDown 2.2s ease-in-out infinite;}
 
 /* SECTION SHARED */
 section{position:relative;z-index:2;}
-.sec-label-row{display:flex;align-items:center;justify-content:space-between;padding:0 var(--pad);margin-bottom:42px;}
-.sec-label{font-size:12px;letter-spacing:.1em;color:var(--white-50);display:flex;align-items:center;gap:9px;}
-.sec-label::before{content:'+';color:var(--accent);font-size:14px;}
-.sec-edition{font-size:12px;letter-spacing:.08em;color:var(--white-30);}
-.copy-title{font-family:'Orbitron',sans-serif;font-weight:700;font-size:clamp(2.6rem,6.5vw,6rem);letter-spacing:-.01em;text-transform:none;line-height:1;color:var(--white);display:flex;align-items:flex-start;gap:.1em;}
-.copy-title .cmark{font-size:.5em;color:var(--accent-bright);font-weight:400;}
-.copy-title .cnum{font-size:.32em;color:var(--white-30);font-weight:400;align-self:flex-start;margin-left:.15em;}
+.sec-tag{font-size:12px;letter-spacing:.1em;color:var(--white-30);padding:0 var(--pad);margin-bottom:20px;}
+.sec-title{font-family:'Orbitron',sans-serif;font-weight:700;font-size:clamp(1.8rem,3.4vw,2.6rem);color:var(--white);padding:0 var(--pad);margin-bottom:44px;}
+.sec-title span{color:var(--accent-bright);}
 
-/* CLIENTS */
-.clients{padding:110px 0;border-top:1px solid var(--white-08);}
-.clients-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--white-08);border-top:1px solid var(--white-08);border-bottom:1px solid var(--white-08);}
-.client{background:var(--black);aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;position:relative;transition:background .3s;font-family:'Orbitron';font-weight:500;letter-spacing:.1em;color:var(--white-50);font-size:1.1rem;}
-.client:hover{background:var(--surface2);color:var(--white);}
-.client .badge{position:absolute;bottom:12px;right:12px;font-size:9px;letter-spacing:.08em;color:var(--white-30);border:1px solid var(--white-08);padding:4px 9px;}
-
-/* ABOUT cycling */
-.about{padding:120px 0;border-top:1px solid var(--white-08);}
-.about-panel{display:grid;grid-template-columns:1fr 1.1fr;min-height:520px;border:1px solid var(--white-08);margin:0 var(--pad);overflow:hidden;}
-.about-img{position:relative;overflow:hidden;background:var(--surface2);}
-.about-img .slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transform:translateY(100%);transition:transform .9s cubic-bezier(.76,0,.24,1),opacity .6s ease;}
-.about-img .slide.active{opacity:1;transform:translateY(0);}
-.about-img .slide.leaving{opacity:1;transform:translateY(-100%);transition:transform .9s cubic-bezier(.76,0,.24,1),opacity .6s ease;}
-.about-content{padding:56px;display:flex;flex-direction:column;justify-content:center;position:relative;}
-.about-headline{font-family:'Orbitron',sans-serif;font-weight:700;font-size:clamp(1.8rem,3.6vw,3.4rem);line-height:1.05;color:var(--white);min-height:1.1em;}
-.about-headline .item{display:none;align-items:flex-start;gap:.1em;}
-.about-headline .item.active{display:flex;}
-.about-headline .cmark{color:var(--accent-bright);font-weight:400;font-size:.7em;}
-.about-desc{font-size:15px;color:var(--white-50);line-height:1.8;max-width:420px;margin-top:auto;padding-top:40px;}
+/* ABOUT */
+.about{padding:110px 0;border-top:1px solid var(--white-08);}
+.about-grid{padding:0 var(--pad);display:grid;grid-template-columns:1fr 1.1fr;gap:0;min-height:480px;}
+.about-img{position:relative;overflow:hidden;border:1px solid var(--white-08);background:var(--surface2);}
+.about-img div{position:absolute;inset:0;background-image:url('about2.jpg');background-size:cover;background-position:center;}
+.about-content{padding:0 56px;display:flex;flex-direction:column;justify-content:center;}
+.about-title{font-family:'Orbitron',sans-serif;font-weight:700;font-size:clamp(1.8rem,3.6vw,2.6rem);color:var(--white);margin-bottom:20px;}
+.about-title span{color:var(--accent-bright);}
+.about-desc{font-size:15px;color:var(--white-50);line-height:1.9;max-width:440px;}
 .about-cta{display:inline-flex;align-items:center;gap:10px;margin-top:26px;background:var(--white);color:var(--black);padding:13px 26px;border-radius:100px;font-size:13px;font-weight:500;width:max-content;transition:all .25s;}
 .about-cta:hover{background:var(--accent-bright);}
 
-/* WORK full-bleed */
-.work{border-top:1px solid var(--white-08);}
-.work-item{position:relative;height:88vh;min-height:560px;overflow:hidden;display:flex;align-items:flex-end;}
-.work-item .w-bg{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform 1.2s cubic-bezier(.16,1,.3,1);transform:scale(1.05);}
-.work-item:hover .w-bg{transform:scale(1.12);}
-.work-item .w-scrim{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,10,.85),transparent 55%);}
-.work-meta{position:relative;z-index:2;padding:0 var(--pad) 50px;width:100%;display:flex;align-items:flex-end;justify-content:space-between;}
-.work-meta .w-title{font-family:'Orbitron',sans-serif;font-weight:700;font-size:clamp(2rem,5vw,4.5rem);color:var(--white);display:flex;align-items:flex-start;gap:.12em;line-height:1;}
-.work-meta .w-title .cnum{font-size:.3em;color:var(--accent-bright);}
-.work-meta .w-info{text-align:right;}
-.work-meta .w-cat{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--white-50);margin-bottom:6px;}
-.work-meta .w-award{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-bright);}
-
 /* SERVICES accordion */
-.services{padding:120px 0;border-top:1px solid var(--white-08);}
-.services .copy-title{padding:0 var(--pad);margin-bottom:50px;}
+.services{padding:110px 0;border-top:1px solid var(--white-08);}
 .svc-acc{border-top:1px solid var(--white-08);}
 .svc-item{border-bottom:1px solid var(--white-08);padding:0 var(--pad);transition:background .3s;}
 .svc-item:hover{background:var(--surface);}
-.svc-head{display:grid;grid-template-columns:70px 1fr 40px;align-items:center;gap:24px;padding:30px 0;cursor:none;}
+.svc-head{display:grid;grid-template-columns:70px 1fr 30px;align-items:center;gap:24px;padding:26px 0;cursor:pointer;}
 .svc-head .s-num{font-size:12px;color:var(--white-30);letter-spacing:.1em;}
-.svc-head .s-name{font-family:'Orbitron',sans-serif;font-weight:600;font-size:clamp(1.2rem,2.4vw,2rem);color:var(--white);}
-.svc-head .s-plus{font-size:1.6rem;color:var(--white-30);justify-self:end;transition:transform .3s,color .3s;font-weight:300;}
+.svc-head .s-name{font-family:'Orbitron',sans-serif;font-weight:600;font-size:clamp(1.1rem,2.2vw,1.6rem);color:var(--white);transition:color .3s;}
+.svc-head .s-plus{font-size:1.5rem;color:var(--white-30);justify-self:end;transition:transform .3s,color .3s;font-weight:300;}
 .svc-item.open .s-plus{transform:rotate(45deg);color:var(--accent-bright);}
 .svc-item.open .s-name{color:var(--accent-bright);}
-.svc-body{max-height:0;overflow:hidden;transition:max-height .45s cubic-bezier(.16,1,.3,1);}
-.svc-body-inner{padding:0 0 34px 94px;max-width:680px;font-size:15px;color:var(--white-50);line-height:1.8;}
+.svc-body{max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.16,1,.3,1);}
+.svc-body-inner{padding:0 0 30px 94px;max-width:640px;font-size:14px;color:var(--white-50);line-height:1.8;}
 
-/* REEL */
-.reel{position:relative;height:90vh;min-height:560px;border-top:1px solid var(--white-08);overflow:hidden;display:flex;align-items:center;justify-content:center;}
-.reel-bg{position:absolute;inset:0;background-image:url("hero.png");background-size:cover;background-position:center;filter:blur(3px) brightness(.6);transform:scale(1.08);}
-.reel-scrim{position:absolute;inset:0;background:rgba(10,10,10,.45);}
-.reel-play{position:relative;z-index:2;display:flex;align-items:center;gap:24px;font-family:'Orbitron',sans-serif;font-weight:700;font-size:clamp(2.5rem,7vw,6rem);color:var(--white);cursor:none;}
-.reel-play .pbtn{width:clamp(56px,7vw,84px);height:clamp(56px,7vw,84px);border-radius:50%;background:rgba(226,221,214,.15);backdrop-filter:blur(6px);border:1px solid var(--white-30);display:flex;align-items:center;justify-content:center;font-size:.4em;transition:all .3s;}
-.reel-play:hover .pbtn{background:var(--accent);border-color:var(--accent);transform:scale(1.08);}
+/* WORK full-bleed */
+.work{border-top:1px solid var(--white-08);}
+.work-item{position:relative;height:75vh;min-height:520px;overflow:hidden;display:flex;align-items:flex-end;}
+.work-item .w-bg{position:absolute;inset:0;background-size:cover;background-position:center;transform:scale(1.05);transition:transform 1.1s cubic-bezier(.16,1,.3,1);}
+.work-item:hover .w-bg{transform:scale(1.14);}
+.work-item .w-scrim{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,10,.85),transparent 55%);}
+.work-meta{position:relative;z-index:2;padding:0 var(--pad) 48px;}
+.work-meta .w-cat{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--white-50);margin-bottom:10px;}
+.work-meta .w-title{font-family:'Orbitron',sans-serif;font-weight:700;font-size:clamp(2.2rem,4.5vw,3.6rem);color:var(--white);}
+.work-meta .w-desc{font-size:14px;color:var(--white-50);line-height:1.8;margin-top:14px;max-width:460px;}
 
 /* CTA */
 .cta{padding:150px var(--pad);text-align:center;border-top:1px solid var(--white-08);position:relative;overflow:hidden;}
-.cta-glow{position:absolute;bottom:-120px;left:50%;transform:translateX(-50%);width:680px;height:420px;background:radial-gradient(ellipse,rgba(53,133,142,.1),transparent 70%);animation:hazeDrift 9s ease-in-out infinite;}
-.cta .copy-title{justify-content:center;margin-bottom:30px;}
-.cta p{font-size:14px;color:var(--white-30);letter-spacing:.04em;margin-bottom:38px;}
-.cta-btn{display:inline-flex;align-items:center;gap:12px;background:var(--white);color:var(--black);padding:17px 40px;border-radius:100px;font-weight:600;font-size:14px;transition:all .25s;}
+.cta-glow{position:absolute;bottom:-120px;left:50%;transform:translateX(-50%);width:680px;height:420px;background:radial-gradient(ellipse,rgba(53,133,142,.12),transparent 70%);}
+.cta p{font-size:14px;color:var(--white-30);letter-spacing:.02em;margin-bottom:36px;position:relative;}
+.cta-btn{display:inline-flex;align-items:center;gap:12px;background:var(--white);color:var(--black);padding:17px 40px;border-radius:100px;font-weight:600;font-size:14px;position:relative;transition:all .25s;}
 .cta-btn:hover{background:var(--accent-bright);}
 
 /* FOOTER */
-footer{border-top:1px solid var(--white-08);padding:60px var(--pad) 40px;background:var(--surface);}
-.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:56px;margin-bottom:50px;}
-.footer-brand .logo-wordmark{height:30px;margin-bottom:16px;}
-.footer-brand p{font-size:13px;color:var(--white-30);line-height:1.8;max-width:250px;margin-bottom:22px;}
-.f-social{display:flex;gap:16px;}
+footer{border-top:1px solid var(--white-08);padding:56px var(--pad) 36px;background:var(--surface);}
+.footer-top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:32px;margin-bottom:36px;}
+.footer-brand-name{font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;color:var(--white);letter-spacing:.05em;margin-bottom:12px;}
+.footer-brand p{font-size:13px;color:var(--white-30);line-height:1.8;max-width:320px;}
+.f-social{display:flex;gap:20px;align-items:flex-start;}
 .f-social a{font-size:10px;letter-spacing:.14em;color:var(--white-30);transition:color .2s;}
 .f-social a:hover{color:var(--accent-bright);}
-.f-col h4{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--white-30);margin-bottom:18px;}
-.f-col ul{list-style:none;display:flex;flex-direction:column;gap:10px;}
-.f-col a{font-size:13px;color:var(--white-50);transition:color .2s;}
-.f-col a:hover{color:var(--white);}
-.footer-bottom{border-top:1px solid var(--white-08);padding-top:24px;display:flex;justify-content:space-between;}
+.footer-bottom{border-top:1px solid var(--white-08);padding-top:20px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;}
 .footer-bottom p{font-size:11px;color:var(--white-30);letter-spacing:.04em;}
 
 .r{opacity:0;transform:translateY(34px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1);}
 .r.in{opacity:1;transform:translateY(0);}
 
 @media(max-width:960px){
-  .nav-menu{display:none;}
-  .logo-wordmark{height:24px;}.logo-graphic{height:32px;}
-  .hero-top{bottom:110px;}
-  .hero-services{display:none;}
-  .contact-card{display:none;}
-  .hero-layer,.hero-nine{font-size:clamp(2.4rem,13vw,4rem);}
-  .clients-grid{grid-template-columns:1fr 1fr;}
-  .about-panel{grid-template-columns:1fr;}
+  .rail{position:fixed;width:100%;height:64px;flex-direction:row;align-items:center;justify-content:space-between;padding:0 20px;border-right:none;border-bottom:1px solid var(--white-08);}
+  .rail-top{flex-direction:row;align-items:center;gap:16px;}
+  .rail-status,.rail-bottom{display:none;}
+  .rail-burger{display:flex;}
+  .rail-nav{display:none;position:fixed;top:64px;left:0;right:0;background:var(--black);border-bottom:1px solid var(--white-08);flex-direction:column;padding:24px 20px;gap:20px;z-index:150;}
+  .rail.open .rail-nav{display:flex;}
+  .main{margin-left:0;margin-top:64px;}
+  .hero{height:calc(100vh - 64px);min-height:520px;}
+  .hero-word{font-size:clamp(2.2rem,11vw,3.6rem);}
+  .about-grid{grid-template-columns:1fr;}
   .about-img{min-height:300px;}
-  .about-content{padding:36px 28px;}
-  .svc-head{grid-template-columns:48px 1fr 30px;gap:14px;}
+  .about-content{padding:36px 0 0;}
+  .svc-head{grid-template-columns:44px 1fr 26px;gap:14px;}
   .svc-body-inner{padding-left:0;}
-  .footer-top{grid-template-columns:1fr 1fr;gap:32px;}
-  body{cursor:auto;}#cur,#cur-r{display:none;}
+  .footer-top{flex-direction:column;}
 }
 </style>
 </head>
 <body>
 <div class="noise"></div>
-<div id="cur"></div><div id="cur-r"></div>
 
-<nav id="nav">
-  <a href="#" class="nav-logo">
-    <img src="logo-text.png" alt="Layer Nine" class="logo-wordmark">
-    <img src="logo-graphic.png" alt="" class="logo-graphic">
-  </a>
-  <ul class="nav-menu">
-    <li><a href="#about">About</a></li>
-    <li><a href="work.html">Work<span class="idx">(04)</span></a></li>
-    <li><a href="#services">Services<span class="idx">(06)</span></a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-  <div class="nav-burger"><span></span><span></span></div>
-</nav>
+<!-- RAIL NAV -->
+<div class="rail" id="rail">
+  <div class="rail-top">
+    <a href="#hero" class="rail-logo">LAYER NINE</a>
+    <div class="rail-status"><span class="status-dot"></span>SYSTEM ONLINE</div>
+    <button class="rail-burger" id="railBurger" aria-label="Toggle menu"><span></span><span></span></button>
+  </div>
+  <nav class="rail-nav">
+    <a href="#hero"><span class="idx">01</span>Home</a>
+    <a href="#about"><span class="idx">02</span>About</a>
+    <a href="#services"><span class="idx">03</span>Services</a>
+    <a href="work.html"><span class="idx">04</span>Work</a>
+    <a href="#contact"><span class="idx">05</span>Contact</a>
+  </nav>
+  <div class="rail-bottom">
+    <div class="rail-loc">Kuala Lumpur</div>
+    <div class="rail-clock" id="railClock">00:00:00</div>
+  </div>
+</div>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-haze"></div>
-  <div class="hero-scrim"></div>
-  <div class="hero-top">
-    <div class="hero-since">© Since — 2026</div>
-    <h1 class="hero-wordmark">
-      <span class="row"><span class="hero-layer">L<i>A</i>YER<span class="hero-tm">™</span></span></span>
-      <span class="row"><span class="hero-nine"><span>N</span><i>I</i><span>N</span><span>E</span></span></span>
-    </h1>
-  </div>
-  <div class="hero-services">
-    <a href="#services"><span class="sidx">(01)</span> Creative AI Visuals</a>
-    <a href="#services"><span class="sidx">(02)</span> AI Marketing</a>
-    <a href="#services"><span class="sidx">(03)</span> AI Social & Branding</a>
-    <a href="#services"><span class="sidx">(04)</span> AI Post-Production</a>
-    <a href="#services"><span class="sidx">(05)</span> AI Direction & Consulting</a>
-    <a href="#services"><span class="sidx">(06)</span> Classic Production</a>
-  </div>
-  <div class="hero-bottom">
-    <div class="hero-lead">More than a studio,</div>
-    <div class="hero-rot" id="heroRot">
-      <span class="active">we build <em>worlds that didn't exist.</em></span>
-      <span>we are a <em>creative engine.</em></span>
-      <span>we are the <em>post-camera era.</em></span>
+<div class="main">
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-scrim"></div>
+    <div class="hero-reticle-v" id="reticleV"></div>
+    <div class="hero-reticle-h" id="reticleH"></div>
+    <div class="hero-reticle-dot" id="reticleDot"></div>
+    <div class="hero-reticle-label" id="reticleLabel">X 500 · Y 500</div>
+    <div class="hero-copy">
+      <div class="hero-eyebrow">Creative Systems / Post-Camera Era</div>
+      <h1 class="hero-word">L<span>A</span>YER N<span>I</span>NE</h1>
     </div>
     <div class="hero-scroll">Scroll to explore ↓</div>
-  </div>
-  <div class="contact-card">
-    <div class="cc-av">L9</div>
-    <div>
-      <div class="cc-label">Let's Talk</div>
-      <div class="cc-name">Layer Nine</div>
-      <div class="cc-role">Studio Director</div>
-    </div>
-    <a href="#contact" class="cc-arrow">→</a>
-  </div>
-</section>
+  </section>
 
-<!-- CLIENTS -->
-<section class="clients r" id="clients">
-  <div class="sec-label-row">
-    <span class="sec-label">Trusted by Visionaries</span>
-    <span class="sec-edition">© Edition 01</span>
-  </div>
-  <div class="clients-grid">
-    <div class="client">SYNAPSE<span class="badge">Feature Film</span></div>
-    <div class="client">NOVACUT<span class="badge">Series</span></div>
-    <div class="client"> AETHER<span class="badge">Commercial</span></div>
-    <div class="client">MERIDIAN<span class="badge">Documentary</span></div>
-    <div class="client">PRISM<span class="badge">Music Video</span></div>
-    <div class="client">VANTA<span class="badge">Campaign</span></div>
-    <div class="client">HALO<span class="badge">Short Film</span></div>
-    <div class="client">ORBIT<span class="badge">Experimental</span></div>
-  </div>
-</section>
-
-<!-- ABOUT cycling -->
-<section class="about r" id="about">
-  <div class="sec-label-row">
-    <span class="sec-label">About Layer Nine</span>
-    <span class="sec-edition">© Edition 02</span>
-  </div>
-  <div class="about-panel">
-    <div class="about-img">
-      <div class="slide active" style="background-image:url('about1.jpg')"></div>
-      <div class="slide" style="background-image:url('about2.jpg')"></div>
-      <div class="slide" style="background-image:url('about3.jpg')"></div>
-    </div>
-    <div class="about-content">
-      <div class="about-headline" id="aboutHead">
-        <span class="item active"><span class="cmark">©</span>Neural Cinema</span>
-        <span class="item"><span class="cmark">©</span>Generative Worlds</span>
-        <span class="item"><span class="cmark">©</span>Post-Camera Craft</span>
+  <!-- ABOUT -->
+  <section class="about r" id="about">
+    <div class="sec-tag">02 / About Layer Nine</div>
+    <div class="about-grid">
+      <div class="about-img"><div></div></div>
+      <div class="about-content">
+        <div class="about-title">Generative <span>Worlds.</span></div>
+        <p class="about-desc">Layer Nine operates at the threshold where machine intelligence meets human story. Every project begins before the camera — in the neural systems that analyse emotional tempo, visual grammar, and the invisible architecture of great cinema. This is not automation. This is amplification.</p>
+        <a href="#contact" class="about-cta">Get in touch →</a>
       </div>
-      <p class="about-desc">Layer Nine operates at the threshold where machine intelligence meets human story. Every project begins before the camera — in the neural systems that analyse emotional tempo, visual grammar, and the invisible architecture of great cinema. This is not automation. This is amplification.</p>
-      <a href="#contact" class="about-cta">Get in touch →</a>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- WORK full-bleed -->
-<section class="work" id="work">
-  <div class="sec-label-row" style="padding-top:60px;padding-bottom:30px;">
-    <span class="sec-label">Selected Work</span>
-    <span class="sec-edition">© Edition 03</span>
-  </div>
-  <div class="work-item r">
-    <div class="w-bg" style="background-image:url('about2.jpg')"></div>
-    <div class="w-scrim"></div>
-    <div class="work-meta">
-      <div class="w-title"><span class="cnum">©01</span> Ghost Lattice</div>
-      <div class="w-info"><div class="w-cat">Feature · AI Environments</div><div class="w-award">Cannes 2025</div></div>
+  <!-- SERVICES accordion -->
+  <section class="services r" id="services">
+    <div class="sec-tag">03 / Capabilities</div>
+    <h2 class="sec-title">Services</h2>
+    <div class="svc-acc">
+      <div class="svc-item open">
+        <div class="svc-head"><span class="s-num">(01)</span><span class="s-name">Creative AI Visuals</span><span class="s-plus">+</span></div>
+        <div class="svc-body"><div class="svc-body-inner">Original AI-generated imagery, concept art, and visual worlds built for film, campaigns, and brands. From mood and look development to finished frames — art-directed, never generic.</div></div>
+      </div>
+      <div class="svc-item">
+        <div class="svc-head"><span class="s-num">(02)</span><span class="s-name">AI Marketing</span><span class="s-plus">+</span></div>
+        <div class="svc-body"><div class="svc-body-inner">End-to-end AI-driven campaigns — visuals, copy, and performance analytics. We turn one idea into dozens of tailored cuts, posters, and ads, each optimised for its platform and audience.</div></div>
+      </div>
+      <div class="svc-item">
+        <div class="svc-head"><span class="s-num">(03)</span><span class="s-name">AI Social &amp; Branding</span><span class="s-plus">+</span></div>
+        <div class="svc-body"><div class="svc-body-inner">Brand identity and social content systems powered by AI. Consistent visual language, scroll-stopping social assets, and a brand that scales across every channel without losing its soul.</div></div>
+      </div>
+      <div class="svc-item">
+        <div class="svc-head"><span class="s-num">(04)</span><span class="s-name">AI Post-Production</span><span class="s-plus">+</span></div>
+        <div class="svc-body"><div class="svc-body-inner">Neural color, generative sound, VFX, and editing — the full finishing pipeline accelerated by AI. Cinematic results at a fraction of traditional time and cost.</div></div>
+      </div>
+      <div class="svc-item">
+        <div class="svc-head"><span class="s-num">(05)</span><span class="s-name">AI Direction &amp; Consulting</span><span class="s-plus">+</span></div>
+        <div class="svc-body"><div class="svc-body-inner">Strategic creative direction for the post-camera era. We help studios and brands integrate AI into their workflow — mapping where it creates real leverage, then guiding the build.</div></div>
+      </div>
+      <div class="svc-item">
+        <div class="svc-head"><span class="s-num">(06)</span><span class="s-name">Classic Production</span><span class="s-plus">+</span></div>
+        <div class="svc-body"><div class="svc-body-inner">Traditional photography and videography, elevated by an AI-native studio. Real cameras, real sets, real craft — seamlessly blended with generative tools when the story calls for it.</div></div>
+      </div>
     </div>
-  </div>
-  <div class="work-item r">
-    <div class="w-bg" style="background-image:url('work1.jpg')"></div>
-    <div class="w-scrim"></div>
-    <div class="work-meta">
-      <div class="w-title"><span class="cnum">©02</span> Negative Space</div>
-      <div class="w-info"><div class="w-cat">Short · Neural Sound</div><div class="w-award">TIFF 2024</div></div>
-    </div>
-  </div>
-  <div class="work-item r">
-    <div class="w-bg" style="background-image:url('about3.jpg')"></div>
-    <div class="w-scrim"></div>
-    <div class="work-meta">
-      <div class="w-title"><span class="cnum">©03</span> The Signal</div>
-      <div class="w-info"><div class="w-cat">Experimental · Gen Score</div><div class="w-award">Sundance</div></div>
-    </div>
-  </div>
-</section>
+  </section>
 
-<!-- SERVICES accordion -->
-<section class="services r" id="services">
-  <div class="sec-label-row"><span class="sec-label">Capabilities</span><span class="sec-edition">© Edition 04</span></div>
-  <h2 class="copy-title"><span class="cmark">©</span>Services<span class="cnum">(06)</span></h2>
-  <div class="svc-acc">
-    <div class="svc-item open">
-      <div class="svc-head"><span class="s-num">(01)</span><span class="s-name">Creative AI Visuals</span><span class="s-plus">+</span></div>
-      <div class="svc-body"><div class="svc-body-inner">Original AI-generated imagery, concept art, and visual worlds built for film, campaigns, and brands. From mood and look development to finished frames — art-directed, never generic.</div></div>
-    </div>
-    <div class="svc-item">
-      <div class="svc-head"><span class="s-num">(02)</span><span class="s-name">AI Marketing</span><span class="s-plus">+</span></div>
-      <div class="svc-body"><div class="svc-body-inner">End-to-end AI-driven campaigns — visuals, copy, and performance analytics. We turn one idea into dozens of tailored cuts, posters, and ads, each optimised for its platform and audience.</div></div>
-    </div>
-    <div class="svc-item">
-      <div class="svc-head"><span class="s-num">(03)</span><span class="s-name">AI Social &amp; Branding</span><span class="s-plus">+</span></div>
-      <div class="svc-body"><div class="svc-body-inner">Brand identity and social content systems powered by AI. Consistent visual language, scroll-stopping social assets, and a brand that scales across every channel without losing its soul.</div></div>
-    </div>
-    <div class="svc-item">
-      <div class="svc-head"><span class="s-num">(04)</span><span class="s-name">AI Post-Production</span><span class="s-plus">+</span></div>
-      <div class="svc-body"><div class="svc-body-inner">Neural color, generative sound, VFX, and editing — the full finishing pipeline accelerated by AI. Cinematic results at a fraction of traditional time and cost.</div></div>
-    </div>
-    <div class="svc-item">
-      <div class="svc-head"><span class="s-num">(05)</span><span class="s-name">AI Direction &amp; Consulting</span><span class="s-plus">+</span></div>
-      <div class="svc-body"><div class="svc-body-inner">Strategic creative direction for the post-camera era. We help studios and brands integrate AI into their workflow — mapping where it creates real leverage, then guiding the build.</div></div>
-    </div>
-    <div class="svc-item">
-      <div class="svc-head"><span class="s-num">(06)</span><span class="s-name">Classic Production</span><span class="s-plus">+</span></div>
-      <div class="svc-body"><div class="svc-body-inner">Traditional photography and videography, elevated by an AI-native studio. Real cameras, real sets, real craft — seamlessly blended with generative tools when the story calls for it.</div></div>
-    </div>
-  </div>
-</section>
+  <!-- WORK full-bleed -->
+  <section class="work" id="work">
+    <div class="sec-tag" style="padding-top:60px;">04 / Selected Work</div>
+    <a href="work.html#cs01" class="work-item r">
+      <div class="w-bg" style="background-image:url('hero.png')"></div>
+      <div class="w-scrim"></div>
+      <div class="work-meta">
+        <div class="w-cat">AI Visual World · Brand Identity</div>
+        <div class="w-title">ERATO</div>
+        <p class="w-desc">A complete AI-generated visual world — cinematic architecture, atmospheric portraiture, generative environments that form Layer Nine's own brand identity.</p>
+      </div>
+    </a>
+    <a href="work.html#cs02" class="work-item r">
+      <div class="w-bg" style="background-image:url('magnific_mimi-same-character-refer_aQWC13dfSh.png')"></div>
+      <div class="w-scrim"></div>
+      <div class="work-meta">
+        <div class="w-cat">AI Marketing · Skincare Campaign</div>
+        <div class="w-title">SKAI</div>
+        <p class="w-desc">A Gen-Z skincare campaign built around Mimi, an AI-native character locked across every shot — product, lifestyle, and film.</p>
+      </div>
+    </a>
+  </section>
 
-<!-- REEL -->
-<section class="reel r">
-  <div class="reel-bg" style="background-image:url('work1.jpg')"></div>
-  <div class="reel-scrim"></div>
-  <a href="#" class="reel-play">Play <span class="pbtn">▶</span> Reel</a>
-</section>
+  <!-- CTA -->
+  <section class="cta r" id="contact">
+    <div class="cta-glow"></div>
+    <div class="sec-tag" style="padding:0;justify-content:center;">05 / Begin Your Project</div>
+    <h2 class="sec-title" style="padding:0;justify-content:center;margin-top:20px;">Let's Create</h2>
+    <p>We're here to turn your vision into something worth watching.</p>
+    <a href="mailto:studio@layernine.studio" class="cta-btn">studio@layernine.studio →</a>
+  </section>
 
-<!-- CTA -->
-<section class="cta r" id="contact">
-  <div class="cta-glow"></div>
-  <div class="sec-label-row" style="justify-content:center;"><span class="sec-label">Begin Your Project</span></div>
-  <h2 class="copy-title"><span class="cmark">©</span>Let's Create</h2>
-  <p>We're here to turn your vision into something worth watching.</p>
-  <a href="mailto:studio@layernine.studio" class="cta-btn">studio@layernine.studio →</a>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <div class="footer-top">
-    <div class="footer-brand">
-      <img src="logo-text.png" alt="Layer Nine" class="logo-wordmark">
-      <p>Creative Systems for the Post-Camera Era. Studio / Lab / Films — Kuala Lumpur.</p>
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-brand-name">LAYER NINE</div>
+        <p>Creative Systems for the Post-Camera Era. Studio / Lab / Films — Kuala Lumpur.</p>
+      </div>
       <div class="f-social"><a href="#">IG</a><a href="#">X</a><a href="#">LI</a><a href="#">VIMEO</a><a href="#">YT</a></div>
     </div>
-    <div class="f-col"><h4>Studio</h4><ul><li><a href="#about">About</a></li><li><a href="work.html">Work</a></li><li><a href="#services">Services</a></li></ul></div>
-    <div class="f-col"><h4>Services</h4><ul><li><a href="#services">AI Direction</a></li><li><a href="#services">Neural Color</a></li><li><a href="#services">Generative Worlds</a></li></ul></div>
-    <div class="f-col"><h4>Connect</h4><ul><li><a href="mailto:studio@layernine.studio">Email</a></li><li><a href="#">Instagram</a></li><li><a href="#">Vimeo</a></li></ul></div>
-  </div>
-  <div class="footer-bottom">
-    <p>© 2026 Layer Nine Studio. All rights reserved.</p>
-    <p>layernine.studio</p>
-  </div>
-</footer>
+    <div class="footer-bottom">
+      <p>© 2026 Layer Nine Studio. All rights reserved.</p>
+      <p>layernine.studio</p>
+    </div>
+  </footer>
+
+</div>
 
 <script>
-// Cursor
-const cur=document.getElementById('cur'),cr=document.getElementById('cur-r');
-let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
-(function loop(){rx+=(mx-rx)*.14;ry+=(my-ry)*.14;cr.style.left=rx+'px';cr.style.top=ry+'px';requestAnimationFrame(loop);})();
-document.querySelectorAll('a,.svc-head,.reel-play,.nav-burger').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{cur.style.width='16px';cur.style.height='16px';cr.style.width='54px';cr.style.height='54px';});
-  el.addEventListener('mouseleave',()=>{cur.style.width='8px';cur.style.height='8px';cr.style.width='34px';cr.style.height='34px';});
+// Rail clock (Kuala Lumpur)
+const railClock=document.getElementById('railClock');
+function tick(){
+  railClock.textContent=new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Kuala_Lumpur',hour:'2-digit',minute:'2-digit',second:'2-digit'}).format(new Date());
+}
+tick();setInterval(tick,1000);
+
+// Mobile rail toggle
+const rail=document.getElementById('rail'),railBurger=document.getElementById('railBurger');
+railBurger.addEventListener('click',()=>rail.classList.toggle('open'));
+document.querySelectorAll('.rail-nav a').forEach(a=>a.addEventListener('click',()=>rail.classList.remove('open')));
+
+// Hero reticle
+const hero=document.querySelector('.hero'),reticleV=document.getElementById('reticleV'),reticleH=document.getElementById('reticleH'),reticleDot=document.getElementById('reticleDot'),reticleLabel=document.getElementById('reticleLabel');
+hero.addEventListener('mousemove',e=>{
+  const r=hero.getBoundingClientRect();
+  const x=Math.min(1,Math.max(0,(e.clientX-r.left)/r.width));
+  const y=Math.min(1,Math.max(0,(e.clientY-r.top)/r.height));
+  const xPct=(x*100)+'%',yPct=(y*100)+'%';
+  reticleV.style.left=xPct;reticleH.style.top=yPct;
+  reticleDot.style.left=xPct;reticleDot.style.top=yPct;
+  reticleLabel.style.left=xPct;reticleLabel.style.top=yPct;
+  reticleLabel.textContent=`X ${Math.round(x*1000)} · Y ${Math.round(y*1000)}`;
 });
-// Nav bg on scroll
-const nav=document.getElementById('nav');
-window.addEventListener('scroll',()=>{const y=window.scrollY;nav.style.background=y>60?'rgba(10,10,10,.9)':'transparent';nav.style.backdropFilter=y>60?'blur(12px)':'none';nav.style.padding=y>60?'14px var(--pad)':'22px var(--pad)';},{passive:true});
-// Reveal
-const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');});},{threshold:.1});
-document.querySelectorAll('.r').forEach(el=>obs.observe(el));
-// Hero rotating tagline
-const rot=document.getElementById('heroRot').querySelectorAll('span');let ri=0;
-setInterval(()=>{rot[ri].classList.remove('active');ri=(ri+1)%rot.length;rot[ri].classList.add('active');},2800);
-// About cycling headline + image (slide-up)
-const aHead=document.getElementById('aboutHead').querySelectorAll('.item');
-const aSlides=document.querySelectorAll('.about-img .slide');let ai=0;
-setInterval(()=>{
-  const prev=ai;ai=(ai+1)%aHead.length;
-  aHead[prev].classList.remove('active');aHead[ai].classList.add('active');
-  aSlides[prev].classList.add('leaving');aSlides[prev].classList.remove('active');
-  aSlides[ai].classList.add('active');
-  setTimeout(()=>aSlides[prev].classList.remove('leaving'),900);
-},3400);
+
 // Services accordion
 document.querySelectorAll('.svc-item').forEach(item=>{
   const head=item.querySelector('.svc-head');const body=item.querySelector('.svc-body');
@@ -428,6 +312,10 @@ document.querySelectorAll('.svc-item').forEach(item=>{
     if(!isOpen){item.classList.add('open');body.style.maxHeight=body.scrollHeight+'px';}
   });
 });
+
+// Reveal on scroll
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');});},{threshold:.1});
+document.querySelectorAll('.r').forEach(el=>obs.observe(el));
 </script>
 </body>
 </html>
