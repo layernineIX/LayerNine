@@ -3,389 +3,135 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Work — Layer Nine Studio</title>
+<title>Work — Selected Projects | Layer Nine Studio</title>
+<meta name="description" content="Selected work from Layer Nine: ERATO, an art-forward streetwear campaign; SKAI, a full skincare brand rollout; and Giveh, a boutique clothing shoot.">
+<link rel="canonical" href="https://layernine.studio/work.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Work — Layer Nine Studio">
+<meta property="og:description" content="Selected work: ERATO, SKAI, and Giveh.">
+<meta property="og:url" content="https://layernine.studio/work.html">
+<meta property="og:image" content="https://layernine.studio/assets/img/erato-hero.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{font-size:16px;scroll-behavior:smooth}
-body{background:#0a0a0a;color:#e2ddd6;font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
-a{color:inherit;text-decoration:none}
-img,video{display:block;max-width:100%}
-:root{
-  --white:#e2ddd6;--white-50:rgba(226,221,214,.5);--white-30:rgba(226,221,214,.3);
-  --white-15:rgba(226,221,214,.15);--white-08:rgba(226,221,214,.08);
-  --accent:#35858E;--accent-bright:#4ba3ad;--accent-dim:rgba(53,133,142,.12);
-  --black:#0a0a0a;--surface:#0f0f0f;--surface2:#141414;--pad:clamp(24px,4vw,64px);--rail-w:220px;
-}
-.noise{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.04;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
-@keyframes statusPulse{0%,100%{opacity:1}50%{opacity:.3}}
-
-/* RAIL NAV */
-.rail{position:fixed;top:0;left:0;width:var(--rail-w);height:100vh;z-index:200;background:var(--black);border-right:1px solid var(--white-08);padding:28px 24px;display:flex;flex-direction:column;justify-content:space-between;}
-.rail-top{display:flex;flex-direction:column;gap:8px;}
-.rail-logo{font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;color:var(--white);letter-spacing:.05em;}
-.rail-status{font-size:10px;letter-spacing:.1em;color:var(--accent-bright);display:flex;align-items:center;gap:6px;}
-.status-dot{width:5px;height:5px;border-radius:50%;background:var(--accent-bright);animation:statusPulse 1.8s ease-in-out infinite;}
-.rail-burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:6px;}
-.rail-burger span{width:22px;height:1.5px;background:var(--white);display:block;}
-.rail-nav{display:flex;flex-direction:column;gap:18px;list-style:none;}
-.rail-nav a{font-size:12px;letter-spacing:.06em;color:var(--white-50);display:flex;align-items:center;gap:10px;transition:color .2s;}
-.rail-nav a:hover,.rail-nav a.current{color:var(--white);}
-.rail-nav .idx{font-size:11px;color:var(--accent-bright);}
-.rail-bottom{display:flex;flex-direction:column;gap:4px;}
-.rail-loc{font-size:10px;letter-spacing:.1em;color:var(--white-30);text-transform:uppercase;}
-.rail-clock{font-family:'Orbitron',sans-serif;font-size:16px;color:var(--white);}
-
-/* MAIN */
-.main{margin-left:var(--rail-w);}
-section{position:relative;z-index:2;}
-.sec-tag{font-size:12px;letter-spacing:.1em;color:var(--white-30);padding:0 var(--pad);margin-bottom:20px;}
-
-/* WORK HERO */
-.work-hero{padding:150px 0 60px;border-bottom:1px solid var(--white-08);}
-.page-title{font-family:'Orbitron',sans-serif;font-weight:700;font-size:clamp(2.4rem,6vw,4.4rem);color:var(--white);padding:0 var(--pad);line-height:1.02;margin-bottom:18px;}
-.page-sub{font-size:15px;color:var(--white-50);padding:0 var(--pad);letter-spacing:.02em;}
-
-/* CASE CARDS INDEX */
-.cards{padding:80px var(--pad);border-bottom:1px solid var(--white-08);display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--white-08);border:1px solid var(--white-08);}
-.case-card{background:var(--black);display:flex;flex-direction:column;transition:background .3s;}
-.case-card:hover{background:var(--surface);}
-.cc-img{position:relative;aspect-ratio:16/10;overflow:hidden;background:#111;}
-.cc-img div{position:absolute;inset:0;background-size:cover;background-position:center;transform:scale(1.03);transition:transform .8s cubic-bezier(.16,1,.3,1);}
-.case-card:hover .cc-img div{transform:scale(1.1);}
-.cc-body{padding:32px;}
-.cc-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;}
-.tag{font-size:10px;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--white-08);padding:6px 12px;color:var(--white-30);}
-.tag.ac{border-color:rgba(75,163,173,.4);color:var(--accent-bright);}
-.cc-title{font-family:'Orbitron',sans-serif;font-weight:700;font-size:clamp(1.3rem,2.2vw,1.7rem);color:var(--white);margin-bottom:12px;}
-.cc-desc{font-size:14px;color:var(--white-50);line-height:1.8;margin-bottom:20px;}
-.cc-link{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-bright);display:inline-flex;align-items:center;gap:8px;transition:gap .2s;}
-.case-card:hover .cc-link{gap:12px;}
-
-/* CASE STUDY */
-.case-study{border-bottom:1px solid var(--white-08);}
-.cs-hero{position:relative;height:64vh;min-height:440px;overflow:hidden;cursor:zoom-in;}
-.cs-hero img{width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.16,1,.3,1);}
-.cs-hero:hover img{transform:scale(1.03);}
-.cs-hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,10,.85),transparent 55%);display:flex;align-items:flex-end;padding:0 var(--pad) 40px;pointer-events:none;}
-.cs-hero-tag{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-bright);}
-.cs-brief{padding:56px var(--pad);display:grid;grid-template-columns:1fr 1.4fr;gap:48px;}
-.cs-tags{display:flex;flex-wrap:wrap;gap:8px;align-content:flex-start;}
-.cs-title{font-family:'Orbitron',sans-serif;font-weight:700;font-size:clamp(1.8rem,3.4vw,2.6rem);color:var(--white);margin-bottom:16px;line-height:1.1;}
-.cs-desc{font-size:15px;color:var(--white-50);line-height:1.85;max-width:640px;}
-
-/* GALLERY */
-.g3{display:grid;grid-template-columns:1fr 1fr 1fr;}
-.g2{display:grid;grid-template-columns:1fr 1fr;}
-.cell{overflow:hidden;position:relative;background:#111;cursor:zoom-in;}
-.cell img{transition:transform .8s cubic-bezier(.16,1,.3,1);width:100%;height:100%;object-fit:cover;}
-.cell:hover img{transform:scale(1.05);}
-.cell.tall{aspect-ratio:3/4;}
-.cell.wide{aspect-ratio:16/9;}
-.cm{position:absolute;bottom:0;left:0;right:0;padding:18px;background:linear-gradient(transparent,rgba(10,10,10,.8));opacity:0;transition:opacity .3s;}
-.cell:hover .cm{opacity:1;}
-.cm-t{font-family:'Orbitron',sans-serif;font-size:12px;letter-spacing:.08em;color:var(--white);}
-.cm-s{font-size:11px;color:var(--accent-bright);letter-spacing:.06em;margin-top:3px;}
-
-/* VIDEO STRIP */
-.vstrip{padding:48px var(--pad);background:var(--surface);border-top:1px solid var(--white-08);}
-.vs-label{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--white-30);margin-bottom:24px;}
-.vs-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
-.vs-cell{overflow:hidden;position:relative;background:#050505;border:1px solid var(--white-08);cursor:zoom-in;aspect-ratio:9/16;}
-.vs-cell video{width:100%;height:100%;object-fit:cover;}
-.vs-meta{position:absolute;bottom:0;left:0;right:0;padding:14px;background:linear-gradient(transparent,rgba(10,10,10,.85));}
-.vs-t{font-size:11px;letter-spacing:.08em;color:var(--white);}
-.vs-s{font-size:10px;color:var(--accent-bright);letter-spacing:.06em;margin-top:2px;}
-
-/* CTA */
-.work-cta{padding:120px var(--pad);text-align:center;}
-.work-cta p{font-size:14px;color:var(--white-30);letter-spacing:.02em;margin-bottom:28px;}
-.cta-btn{display:inline-flex;align-items:center;gap:12px;background:var(--white);color:var(--black);padding:17px 40px;border-radius:100px;font-weight:600;font-size:14px;transition:all .25s;}
-.cta-btn:hover{background:var(--accent-bright);}
-
-/* FOOTER */
-footer{padding:56px var(--pad) 36px;background:var(--surface);border-top:1px solid var(--white-08);}
-.footer-top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:32px;margin-bottom:36px;}
-.footer-brand-name{font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;color:var(--white);letter-spacing:.05em;margin-bottom:12px;}
-.footer-brand p{font-size:13px;color:var(--white-30);line-height:1.8;max-width:320px;}
-.f-social{display:flex;gap:20px;align-items:flex-start;}
-.f-social a{font-size:10px;letter-spacing:.14em;color:var(--white-30);transition:color .2s;}
-.f-social a:hover{color:var(--accent-bright);}
-.footer-bottom{border-top:1px solid var(--white-08);padding-top:20px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;}
-.footer-bottom p{font-size:11px;color:var(--white-30);letter-spacing:.04em;}
-
-.r{opacity:0;transform:translateY(34px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1);}
-.r.in{opacity:1;transform:translateY(0);}
-
-/* LIGHTBOX */
-.lb{display:none;position:fixed;inset:0;z-index:999;background:rgba(0,0,0,.95);backdrop-filter:blur(8px);align-items:center;justify-content:center;cursor:zoom-out;}
-.lb.open{display:flex;}
-.lb-inner{position:relative;max-width:92vw;max-height:92vh;display:flex;align-items:center;justify-content:center;}
-.lb-inner img,.lb-inner video{max-width:90vw;max-height:88vh;object-fit:contain;width:auto;height:auto;}
-.lb-close{position:fixed;top:24px;right:32px;font-size:28px;color:rgba(226,221,214,.6);cursor:pointer;line-height:1;transition:color .2s;z-index:1000;}
-.lb-close:hover{color:var(--accent-bright);}
-.lb-caption{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(226,221,214,.4);}
-
-@media(max-width:960px){
-  .rail{position:fixed;width:100%;height:64px;flex-direction:row;align-items:center;justify-content:space-between;padding:0 20px;border-right:none;border-bottom:1px solid var(--white-08);}
-  .rail-top{flex-direction:row;align-items:center;gap:16px;}
-  .rail-status,.rail-bottom{display:none;}
-  .rail-burger{display:flex;}
-  .rail-nav{display:none;position:fixed;top:64px;left:0;right:0;background:var(--black);border-bottom:1px solid var(--white-08);flex-direction:column;padding:24px 20px;gap:20px;z-index:150;}
-  .rail.open .rail-nav{display:flex;}
-  .main{margin-left:0;margin-top:64px;}
-  .work-hero{padding-top:70px;}
-  .cards{grid-template-columns:1fr;padding:24px;}
-  .cs-brief{grid-template-columns:1fr;padding:40px 24px;gap:24px;}
-  .g3,.g2,.vs-grid{grid-template-columns:1fr 1fr;}
-  .vstrip{padding:32px 24px;}
-}
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Bricolage+Grotesque:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/site.css">
 </head>
 <body>
-<div class="noise"></div>
+<div class="ln-grain"></div>
 
-<!-- LIGHTBOX -->
-<div class="lb" id="lb" onclick="closeLB(event)">
-  <span class="lb-close" onclick="closeLB()">×</span>
-  <div class="lb-inner" id="lb-inner"></div>
-  <div class="lb-caption" id="lb-caption"></div>
+<nav class="ln-nav">
+  <a href="index.html" class="ln-logo"><span class="ln-logo-mark"></span>Layer Nine</a>
+  <span class="ln-nav-links">
+    <a href="about.html">About</a>
+    <a href="services.html">Services</a>
+    <a href="work.html" class="current">Work</a>
+    <a href="lab.html">Lab</a>
+    <a href="contact.html" class="ln-nav-cta">Contact</a>
+  </span>
+  <button class="ln-burger" id="lnBurger" aria-label="Toggle menu"><span></span><span></span></button>
+</nav>
+<div class="ln-mobile-panel" id="lnMobilePanel">
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="services.html">Services</a>
+  <a href="work.html" class="current">Work</a>
+  <a href="lab.html">Lab</a>
+  <a href="contact.html">Contact</a>
 </div>
 
-<!-- RAIL NAV -->
-<div class="rail" id="rail">
-  <div class="rail-top">
-    <a href="index.html" class="rail-logo">LAYER NINE</a>
-    <div class="rail-status"><span class="status-dot"></span>SYSTEM ONLINE</div>
-    <button class="rail-burger" id="railBurger" aria-label="Toggle menu"><span></span><span></span></button>
-  </div>
-  <nav class="rail-nav">
-    <a href="index.html"><span class="idx">01</span>Home</a>
-    <a href="about.html"><span class="idx">02</span>About</a>
-    <a href="services.html"><span class="idx">03</span>Services</a>
-    <a href="work.html" class="current"><span class="idx">04</span>Work</a>
-    <a href="contact.html"><span class="idx">05</span>Contact</a>
-  </nav>
-  <div class="rail-bottom">
-    <div class="rail-loc">Kuala Lumpur</div>
-    <div class="rail-clock" id="railClock">00:00:00</div>
-  </div>
-</div>
-
-<div class="main">
-
-  <!-- WORK HERO -->
-  <section class="work-hero r">
-    <div class="sec-tag">04 / Selected Work</div>
+<main>
+  <section class="page-hero" data-rise>
+    <div class="eyebrow">04 / Selected Work</div>
     <h1 class="page-title">Selected Work</h1>
     <p class="page-sub">Concept campaigns developed in-house to show our range.</p>
   </section>
 
-  <!-- CASE STUDY CARDS INDEX -->
-  <section class="cards r">
-    <a href="#cs01" class="case-card">
-      <div class="cc-img"><div style="background-image:url('hero.png')"></div></div>
-      <div class="cc-body">
-        <div class="cc-tags"><span class="tag ac">Streetwear</span><span class="tag">Campaign</span><span class="tag">AI Visuals</span><span class="tag">Video</span></div>
-        <div class="cc-title">ERATO — Worn History</div>
-        <p class="cc-desc">An art-forward streetwear campaign layering Mughal miniatures, Japanese ukiyo-e, and vintage illustration onto everyday garments — shot against Kuala Lumpur's own contrast of warm amber and cool blue light.</p>
-        <span class="cc-link">View case study →</span>
-      </div>
-    </a>
-    <a href="#cs02" class="case-card">
-      <div class="cc-img"><div style="background-image:url('magnific_beauty-portrait-southeast_iA1iQXW3uK.jpeg')"></div></div>
-      <div class="cc-body">
-        <div class="cc-tags"><span class="tag ac">Beauty</span><span class="tag">Campaign</span><span class="tag">Full Rollout</span></div>
-        <div class="cc-title">SKAI — Your skin. Your sky.</div>
-        <p class="cc-desc">A four-product skincare campaign built end-to-end: 12 campaign stills, 6 videos, full brand rollout.</p>
-        <span class="cc-link">View case study →</span>
-      </div>
-    </a>
-  </section>
-
-  <!-- ══════════════════════════════
-    CASE STUDY 01 — ERATO
-  ══════════════════════════════ -->
-  <section class="case-study" id="cs01">
-    <div class="cs-hero r" onclick="openLB('hero.png','ERATO — Worn History')">
-      <img src="hero.png" alt="ERATO — Worn History">
-      <div class="cs-hero-overlay"><div class="cs-hero-tag">ERATO · Streetwear Campaign</div></div>
-    </div>
-    <div class="cs-brief r">
-      <div class="cs-tags">
-        <span class="tag ac">Streetwear</span>
-        <span class="tag ac">Campaign</span>
-        <span class="tag ac">AI Visuals</span>
-        <span class="tag ac">Video</span>
-      </div>
-      <div>
-        <h2 class="cs-title">ERATO — Worn History</h2>
-        <p class="cs-desc">An art-forward streetwear campaign layering Mughal miniatures, Japanese ukiyo-e, and vintage illustration onto everyday garments — shot against Kuala Lumpur's own contrast of warm amber and cool blue light.</p>
-      </div>
-    </div>
-    <div class="g3 r">
-      <div class="cell tall" onclick="openLB('about1.jpg','ERATO · Portrait Study 01')">
-        <img src="about1.jpg" alt="ERATO Portrait Study">
-        <div class="cm"><div class="cm-t">Portrait Study</div><div class="cm-s">Amber Light · 01</div></div>
-      </div>
-      <div class="cell tall" onclick="openLB('about2.jpg','ERATO · Environment Study')">
-        <img src="about2.jpg" alt="ERATO Environment Study">
-        <div class="cm"><div class="cm-t">Environment Study</div><div class="cm-s">Generative Backdrop</div></div>
-      </div>
-      <div class="cell tall" onclick="openLB('about3.jpg','ERATO · Portrait Study 02')">
-        <img src="about3.jpg" alt="ERATO Portrait Study 02">
-        <div class="cm"><div class="cm-t">Portrait Study</div><div class="cm-s">Blue Light · 02</div></div>
-      </div>
-    </div>
-    <div class="g2 r">
-      <div class="cell wide" onclick="openLB('work1.jpg','ERATO · Amber Corridor')">
-        <img src="work1.jpg" alt="ERATO Amber Corridor">
-        <div class="cm"><div class="cm-t">Amber Corridor</div><div class="cm-s">Campaign Visual</div></div>
-      </div>
-      <div class="cell wide" onclick="openLB('hero.png','ERATO — Worn History')">
-        <img src="hero.png" alt="ERATO Hero Revisit">
-        <div class="cm"><div class="cm-t">Worn History</div><div class="cm-s">Hero Visual</div></div>
-      </div>
+  <section class="ln-section" data-rise>
+    <div class="cards">
+      <a href="work/erato.html" class="case-card">
+        <div class="cc-img">
+          <picture>
+            <source srcset="assets/img/erato-hero-card.webp" type="image/webp">
+            <img src="assets/img/erato-hero-card.jpg" alt="ERATO — Worn History campaign still" loading="lazy" width="960" height="600">
+          </picture>
+        </div>
+        <div class="cc-body">
+          <div class="cc-tags"><span class="tag ac">Streetwear</span><span class="tag">Campaign</span><span class="tag">AI Visuals</span></div>
+          <div class="cc-title">ERATO — Worn History</div>
+          <p class="cc-desc">An art-forward streetwear campaign layering historical illustration onto everyday garments — shot against Kuala Lumpur's own contrast of warm amber and cool blue light.</p>
+          <span class="cc-link">View case study →</span>
+        </div>
+      </a>
+      <a href="work/skai.html" class="case-card">
+        <div class="cc-img">
+          <picture>
+            <source srcset="assets/img/skai-portrait-hero-card.webp" type="image/webp">
+            <img src="assets/img/skai-portrait-hero-card.jpg" alt="SKAI — Your skin. Your sky. campaign still" loading="lazy" width="900" height="562">
+          </picture>
+        </div>
+        <div class="cc-body">
+          <div class="cc-tags"><span class="tag ac">Beauty</span><span class="tag">Campaign</span><span class="tag">Full Rollout</span></div>
+          <div class="cc-title">SKAI — Your skin. Your sky.</div>
+          <p class="cc-desc">A skincare campaign built end-to-end: campaign stills, short films, and full brand rollout around a single consistent character.</p>
+          <span class="cc-link">View case study →</span>
+        </div>
+      </a>
+      <a href="work/giveh.html" class="case-card">
+        <div class="cc-img">
+          <div class="slot-placeholder" style="position:relative; aspect-ratio:16/10;">Giveh — campaign still<br>(asset pending)</div>
+        </div>
+        <div class="cc-body">
+          <div class="cc-tags"><span class="tag ac">Boutique</span><span class="tag">Clothing</span></div>
+          <div class="cc-title">Giveh</div>
+          <p class="cc-desc">A single-day shoot for a clothing boutique, edited into stills and short-form reels.</p>
+          <span class="cc-link">View case study →</span>
+        </div>
+      </a>
     </div>
   </section>
 
-  <!-- ══════════════════════════════
-    CASE STUDY 02 — SKAI
-  ══════════════════════════════ -->
-  <section class="case-study" id="cs02">
-    <div class="cs-hero r" onclick="openLB('magnific_beauty-portrait-southeast_iA1iQXW3uK.jpeg','SKAI — Your skin. Your sky.')">
-      <img src="magnific_beauty-portrait-southeast_iA1iQXW3uK.jpeg" alt="SKAI — Your skin. Your sky.">
-      <div class="cs-hero-overlay"><div class="cs-hero-tag">SKAI · Skincare Campaign</div></div>
-    </div>
-    <div class="cs-brief r">
-      <div class="cs-tags">
-        <span class="tag ac">Beauty</span>
-        <span class="tag ac">Campaign</span>
-        <span class="tag ac">Full Rollout</span>
-      </div>
-      <div>
-        <h2 class="cs-title">SKAI — Your skin. Your sky.</h2>
-        <p class="cs-desc">A four-product skincare campaign built end-to-end: 12 campaign stills, 6 videos, full brand rollout.</p>
-      </div>
-    </div>
-    <div class="g3 r">
-      <div class="cell tall" onclick="openLB('magnific_mimi-same-character-refer_aQWC13dfSh.png','Daily Essence · Navy Campaign Hero')">
-        <img src="magnific_mimi-same-character-refer_aQWC13dfSh.png" alt="Mimi Navy">
-        <div class="cm"><div class="cm-t">Daily Essence</div><div class="cm-s">Navy · Campaign Hero</div></div>
-      </div>
-      <div class="cell tall" onclick="openLB('magnific_mimi-same-character-refer_hEnakETvqL.png','Viral Format · Social First Gen Z')">
-        <img src="magnific_mimi-same-character-refer_hEnakETvqL.png" alt="Mimi Peek">
-        <div class="cm"><div class="cm-t">Viral Format</div><div class="cm-s">Social First · Gen Z</div></div>
-      </div>
-      <div class="cell tall" onclick="openLB('magnific_mimi-same-character-refer_jSms6eeLD0.png','Gen Z Moment · Hands on Cheeks')">
-        <img src="magnific_mimi-same-character-refer_jSms6eeLD0.png" alt="Mimi Cheeks">
-        <div class="cm"><div class="cm-t">Gen Z Moment</div><div class="cm-s">Hands on Cheeks</div></div>
-      </div>
-    </div>
-    <div class="g2 r">
-      <div class="cell wide" onclick="openLB('magnific_same-girl-as-character-re_WMwWSmvcXe.png','Night Repair · Sensory Terracotta')">
-        <img src="magnific_same-girl-as-character-re_WMwWSmvcXe.png" alt="Mimi Sensory">
-        <div class="cm"><div class="cm-t">Night Repair</div><div class="cm-s">Sensory · Terracotta</div></div>
-      </div>
-      <div class="cell wide" onclick="openLB('magnific_same-girl-mimi-character-_YVUYSh5WeC.png','Mimi — Character Master Reference')">
-        <img src="magnific_same-girl-mimi-character-_YVUYSh5WeC.png" alt="Mimi Master">
-        <div class="cm"><div class="cm-t">Mimi — Character</div><div class="cm-s">Master Reference</div></div>
-      </div>
-    </div>
-
-    <!-- VIDEOS -->
-    <div class="vstrip r">
-      <div class="vs-label">Campaign Videos — Kling AI · Colour Graded by Layer Nine</div>
-      <div class="vs-grid">
-        <div class="vs-cell" onclick="openLBVideo('skai_videos/skai_v1_bottle_warm.mp4','Bottle Reveal · Product 5s 9:16')">
-          <video autoplay muted loop playsinline src="skai_videos/skai_v1_bottle_warm.mp4"></video>
-          <div class="vs-meta"><div class="vs-t">Bottle Reveal</div><div class="vs-s">Product · 5s</div></div>
-        </div>
-        <div class="vs-cell" onclick="openLBVideo('skai_videos/skai_v2_bathroom_warm.mp4','Morning Ritual · Lifestyle 5s 9:16')">
-          <video autoplay muted loop playsinline src="skai_videos/skai_v2_bathroom_warm.mp4"></video>
-          <div class="vs-meta"><div class="vs-t">Morning Ritual</div><div class="vs-s">Lifestyle · 5s</div></div>
-        </div>
-        <div class="vs-cell" onclick="openLBVideo('skai_videos/skai_v4_portrait_warm.mp4','Portrait Film · Character 5s 9:16')">
-          <video autoplay muted loop playsinline src="skai_videos/skai_v4_portrait_warm.mp4"></video>
-          <div class="vs-meta"><div class="vs-t">Portrait Film</div><div class="vs-s">Character · 5s</div></div>
-        </div>
-        <div class="vs-cell" onclick="openLBVideo('skai_videos/skai_v5_skin_warm.mp4','Skin Texture · Macro 4s 9:16')">
-          <video autoplay muted loop playsinline src="skai_videos/skai_v5_skin_warm.mp4"></video>
-          <div class="vs-meta"><div class="vs-t">Skin Texture</div><div class="vs-s">Macro · 4s</div></div>
-        </div>
-      </div>
-    </div>
+  <section class="about-cta-row" data-rise style="padding:120px var(--pad); text-align:center;">
+    <p style="font-size:14px; color:var(--fg-30); margin-bottom:28px;">Want a campaign like this for your brand?</p>
+    <a href="contact.html" class="btn btn-fill">Start a project →</a>
   </section>
+</main>
 
-  <!-- CTA -->
-  <section class="work-cta r">
-    <p>Want a campaign like this for your brand?</p>
-    <a href="mailto:studio@layernine.studio" class="cta-btn">studio@layernine.studio →</a>
-  </section>
-
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-top">
-      <div class="footer-brand">
-        <div class="footer-brand-name">LAYER NINE</div>
-        <p>Creative Systems for the Post-Camera Era. Studio / Lab / Films — Kuala Lumpur.</p>
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-brand-name">Layer Nine</div>
+      <p>Film &amp; AI production studio — Kuala Lumpur, working with brands everywhere.</p>
+    </div>
+    <div class="f-links">
+      <div class="f-links-col">
+        <div class="f-links-label">Studio</div>
+        <a href="about.html">About</a>
+        <a href="services.html">Services</a>
+        <a href="work.html">Work</a>
+        <a href="lab.html">Lab</a>
       </div>
-      <div class="f-social"><a href="#">IG</a><a href="#">X</a><a href="#">LI</a><a href="#">VIMEO</a><a href="#">YT</a></div>
+      <div class="f-links-col">
+        <div class="f-links-label">Contact</div>
+        <a href="mailto:layernineix@gmail.com">layernineix@gmail.com</a>
+        <a href="contact.html">Contact page</a>
+      </div>
+      <div class="f-links-col">
+        <div class="f-links-label">Legal</div>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms</a>
+      </div>
     </div>
-    <div class="footer-bottom">
-      <p>© 2026 Layer Nine Studio. All rights reserved.</p>
-      <p>layernine.studio</p>
-    </div>
-  </footer>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Layer Nine Studio. All rights reserved.</p>
+    <p>layernine.studio</p>
+  </div>
+</footer>
 
-</div>
-
-<script>
-// Rail clock (Kuala Lumpur)
-const railClock=document.getElementById('railClock');
-function tick(){
-  railClock.textContent=new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Kuala_Lumpur',hour:'2-digit',minute:'2-digit',second:'2-digit'}).format(new Date());
-}
-tick();setInterval(tick,1000);
-
-// Mobile rail toggle
-const rail=document.getElementById('rail'),railBurger=document.getElementById('railBurger');
-railBurger.addEventListener('click',()=>rail.classList.toggle('open'));
-document.querySelectorAll('.rail-nav a').forEach(a=>a.addEventListener('click',()=>rail.classList.remove('open')));
-
-// Reveal on scroll
-const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');});},{threshold:.08});
-document.querySelectorAll('.r').forEach(el=>obs.observe(el));
-
-// LIGHTBOX
-const lb=document.getElementById('lb');
-const lbInner=document.getElementById('lb-inner');
-const lbCap=document.getElementById('lb-caption');
-
-function openLB(src,caption){
-  lbInner.innerHTML=`<img src="${src}" alt="${caption}">`;
-  lbCap.textContent=caption||'';
-  lb.classList.add('open');
-  document.body.style.overflow='hidden';
-}
-
-function openLBVideo(src,caption){
-  lbInner.innerHTML=`<video src="${src}" autoplay controls loop playsinline></video>`;
-  lbCap.textContent=caption||'';
-  lb.classList.add('open');
-  document.body.style.overflow='hidden';
-}
-
-function closeLB(e){
-  if(e&&e.target!==lb&&e.target.className!=='lb-close')return;
-  lb.classList.remove('open');
-  document.body.style.overflow='';
-  lbInner.innerHTML='';
-}
-
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLB({target:lb});});
-</script>
+<script src="assets/js/site.js"></script>
 </body>
 </html>
