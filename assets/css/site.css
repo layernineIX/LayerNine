@@ -61,7 +61,10 @@ button, input, select, textarea { font-family: inherit; }
 .ln-logo { display: flex; align-items: center; gap: 10px; color: var(--fg); flex-shrink: 0; }
 .ln-logo-mark { width: 16px; height: 16px; border: 1.5px solid var(--accent); position: relative; flex: 0 0 auto; }
 .ln-logo-mark::after { content: ''; position: absolute; inset: 3px; background: var(--accent); }
+.ln-logo-word { font-family: var(--display); font-weight: 700; font-size: 15px; letter-spacing: 0; white-space: nowrap; }
+.ln-logo-accent { color: var(--accent); }
 .ln-nav-links { display: flex; gap: 26px; align-items: center; }
+.ln-nav-links a { font-weight: 600; }
 .ln-nav-links a.current { color: var(--fg); }
 .ln-nav-links a.current::after { content: ''; display: block; height: 1px; background: var(--accent); margin-top: 4px; }
 .ln-nav-cta { border: 1px solid var(--accent); background: var(--accent); color: var(--bg) !important; padding: 9px 16px; }
@@ -74,7 +77,7 @@ button, input, select, textarea { font-family: inherit; }
   gap: 22px; overflow-y: auto;
 }
 .ln-mobile-panel.open { display: flex; }
-.ln-mobile-panel a { font-family: var(--mono); font-size: 15px; letter-spacing: .1em; text-transform: uppercase; color: var(--fg-70); }
+.ln-mobile-panel a { font-family: var(--mono); font-weight: 600; font-size: 15px; letter-spacing: .1em; text-transform: uppercase; color: var(--fg-70); }
 .ln-mobile-panel a.current { color: var(--accent-bright); }
 
 /* ---------- HUD side index (home page only) ---------- */
