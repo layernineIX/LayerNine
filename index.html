@@ -59,37 +59,27 @@
 <main class="ln-persp">
 
   <!-- 01 HERO -->
-  <section id="ln-s1" data-screen-label="01 Hero" style="min-height:100vh; display:flex; align-items:center; justify-content:center; overflow:hidden; padding:clamp(90px,11vh,110px) 0 clamp(40px,5vh,60px);">
-    <div data-plane style="width:100%; max-width:1560px; padding:0 clamp(24px,5vw,80px); display:flex; flex-wrap:wrap; align-items:center; gap:clamp(30px,5vw,60px);">
-      <div style="flex:1 1 480px; min-width:0; max-width:700px;">
-        <div class="hero-eyebrow-row">Kuala Lumpur — working with brands everywhere</div>
-        <h1 class="hero-h1">Layer<br>Nine<span class="bar" aria-hidden="true"></span></h1>
-        <p class="hero-lead">We make films and photography for brands — then keep the content coming every month.</p>
-        <div class="hero-actions">
-          <a href="work.html" class="btn">See our work</a>
-          <a href="#ln-s3" class="btn btn-fill">Start a project</a>
-        </div>
-      </div>
+  <section id="ln-s1" data-screen-label="01 Hero" style="min-height:100vh; display:flex; align-items:center; justify-content:center; overflow:hidden; padding:clamp(90px,11vh,110px) clamp(20px,4vw,64px) clamp(40px,5vh,60px);">
+    <div data-plane style="width:100%; max-width:1560px;">
+      <div class="hero-media" id="heroMedia">
+        <div class="hero-media-bg" id="heroMediaBg"></div>
+        <div class="hero-media-scrim" aria-hidden="true"></div>
 
-      <div class="ln-hero-cards">
-        <div class="hc hc-1 slot">
-          <picture>
-            <source srcset="assets/img/skai-portrait-hero-card.webp" type="image/webp">
-            <img src="assets/img/skai-portrait-hero-card.jpg" alt="SKAI campaign portrait still" width="900" height="1116">
-          </picture>
-          <span class="slot-tag">Skai</span>
+        <div class="hero-media-empty">
+          <div class="hero-media-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg>
+          </div>
+          <p class="hero-media-copy">Drop hero footage — full-bleed still, warm amber / cool teal grade</p>
+          <p class="hero-media-sub">or <button type="button" class="hero-browse" id="heroBrowseBtn">browse files</button></p>
+          <input type="file" id="heroFileInput" accept="image/*,video/*" style="display:none;">
         </div>
-        <div class="hc hc-2 slot">
-          <div class="slot-placeholder">Giveh — boutique still<br>(asset pending)</div>
-          <span class="slot-tag">Giveh</span>
+
+        <div class="hero-media-fg">
+          <div class="hero-eyebrow-2">Kuala Lumpur — working with brands everywhere</div>
+          <h1 class="hero-h1-2">Every frame,<br><span class="acc">built with intent.</span></h1>
         </div>
-        <div class="hc hc-3 slot">
-          <picture>
-            <source srcset="assets/img/erato-hero-card.webp" type="image/webp">
-            <img src="assets/img/erato-hero-card.jpg" alt="ERATO campaign hero still" width="960" height="960">
-          </picture>
-          <span class="slot-tag">Erato</span>
-        </div>
+
+        <button type="button" class="hero-replay" id="heroReplay"><span>Replay</span> ↻</button>
       </div>
     </div>
   </section>
@@ -322,5 +312,6 @@
 
 <script src="assets/js/site.js"></script>
 <script src="assets/js/contact.js"></script>
+<script src="assets/js/hero-drop.js"></script>
 </body>
 </html>
