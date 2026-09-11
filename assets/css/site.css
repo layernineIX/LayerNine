@@ -375,6 +375,22 @@ footer { padding: 56px var(--pad) 36px; background: var(--bg-raised); border-top
 .legal .updated { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--fg-30); margin-bottom: 40px; }
 
 /* ============================================================
+   Blog article body — same eyebrow/nav/footer shell as every page,
+   long-form prose sized like the legal pages but with a proper
+   editorial headline instead of the giant uppercase .page-title
+   (a long sentence-length title reads badly at that scale).
+   ============================================================ */
+.article-title { margin: 22px 0 0; font-family: var(--display); font-weight: 700; font-size: clamp(28px,4vw,44px); line-height: 1.15; letter-spacing: -.01em; text-transform: none; max-width: 20em; }
+.article { padding: clamp(50px,7vw,80px) var(--pad) 0; max-width: 780px; }
+.article-lead { font-size: clamp(17px,1.6vw,20px); line-height: 1.7; color: var(--fg-85); margin-bottom: 36px; max-width: 34em; }
+.article h2 { font-size: clamp(20px,2.2vw,26px); font-weight: 700; text-transform: none; letter-spacing: -.01em; color: var(--fg); margin: 44px 0 14px; }
+.article h2:first-of-type { margin-top: 0; }
+.article p { font-size: 15px; line-height: 1.85; color: var(--fg-70); margin-bottom: 18px; max-width: 38em; }
+.article p strong { color: var(--fg); font-weight: 600; }
+.article p a { border-bottom: 1px solid rgba(75,163,173,.4); }
+.article p a:hover { color: var(--fg); }
+
+/* ============================================================
    Responsive — desktop (default) > 1400px is baseline above.
    Laptop / small-desktop 1101–1400
    ============================================================ */
