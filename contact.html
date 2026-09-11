@@ -76,7 +76,8 @@
       </div>
     </div>
 
-    <form class="cform" id="contactForm">
+    <form class="cform" id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+      <input type="hidden" name="access_key" value="48e1d72d-985d-4ddd-ac1f-bb67b0e9e459">
       <input type="text" name="_gotcha" class="hp" tabindex="-1" autocomplete="off">
 
       <div class="cform-row">
@@ -124,7 +125,7 @@
         <button type="submit" class="btn btn-fill" id="submitBtn">Send Message →</button>
         <span class="contact-status" id="formStatus"></span>
       </div>
-      <p style="font-size:12px; color:var(--fg-30);">Sending opens a drafted email in your own mail app, addressed to us — nothing is stored on this site.</p>
+      <p style="font-size:12px; color:var(--fg-30);">Sending delivers this straight to our inbox — if it fails for any reason, your mail app opens with a drafted email instead.</p>
     </form>
   </section>
 </main>

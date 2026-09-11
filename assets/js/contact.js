@@ -1,8 +1,8 @@
 /* Layer Nine — contact chat widget (home page) + contact form (contact.html).
-   No backend exists yet, so both paths build a plain mailto: draft to
-   layernineix@gmail.com. If a real form backend is added later, set
-   window.LN_FORM_ENDPOINT to a POST URL and the contact page form will
-   fetch() it instead of falling back to mailto. See README for details. */
+   The home page chat widget has no backend, so it builds a plain mailto:
+   draft to layernineix@gmail.com. The contact page form submits to
+   Web3Forms (endpoint set via the form's action="" in contact.html) and
+   only falls back to a mailto: draft if that request fails outright. */
 (function () {
   "use strict";
   var STUDIO_EMAIL = "layernineix@gmail.com";
@@ -101,7 +101,10 @@
     renderSummary();
   }
 
-  /* ================= Contact page form ================= */
+  /* ================= Contact page form =================
+     Submits to Web3Forms (form.action, set in contact.html) so the page
+     shows an inline confirmation instead of navigating away. Falls back
+     to a mailto: draft only if that request fails outright. */
   var form = document.getElementById("contactForm");
   if (form) {
     var status = document.getElementById("formStatus");
@@ -111,31 +114,31 @@
       var data = new FormData(form);
       if (data.get("_gotcha")) return; // honeypot
 
-      if (window.LN_FORM_ENDPOINT) {
-        status.className = "contact-status";
-        status.textContent = "Sending…";
-        submitBtn.disabled = true;
-        fetch(window.LN_FORM_ENDPOINT, { method: "POST", body: data, headers: { Accept: "application/json" } })
-          .then(function (res) {
-            if (res.ok) {
-              form.reset();
-              status.textContent = "Thanks — we'll get back to you within 48 hours.";
-              status.classList.add("ok");
-            } else {
-              throw new Error("bad response");
-            }
-          })
-          .catch(function () {
-            status.textContent = "Something went wrong — opening your email client instead.";
-            status.classList.add("err");
-            mailtoFallback(data);
-          })
-          .finally(function () { submitBtn.disabled = false; });
-      } else {
-        mailtoFallback(data);
-        status.className = "contact-status ok";
-        status.textContent = "Opening your email app with this message ready to send.";
-      }
+      status.className = "contact-status";
+      status.textContent = "Sending…";
+      submitBtn.disabled = true;
+
+      fetch(form.action, { method: "POST", body: data, headers: { Accept: "application/json" } })
+        .then(function (res) {
+          return res.json().catch(function () { return {}; }).then(function (json) {
+            return { ok: res.ok, json: json };
+          });
+        })
+        .then(function (result) {
+          if (result.ok && result.json && result.json.success) {
+            form.reset();
+            status.textContent = "Thanks — we'll get back to you within 48 hours.";
+            status.classList.add("ok");
+          } else {
+            throw new Error((result.json && result.json.message) || "Submission failed");
+          }
+        })
+        .catch(function () {
+          status.textContent = "Something went wrong — opening your email client instead.";
+          status.classList.add("err");
+          mailtoFallback(data);
+        })
+        .finally(function () { submitBtn.disabled = false; });
     });
     function mailtoFallback(data) {
       var subject = "New project inquiry — Layer Nine website";
