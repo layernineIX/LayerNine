@@ -10,6 +10,18 @@
   var browseBtn = document.getElementById("heroBrowseBtn");
   var fileInput = document.getElementById("heroFileInput");
   var replayBtn = document.getElementById("heroReplay");
+  var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* The baked-in hero video autoplays via its own HTML `autoplay` attribute —
+     browsers handle that natively and more reliably than a JS .play() call
+     made at script-parse time. We only need to intervene for reduced motion. */
+  var initialVideo = bg.querySelector("video");
+  if (initialVideo && reducedMotion) {
+    initialVideo.removeAttribute("autoplay");
+    initialVideo.pause();
+    initialVideo.setAttribute("controls", "");
+    initialVideo.loop = false;
+  }
 
   function showFile(file) {
     if (!/^image\/|^video\//.test(file.type)) return;
@@ -18,9 +30,13 @@
     var el = document.createElement(isVideo ? "video" : "img");
     if (isVideo) {
       el.muted = true;
-      el.loop = true;
       el.playsInline = true;
-      el.autoplay = true;
+      if (reducedMotion) {
+        el.controls = true;
+      } else {
+        el.loop = true;
+        el.autoplay = true;
+      }
     } else {
       el.alt = "Hero preview";
     }
