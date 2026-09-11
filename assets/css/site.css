@@ -165,7 +165,7 @@ footer { padding: 56px var(--pad) 36px; background: var(--bg-raised); border-top
 .hero-browse { color: var(--fg); text-decoration: underline; text-underline-offset: 3px; background: none; border: none; cursor: pointer; font: inherit; padding: 0; }
 .hero-browse:hover { color: var(--accent-bright); }
 
-.hero-media-fg { position: relative; z-index: 2; padding: clamp(20px,3.4vw,40px); }
+.hero-media-fg { position: relative; z-index: 2; padding: clamp(20px,3.4vw,40px); margin-top: auto; }
 .hero-eyebrow-2 { font-family: var(--mono); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--fg-50, rgba(226,221,214,.5)); margin-bottom: 16px; }
 .hero-h1-2 { font-size: clamp(32px, 5.2vw, 56px); font-weight: 700; line-height: 1.1; letter-spacing: -.02em; }
 .hero-h1-2 .acc { color: var(--accent-bright); }
@@ -391,6 +391,7 @@ footer { padding: 56px var(--pad) 36px; background: var(--bg-raised); border-top
   .hero-media { min-height: clamp(320px, 60vh, 460px); border-radius: 8px; }
   .hero-media-icon { width: 36px; height: 36px; }
   .hero-media-copy, .hero-media-sub { font-size: 13px; }
+  .hero-media-fg { padding-right: 130px; }
   .cards { grid-template-columns: 1fr; }
   .cs-brief { grid-template-columns: 1fr; gap: 20px; padding: 40px 20px; }
   .g3, .g2, .vs-grid { grid-template-columns: 1fr 1fr; }
