@@ -9,10 +9,15 @@
   if (!sweeps.length) return;
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-  function randomBits(count) {
-    var out = [];
-    for (var i = 0; i < count; i++) out.push(Math.random() < 0.5 ? "0" : "1");
-    return out.join(" ");
+  function buildBits(count) {
+    var frag = document.createDocumentFragment();
+    for (var i = 0; i < count; i++) {
+      var bit = document.createElement("span");
+      bit.className = "bit";
+      bit.textContent = Math.random() < 0.5 ? "0" : "1";
+      frag.appendChild(bit);
+    }
+    return frag;
   }
 
   sweeps.forEach(function (el) {
@@ -23,10 +28,14 @@
     function play() {
       if (playing) return;
       playing = true;
-      track.textContent = randomBits(220);
+      track.innerHTML = "";
+      track.appendChild(buildBits(60));
       el.classList.add("play");
     }
-    track.addEventListener("animationend", function () {
+    /* animationend bubbles up from every rotating .bit as well as the
+       track's own sweep animation — only react to the track's own. */
+    track.addEventListener("animationend", function (e) {
+      if (e.target !== track) return;
       el.classList.remove("play");
       playing = false;
     });
