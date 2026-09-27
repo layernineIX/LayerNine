@@ -58,10 +58,10 @@ button, input, select, textarea { font-family: inherit; }
   color: var(--fg-70); background: rgba(10,10,10,.72); backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--fg-08);
 }
-.ln-logo { display: flex; align-items: center; gap: 10px; color: var(--fg); flex-shrink: 0; }
-.ln-logo-mark { width: 16px; height: 16px; border: 1.5px solid var(--accent); position: relative; flex: 0 0 auto; }
-.ln-logo-mark::after { content: ''; position: absolute; inset: 3px; background: var(--accent); }
-.ln-logo-word { font-family: var(--display); font-weight: 700; font-size: 15px; letter-spacing: 0; white-space: nowrap; }
+.ln-logo { display: flex; align-items: center; gap: 14px; color: var(--fg); flex-shrink: 0; }
+.ln-logo-mark { width: 27px; height: 27px; border: 2px solid var(--accent); position: relative; flex: 0 0 auto; }
+.ln-logo-mark::after { content: ''; position: absolute; inset: 5px; background: var(--accent); }
+.ln-logo-word { font-family: var(--display); font-weight: 700; font-size: 25px; letter-spacing: 0; white-space: nowrap; }
 .ln-logo-accent { color: var(--accent); }
 .ln-nav-links { display: flex; gap: 26px; align-items: center; }
 .ln-nav-links a { font-weight: 600; }
@@ -174,13 +174,33 @@ footer { padding: 56px var(--pad) 36px; background: var(--bg-raised); border-top
 [data-rise] { opacity: 0; transform: translateY(26px); transition: opacity 1s cubic-bezier(.16,1,.3,1), transform 1.2s cubic-bezier(.16,1,.3,1); }
 [data-rise].in { opacity: 1; transform: none; }
 
+/* ---------- homepage section reveal ----------
+   A "rack focus" reveal, one per section: it arrives soft, small, and low —
+   like a lens pulling focus onto the next shot — then sharpens into place.
+   Distinct from [data-rise] above (which staggers individual elements on
+   other pages): here the whole section is the unit. */
+[data-section-rise] {
+  opacity: 0;
+  transform: translateY(46px) scale(.95);
+  filter: blur(10px) saturate(.6);
+  transition: opacity .9s cubic-bezier(.16,1,.3,1), transform .9s cubic-bezier(.16,1,.3,1), filter .9s cubic-bezier(.16,1,.3,1);
+  will-change: opacity, transform, filter;
+}
+[data-section-rise].in { opacity: 1; transform: none; filter: blur(0) saturate(1); }
+
 /* ============================================================
    HOME — hero (full-bleed media drop zone)
    ============================================================ */
-.hero-media { position: relative; width: 100%; min-height: clamp(420px, 68vh, 720px); display: flex; flex-direction: column; border: 1.5px dashed var(--fg-18, rgba(226,221,214,.18)); border-radius: 10px; background: var(--bg-panel); overflow: hidden; transition: border-color .3s ease, background .3s ease; }
-.hero-media.has-media { border-style: solid; border-color: var(--fg-14); }
+.hero-media { position: relative; width: 100%; min-height: clamp(560px, 88vh, 960px); display: flex; flex-direction: column; background: var(--bg-panel); overflow: hidden; }
+.hero-media.has-media { }
 .hero-media-bg { position: absolute; inset: 0; z-index: 0; }
 .hero-media-bg img, .hero-media-bg video { width: 100%; height: 100%; object-fit: cover; display: block; }
+/* Art-directed crop: the same source frame, re-centred per breakpoint so
+   the subject stays composed rather than just being cropped by the browser. */
+.hero-video-crop { object-position: center 30%; }
+@media (max-width: 760px) {
+  .hero-video-crop { object-position: center 22%; }
+}
 .hero-media-scrim { position: absolute; inset: 0; z-index: 1; background: linear-gradient(to top, rgba(10,10,10,.82), transparent 55%); opacity: 0; transition: opacity .3s ease; pointer-events: none; }
 .hero-media.has-media .hero-media-scrim { opacity: 1; }
 
@@ -192,14 +212,17 @@ footer { padding: 56px var(--pad) 36px; background: var(--bg-raised); border-top
 .hero-browse { color: var(--fg); text-decoration: underline; text-underline-offset: 3px; background: none; border: none; cursor: pointer; font: inherit; padding: 0; }
 .hero-browse:hover { color: var(--accent-bright); }
 
-.hero-media-fg { position: relative; z-index: 2; padding: clamp(20px,3.4vw,40px); margin-top: auto; }
+.hero-media-fg { position: relative; z-index: 2; padding: clamp(20px,3.4vw,48px); margin-top: auto; max-width: 46em; }
 .hero-eyebrow-2 { font-family: var(--mono); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--fg-50, rgba(226,221,214,.5)); margin-bottom: 16px; }
 .hero-h1-2 { font-size: clamp(32px, 5.2vw, 56px); font-weight: 700; line-height: 1.1; letter-spacing: -.02em; }
 .hero-h1-2 .acc { color: var(--accent-bright); }
+.hero-sub-2 { margin-top: 18px; font-size: clamp(15px,1.25vw,19px); line-height: 1.55; color: var(--fg-70); max-width: 36em; }
+.hero-cta-row { display: flex; flex-wrap: wrap; gap: 14px; margin-top: clamp(26px,3vw,38px); }
 
-.hero-replay { position: absolute; z-index: 2; right: clamp(14px,2vw,20px); bottom: clamp(14px,2vw,20px); display: none; align-items: center; gap: 8px; font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--fg-70); border: 1.5px dashed var(--fg-30); border-radius: 6px; padding: 10px 16px; background: rgba(10,10,10,.4); cursor: pointer; }
-.hero-media.has-media .hero-replay { display: inline-flex; }
-.hero-replay:hover { border-color: var(--accent-bright); color: var(--fg); }
+/* Visible pause/play control for the hero video — always present (not a
+   hover-reveal), so it works the same on touch and keyboard. */
+.hero-toggle { position: absolute; z-index: 2; right: clamp(14px,2vw,20px); bottom: clamp(14px,2vw,20px); display: inline-flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--fg-70); border: 1.5px solid var(--fg-30); border-radius: 6px; padding: 10px 16px; background: rgba(10,10,10,.4); cursor: pointer; }
+.hero-toggle:hover, .hero-toggle:focus-visible { border-color: var(--accent-bright); color: var(--fg); }
 
 /* ---------- generic dashed media placeholder (interior page headers) ----------
    Same visual language as the homepage hero's empty state, sized for a fixed
@@ -226,13 +249,81 @@ footer { padding: 56px var(--pad) 36px; background: var(--bg-raised); border-top
 .disc-body { flex: 1 1 300px; max-width: 30em; font-size: clamp(15px,1.15vw,18px); line-height: 1.55; color: var(--fg-58); }
 .disc-list-end { border-top: 1px solid var(--fg-14); }
 
-/* ---------- work grid (home) ---------- */
-.work-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: clamp(16px,2vw,32px); }
-.work-tile { display: block; }
+/* ---------- work slider (home) ----------
+   Cards keep their exact prior sizing/styling (.work-tile, .slot, etc. are
+   unchanged below) — only the container changed, from a CSS grid to a
+   horizontally scrolling, scroll-snapping row, so it scales cleanly as more
+   projects are added later instead of the columns shrinking to fit. */
+.work-slider-wrap { position: relative; }
+.work-slider {
+  display: flex; gap: clamp(16px,2vw,32px); align-items: start;
+  overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth;
+  padding: 2px 2px 6px; margin: -2px -2px -6px;
+  scrollbar-width: none; -ms-overflow-style: none;
+}
+.work-slider::-webkit-scrollbar { display: none; }
+.work-slider .work-tile { flex: 0 0 min(780px, 82vw); scroll-snap-align: start; }
+.work-tile { display: block; position: relative; }
 .work-tile .slot { aspect-ratio: 4/3; border: 1px solid var(--fg-14); }
 .work-tile .wt-tag { margin-top: 14px; font-family: var(--mono); font-size: 10px; letter-spacing: .15em; text-transform: uppercase; color: var(--fg-42); }
-.work-tile h3 { margin: 8px 0 0; font-size: clamp(22px,2.1vw,34px); font-weight: 600; letter-spacing: -.03em; line-height: 1.08; text-transform: none; }
+.work-tile h3 { position: relative; margin: 8px 0 0; font-size: clamp(22px,2.1vw,34px); font-weight: 600; letter-spacing: -.03em; line-height: 1.08; text-transform: none; }
 .work-tile p { margin: 8px 0 0; font-size: 14px; line-height: 1.55; color: var(--fg-50, rgba(226,221,214,.5)); }
+/* Stretched-link pattern: the tile title is the real link, and its ::after
+   extends the click target over the whole card — lets a separate, genuinely
+   interactive control (the video-preview button) sit in the same card
+   without nesting interactive elements inside an <a>. */
+.wt-stretch-link::after { content: ""; position: absolute; inset: 0; z-index: 1; }
+
+/* Arrow controls — real buttons, hidden (not just disabled-looking) at each
+   end so they never invite a click that does nothing. */
+.work-slider-arrow {
+  position: absolute; top: 38%; transform: translateY(-50%); z-index: 6;
+  width: 44px; height: 44px; border-radius: 50%;
+  border: 1px solid var(--fg-14); background: rgba(10,10,10,.7); backdrop-filter: blur(6px);
+  color: var(--fg); display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: border-color .3s ease, opacity .3s ease, visibility .3s ease;
+}
+.work-slider-arrow svg { width: 18px; height: 18px; }
+.work-slider-arrow:hover { border-color: var(--accent-bright); }
+.work-slider-arrow:disabled { opacity: 0; visibility: hidden; pointer-events: none; }
+.work-slider-arrow.prev { left: clamp(-8px, -1.5vw, -22px); }
+.work-slider-arrow.next { right: clamp(-8px, -1.5vw, -22px); }
+@media (max-width: 760px) {
+  .work-slider-arrow { display: none; }
+  .work-slider .work-tile { flex-basis: 88vw; }
+}
+
+/* Selected-work hover/tap video preview (SKAI only — the one project with
+   real video assets). Poster image is the real content; the clip is a
+   muted, looped extra that only loads on request. */
+.wt-preview { position: relative; }
+.wt-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .4s ease; pointer-events: none; }
+.wt-preview.playing .wt-video { opacity: 1; }
+.wt-play {
+  position: absolute; z-index: 5; right: 12px; bottom: 12px;
+  display: flex; align-items: center; gap: 7px;
+  font-family: var(--mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--fg-70);
+  background: rgba(10,10,10,.55); backdrop-filter: blur(4px); border: 1px solid var(--fg-14); border-radius: 6px;
+  padding: 8px 12px; cursor: pointer; transition: border-color .3s ease, color .3s ease;
+}
+.wt-play:hover, .wt-play:focus-visible { border-color: var(--accent-bright); color: var(--fg); }
+.wt-preview.playing .wt-play-label::before { content: "Pause"; }
+.wt-preview:not(.playing) .wt-play-label::before { content: "Play"; }
+.wt-play-label { font-size: 0; }
+.wt-play-label::before { font-size: 10px; }
+
+/* ---------- format grid ("one idea, many expressions") ---------- */
+.format-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: clamp(16px,2vw,28px); }
+.format-tile .slot { aspect-ratio: 4/5; border: 1px solid var(--fg-14); }
+.format-tile .wt-tag { margin-top: 14px; font-family: var(--mono); font-size: 10px; letter-spacing: .15em; text-transform: uppercase; color: var(--fg-42); }
+.format-tile h4 { margin: 6px 0 0; font-size: clamp(17px,1.3vw,20px); font-weight: 600; letter-spacing: -.01em; text-transform: none; }
+
+/* ---------- capability groups (home) ---------- */
+.cap-group { margin-top: clamp(40px,5vw,64px); }
+.cap-group:first-of-type { margin-top: 0; }
+.cap-group-head { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; margin-bottom: 6px; }
+.cap-group-n { font-family: var(--mono); font-size: 11px; letter-spacing: .16em; color: var(--accent); }
+.cap-group-title { font-size: clamp(20px,1.8vw,28px); font-weight: 600; letter-spacing: -.02em; }
 
 /* ---------- process grid ---------- */
 .proc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px,1fr)); gap: 1px; background: var(--fg-14); border-top: 1px solid var(--fg-14); }
@@ -403,7 +494,7 @@ footer { padding: 56px var(--pad) 36px; background: var(--bg-raised); border-top
   :root { --nav-h: 66px; }
   .ln-nav { padding: 16px 24px; }
   .ln-nav-links { gap: 16px; font-size: 9.5px; }
-  .hero-media { min-height: clamp(360px, 56vh, 560px); }
+  .hero-media { min-height: clamp(480px, 82vh, 760px); }
   .hero-h1-2 { font-size: clamp(26px, 5.6vw, 38px); }
   .about-copy { font-size: clamp(26px, 4.6vw, 48px); }
   .stat-grid, .proc-grid, .offer-grid { grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); }
@@ -416,8 +507,6 @@ footer { padding: 56px var(--pad) 36px; background: var(--bg-raised); border-top
 
 @media (min-width: 761px) and (max-width: 1100px) {
   .ln-persp { perspective: 1100px; }
-  section[data-screen-label] { padding: clamp(60px,9vh,110px) var(--pad) !important; min-height: 0 !important; }
-  #ln-s1 { padding-top: calc(var(--nav-h) + 50px) !important; }
 }
 
 /* Mobile ≤760 */
@@ -429,9 +518,8 @@ footer { padding: 56px var(--pad) 36px; background: var(--bg-raised); border-top
   .ln-nav-links { display: none; }
   .ln-burger { display: flex; }
   section { padding-left: 20px !important; padding-right: 20px !important; }
-  section[data-screen-label] { min-height: 0 !important; padding-top: clamp(50px,8vh,70px) !important; padding-bottom: clamp(40px,6vh,60px) !important; }
-  #ln-s1 { padding-top: calc(var(--nav-h) + 30px) !important; }
-  .hero-media { min-height: clamp(320px, 60vh, 460px); border-radius: 8px; }
+  #ln-s1 { padding: 0 !important; }
+  .hero-media { min-height: clamp(420px, 80vh, 640px); }
   .hero-media-icon { width: 36px; height: 36px; }
   .hero-media-copy, .hero-media-sub { font-size: 13px; }
   .hero-media-fg { padding-right: 130px; }
@@ -455,5 +543,6 @@ footer { padding: 56px var(--pad) 36px; background: var(--bg-raised); border-top
   *, *::before, *::after { animation: none !important; transition: none !important; }
   [data-plane] { transform: none !important; opacity: 1 !important; }
   [data-rise] { opacity: 1 !important; transform: none !important; }
+  [data-section-rise] { opacity: 1 !important; transform: none !important; filter: none !important; }
   .ln-persp { perspective: none; }
 }
