@@ -4,13 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Giveh — Boutique Clothing Shoot | Layer Nine Studio</title>
-<meta name="description" content="Giveh: a single-day shoot for a clothing boutique, edited into stills and short-form reels by Layer Nine. Campaign assets in production.">
+<meta name="description" content="Giveh: a real single-day shoot for a clothing boutique, delivered by Layer Nine — editorial portraits, lifestyle, and product photography.">
 <link rel="canonical" href="https://layernine.studio/work/giveh.html">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Giveh — Layer Nine Studio">
-<meta property="og:description" content="A single-day shoot for a clothing boutique, edited into stills and short-form reels.">
+<meta property="og:description" content="A real single-day shoot for a clothing boutique, delivered by Layer Nine.">
 <meta property="og:url" content="https://layernine.studio/work/giveh.html">
-<meta name="twitter:card" content="summary">
+<meta property="og:image" content="https://layernine.studio/assets/img/giveh-hero-01.jpg">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32.png">
 <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
@@ -21,6 +22,8 @@
 </head>
 <body>
 <div class="ln-grain"></div>
+
+<div class="lb" id="lb"><span class="lb-close">×</span><div class="lb-inner" id="lbInner"></div><div class="lb-caption" id="lbCaption"></div></div>
 
 <nav class="ln-nav">
   <a href="../index.html" class="ln-logo"><span class="ln-logo-mark"></span><span class="ln-logo-word">L<span class="ln-logo-accent">A</span>YER N<span class="ln-logo-accent">I</span>NE</span></a>
@@ -45,20 +48,35 @@
 </div>
 
 <main>
-  <section class="page-hero" data-rise>
-    <div class="eyebrow">Work / Giveh</div>
-    <h1 class="page-title">Giveh</h1>
-    <p class="page-sub">A confirmed project for a clothing boutique — quotation LN-2026-GIVEH-01. The shoot hasn't happened yet, so there's no gallery here. This page will be built out with real photography once it's delivered.</p>
-  </section>
+  <div class="cs-hero" data-rise onclick="lnOpenLB('../assets/img/giveh-hero-01.jpg','Giveh — Boutique Clothing')">
+    <span class="cc-status complete">Real Photography · Delivered</span>
+    <picture>
+      <source srcset="../assets/img/giveh-hero-01.webp" type="image/webp">
+      <img src="../assets/img/giveh-hero-01.jpg" alt="Giveh boutique clothing campaign, editorial portrait" width="1493" height="2000" style="width:100%;height:100%;object-fit:cover;">
+    </picture>
+    <div class="cs-hero-overlay"><div class="cs-hero-tag">Giveh · Clothing Boutique</div></div>
+  </div>
 
   <div class="cs-brief" data-rise>
     <div class="cs-tags">
       <span class="tag ac">Boutique</span>
       <span class="tag ac">Clothing</span>
-      <span class="tag">In Progress</span>
+      <span class="tag ac">Real Photography</span>
     </div>
     <div>
-      <p class="cs-desc">A single-day shoot for a clothing boutique, to be edited into stills and short-form reels. Real photography — not AI-generated — once it's shot.</p>
+      <h1 class="cs-title">Giveh</h1>
+      <p class="cs-desc">A real single-day shoot for a clothing boutique — quotation LN-2026-GIVEH-01 — edited into editorial stills and lifestyle photography. Real footage, shot and delivered, not AI-generated.</p>
+    </div>
+  </div>
+
+  <div class="g2" data-rise>
+    <div class="cell tall" onclick="lnOpenLB('../assets/img/giveh-lifestyle-01.jpg','Giveh · Lifestyle')">
+      <picture><source srcset="../assets/img/giveh-lifestyle-01.webp" type="image/webp"><img src="../assets/img/giveh-lifestyle-01.jpg" alt="Giveh lifestyle photography, linen clothing and espadrilles" loading="lazy" width="880" height="1168"></picture>
+      <div class="cm"><div class="cm-t">Giveh</div><div class="cm-s">Lifestyle</div></div>
+    </div>
+    <div class="cell tall" onclick="lnOpenLB('../assets/img/giveh-product-01.jpg','Giveh · Product')">
+      <picture><source srcset="../assets/img/giveh-product-01.webp" type="image/webp"><img src="../assets/img/giveh-product-01.jpg" alt="Giveh embroidered espadrilles, product photography" loading="lazy" width="1611" height="2000"></picture>
+      <div class="cm"><div class="cm-t">Giveh</div><div class="cm-s">Product</div></div>
     </div>
   </div>
 
@@ -102,5 +120,6 @@
 </footer>
 
 <script src="../assets/js/site.js"></script>
+<script src="../assets/js/lightbox.js"></script>
 </body>
 </html>
