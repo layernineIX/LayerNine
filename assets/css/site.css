@@ -191,18 +191,17 @@ footer { padding: 56px var(--pad) 36px; background: var(--bg-raised); border-top
 /* ============================================================
    HOME — hero (full-bleed media drop zone)
    ============================================================ */
-.hero-media { position: relative; width: 100%; min-height: clamp(560px, 88vh, 960px); display: flex; flex-direction: column; background: var(--bg-panel); overflow: hidden; }
+/* The hero video is a finished reel with its own titles/logo/timecode baked in
+   right up to the frame edges. The box is sized to the video's own 16:9 so it
+   never needs cropping (which would slice into that on-screen text) — and the
+   page's own headline lives in normal flow below it instead of overlaid on
+   top, so the two don't compete for the same space. */
+.hero-media { position: relative; width: 100%; aspect-ratio: 16/9; background: var(--bg-panel); overflow: hidden; }
 .hero-media.has-media { }
 .hero-media-bg { position: absolute; inset: 0; z-index: 0; }
 .hero-media-bg img, .hero-media-bg video { width: 100%; height: 100%; object-fit: cover; display: block; }
-/* Art-directed crop: the same source frame, re-centred per breakpoint so
-   the subject stays composed rather than just being cropped by the browser. */
-.hero-video-crop { object-position: 68% 30%; }
-@media (max-width: 760px) {
-  .hero-video-crop { object-position: 68% 22%; }
-}
-.hero-media-scrim { position: absolute; inset: 0; z-index: 1; background: linear-gradient(to top, rgba(10,10,10,.82), transparent 55%); opacity: 0; transition: opacity .3s ease; pointer-events: none; }
-.hero-media.has-media .hero-media-scrim { opacity: 1; }
+
+.hero-copy { padding: clamp(32px,5vw,64px) var(--pad); max-width: 46em; }
 
 .hero-media-empty { position: relative; z-index: 2; flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; text-align: center; padding: 40px 24px; }
 .hero-media.has-media .hero-media-empty { display: none; }
@@ -212,8 +211,6 @@ footer { padding: 56px var(--pad) 36px; background: var(--bg-raised); border-top
 .hero-browse { color: var(--fg); text-decoration: underline; text-underline-offset: 3px; background: none; border: none; cursor: pointer; font: inherit; padding: 0; }
 .hero-browse:hover { color: var(--accent-bright); }
 
-.hero-media-fg { position: relative; z-index: 2; padding: clamp(20px,3.4vw,48px); margin-top: auto; max-width: 46em; }
-.hero-eyebrow-2 { font-family: var(--mono); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--fg-50, rgba(226,221,214,.5)); margin-bottom: 16px; }
 .hero-h1-2 { font-size: clamp(32px, 5.2vw, 56px); font-weight: 700; line-height: 1.1; letter-spacing: -.02em; }
 .hero-h1-2 .acc { color: var(--accent-bright); }
 .hero-sub-2 { margin-top: 18px; font-size: clamp(15px,1.25vw,19px); line-height: 1.55; color: var(--fg-70); max-width: 36em; }
@@ -495,7 +492,6 @@ footer { padding: 56px var(--pad) 36px; background: var(--bg-raised); border-top
   :root { --nav-h: 66px; }
   .ln-nav { padding: 16px 24px; }
   .ln-nav-links { gap: 16px; font-size: 9.5px; }
-  .hero-media { min-height: clamp(480px, 82vh, 760px); }
   .hero-h1-2 { font-size: clamp(26px, 5.6vw, 38px); }
   .about-copy { font-size: clamp(26px, 4.6vw, 48px); }
   .stat-grid, .proc-grid, .offer-grid { grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); }
@@ -520,10 +516,8 @@ footer { padding: 56px var(--pad) 36px; background: var(--bg-raised); border-top
   .ln-burger { display: flex; }
   section { padding-left: 20px !important; padding-right: 20px !important; }
   #ln-s1 { padding: 0 !important; }
-  .hero-media { min-height: clamp(420px, 80vh, 640px); }
   .hero-media-icon { width: 36px; height: 36px; }
   .hero-media-copy, .hero-media-sub { font-size: 13px; }
-  .hero-media-fg { padding-right: 130px; }
   .cards { grid-template-columns: 1fr; }
   .cs-brief { grid-template-columns: 1fr; gap: 20px; padding: 40px 20px; }
   .g3, .g2, .vs-grid { grid-template-columns: 1fr 1fr; }
