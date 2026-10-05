@@ -59,8 +59,6 @@ button, input, select, textarea { font-family: inherit; }
   border-bottom: 1px solid var(--fg-08);
 }
 .ln-logo { display: flex; align-items: center; gap: 14px; color: var(--fg); flex-shrink: 0; }
-.ln-logo-mark { width: 27px; height: 27px; border: 2px solid var(--accent); position: relative; flex: 0 0 auto; }
-.ln-logo-mark::after { content: ''; position: absolute; inset: 5px; background: var(--accent); }
 .ln-logo-word { font-family: var(--display); font-weight: 700; font-size: 25px; letter-spacing: 0; white-space: nowrap; }
 .ln-logo-accent { color: var(--accent); }
 .ln-nav-links { display: flex; gap: 26px; align-items: center; }
@@ -202,6 +200,12 @@ footer { padding: 56px var(--pad) 36px; background: var(--bg-raised); border-top
 .hero-media-bg img, .hero-media-bg video { width: 100%; height: 100%; object-fit: cover; display: block; }
 
 .hero-copy { padding: clamp(32px,5vw,64px) var(--pad); max-width: 46em; }
+/* Desktop: shrink the (uncropped 16:9) video just enough that the headline and
+   buttons below it fit in the first screen. */
+@media (min-width: 900px) {
+  .hero-media { width: min(100%, calc((100vh - 330px) * 16 / 9)); margin: 0 auto; }
+  .hero-copy { padding-top: 28px; padding-bottom: 28px; }
+}
 
 .hero-media-empty { position: relative; z-index: 2; flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; text-align: center; padding: 40px 24px; }
 .hero-media.has-media .hero-media-empty { display: none; }
