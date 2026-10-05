@@ -545,3 +545,19 @@ footer { padding: 56px var(--pad) 36px; background: var(--bg-raised); border-top
   [data-section-rise] { opacity: 1 !important; transform: none !important; filter: none !important; }
   .ln-persp { perspective: none; }
 }
+
+/* HOME — 04 Services image cards */
+.svc-grid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: clamp(14px,1.6vw,24px); }
+.svc-tile { display: flex; flex-direction: column; border: 1px solid var(--fg-14); background: transparent; color: var(--fg); transition: transform .4s ease, border-color .4s ease; }
+.svc-tile-img { aspect-ratio: 4/5; overflow: hidden; }
+.svc-tile-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 1.2s ease; }
+.svc-tile-body { display: flex; flex-direction: column; gap: 8px; padding: clamp(16px,1.6vw,24px); flex: 1; }
+.svc-tile-n { font-family: var(--mono); font-size: 11px; letter-spacing: .16em; color: var(--accent); }
+.svc-tile-title { font-size: clamp(20px,1.8vw,28px); font-weight: 600; letter-spacing: -.02em; line-height: 1.1; }
+.svc-tile-line { font-size: clamp(14px,1.05vw,16px); line-height: 1.5; color: var(--fg-58); }
+.svc-tile-cta { margin-top: auto; padding-top: 10px; font-family: var(--mono); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; }
+.svc-tile:hover, .svc-tile:focus-visible { transform: translateY(-6px); border-color: var(--accent); }
+.svc-tile:hover .svc-tile-img img, .svc-tile:focus-visible .svc-tile-img img { transform: scale(1.08); }
+@media (max-width: 1000px) { .svc-grid { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+@media (max-width: 359px) { .svc-grid { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .svc-tile, .svc-tile-img img { transition: none; } .svc-tile:hover { transform: none; } }
